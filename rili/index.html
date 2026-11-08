@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Rili | قناة بدر</title>
-<meta name="description" content="Rili — قناة بدر. ملخصات الفيديوهات، حسابات التواصل، الدعم، واقتراحات الفيديوهات.">
+<title>Rili's World | بدر</title>
+<meta name="description" content="Rili's World — قناة بدر. ملخصات الفيديوهات، حسابات التواصل، الدعم، واقتراحات الفيديوهات.">
 <meta name="theme-color" content="#211a6b">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Lalezar&family=Baloo+Bhaijaan+2:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Lalezar&family=Baloo+2:wght@700;800&family=Baloo+Bhaijaan+2:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
   --sky-1:#15114a;
@@ -35,6 +35,7 @@
 html{scroll-behavior:smooth}
 html,body{margin:0}
 body{
+  position:relative;
   background:var(--sky-1);
   color:var(--text);
   font-family:"Baloo Bhaijaan 2",system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif;
@@ -52,6 +53,18 @@ img{max-width:100%;display:block}
     radial-gradient(1200px 700px at 85% -10%,rgba(160,120,255,.35),transparent 60%),
     radial-gradient(900px 600px at 0% 10%,rgba(240,150,230,.18),transparent 60%),
     linear-gradient(180deg,var(--sky-1) 0%,var(--sky-2) 45%,var(--sky-3) 100%);}
+.sky{filter:hue-rotate(calc(var(--p,0) * -40deg)) brightness(calc(1 - var(--p,0) * .22))}
+#deep{position:absolute;top:0;left:0;right:0;z-index:-1;overflow:hidden;pointer-events:none}
+.di{position:absolute;will-change:transform}
+.dr{opacity:0;transform:scale(.35) rotate(-20deg);transition:opacity 1.4s ease,transform 1.6s cubic-bezier(.2,.9,.25,1.2)}
+.di.seen .dr{opacity:var(--o,1);transform:none}
+.df{animation:dfloat var(--d,9s) ease-in-out infinite}
+.df.rot{animation:dspin var(--d,40s) linear infinite}
+.df svg{width:100%;height:auto;display:block;overflow:visible}
+@keyframes dfloat{50%{transform:translateY(-14px) rotate(4deg)}}
+@keyframes dspin{to{transform:rotate(360deg)}}
+.shoot{position:fixed;z-index:-1;height:2px;width:140px;border-radius:2px;pointer-events:none;
+  background:linear-gradient(90deg,rgba(255,255,255,0),#fff 85%,#ffe0fb);filter:drop-shadow(0 0 6px #ffc8f6)}
 #stars{position:fixed;inset:0;z-index:-2;width:100%;height:100%;pointer-events:none}
 .clouds{position:fixed;left:0;right:0;bottom:-2px;z-index:-1;pointer-events:none;height:46vh;min-height:220px;max-height:420px}
 .clouds svg{position:absolute;bottom:0;width:max(140%,1100px);height:auto;aspect-ratio:1400/400;left:calc((100% - max(140%,1100px))/2)}
@@ -74,7 +87,7 @@ nav.top{position:sticky;top:0;z-index:20;
   backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
   background:rgba(21,17,74,.55);border-bottom:1px solid var(--line)}
 nav.top .wrap{display:flex;align-items:center;justify-content:space-between;height:62px;gap:12px}
-.brand{display:flex;align-items:center;gap:10px;font-size:28px;text-decoration:none}
+.brand{display:flex;align-items:center;gap:10px;font-size:24px;text-decoration:none;font-family:"Baloo 2","Lalezar",sans-serif;font-weight:800;direction:ltr;white-space:nowrap}
 .brand .dot{width:30px;height:30px;border-radius:50%;
   background:radial-gradient(circle at 40% 40%,#fff 0 18%,#ffd3f7 30%,#b48cff 60%,transparent 72%);
   box-shadow:0 0 18px 4px rgba(255,190,250,.55)}
@@ -96,8 +109,32 @@ nav.top .wrap{display:flex;align-items:center;justify-content:space-between;heig
 .hero .wrap{position:relative;z-index:1;text-align:center}
 .hello{display:inline-flex;align-items:center;gap:8px;padding:6px 16px;border-radius:999px;
   background:var(--glass);border:1px solid var(--line);color:var(--mut);font-weight:600;font-size:15px}
-.hero h1{font-size:clamp(84px,18vw,180px);line-height:1;margin:18px 0 6px;
-  color:#fff;text-shadow:0 0 30px rgba(255,200,250,.85),0 0 80px rgba(180,140,255,.7),0 6px 0 rgba(60,40,160,.6)}
+.title{position:relative;display:block;width:fit-content;max-width:100%;direction:ltr;margin:22px auto 12px;
+  font-family:"Baloo 2","Lalezar",sans-serif;font-weight:800;font-size:clamp(64px,12.5vw,148px);line-height:1;letter-spacing:-.01em}
+.title .w{display:inline-block;white-space:nowrap;margin:0 .05em;
+  background:linear-gradient(180deg,#ffffff 25%,#ffe1fa 60%,#c9b6ff 100%);-webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 0 18px rgba(255,190,250,.55)) drop-shadow(0 .05em 0 rgba(70,45,175,.75))}
+.title .i{position:relative}
+.title .pl{position:absolute;left:50%;top:.29em;width:.2em;height:.2em;margin-left:-.1em;border-radius:50%;
+  animation:bobp 5s ease-in-out infinite}
+.title .p1{background:radial-gradient(circle at 34% 30%,#fff1fc 0 8%,#ffb3f1 22%,#e57ad9 55%,#9c4fd0 100%);
+  box-shadow:0 0 .12em .02em rgba(255,160,240,.75)}
+.title .p1::after{content:"";position:absolute;left:-45%;top:32%;width:190%;height:36%;border-radius:50%;
+  border:.022em solid rgba(255,235,255,.95);border-top-color:transparent;transform:rotate(-18deg)}
+.title .p2{animation-delay:-2.5s;
+  background:radial-gradient(circle at 30% 36%,#5fe08f 0 16%,transparent 17%),radial-gradient(circle at 70% 66%,#d29a52 0 15%,transparent 16%),
+    radial-gradient(circle at 62% 26%,#ffffff 0 9%,transparent 10%),radial-gradient(circle at 36% 32%,#7fd6ff,#2a86e8 60%,#1450b8);
+  box-shadow:0 0 .12em .02em rgba(110,190,255,.75)}
+.title .p2::after{content:"";position:absolute;width:30%;height:30%;left:35%;top:35%;border-radius:50%;background:#ecebf5;
+  box-shadow:0 0 4px rgba(255,255,255,.7);animation:moonlet 7s linear infinite}
+@keyframes moonlet{from{transform:rotate(0) translateX(.17em) rotate(0)}to{transform:rotate(360deg) translateX(.17em) rotate(-360deg)}}
+@keyframes bobp{50%{transform:translateY(-.03em)}}
+.tsp{position:absolute;color:#fff;animation:tw 3s ease-in-out infinite;filter:drop-shadow(0 0 8px rgba(255,210,250,.9))}
+.tsp.t1{width:.22em;height:.22em;top:-.12em;right:-.1em}
+.tsp.t2{width:.13em;height:.13em;top:.25em;right:-.3em;animation-delay:-1s;color:#ffc8f6}
+.tsp.t3{width:.16em;height:.16em;bottom:-.02em;left:-.22em;animation-delay:-2s}
+.tsp.t4{width:.1em;height:.1em;top:-.05em;left:.05em;animation-delay:-.5s;color:#cfc2ff}
+@keyframes tw{0%,100%{opacity:1;transform:scale(1) rotate(0)}50%{opacity:.35;transform:scale(.6) rotate(25deg)}}
 .hero .tag{font-size:clamp(18px,2.6vw,22px);color:#efeaff;max-width:620px;margin:0 auto 26px}
 .hero .tag b{color:var(--pink)}
 .cta{display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
@@ -252,6 +289,7 @@ footer .brand{justify-content:center;color:#fff;margin-bottom:6px}
 
 <div class="sky"></div>
 <canvas id="stars" aria-hidden="true"></canvas>
+<div id="deep" aria-hidden="true"></div>
 <div class="clouds" aria-hidden="true">
   <svg class="c1" viewBox="0 0 1400 400" preserveAspectRatio="xMidYMax slice"><g id="cloudA" fill="#5a4bd6" fill-opacity=".55" stroke="#8f80ff" stroke-opacity=".35" stroke-width="3">
     <circle cx="80" cy="260" r="120"/><circle cx="250" cy="200" r="140"/><circle cx="430" cy="250" r="110"/><circle cx="600" cy="190" r="150"/>
@@ -272,7 +310,7 @@ footer .brand{justify-content:center;color:#fff;margin-bottom:6px}
 
 <nav class="top">
   <div class="wrap">
-    <a href="#home" class="brand"><span class="dot"></span>Rili</a>
+    <a href="#home" class="brand"><span class="dot"></span>Rili's World</a>
     <button class="menu-btn" id="menuBtn" aria-label="القائمة">☰</button>
     <ul class="links" id="links">
       <li><a href="#videos">الفيديوهات</a></li>
@@ -289,7 +327,14 @@ footer .brand{justify-content:center;color:#fff;margin-bottom:6px}
   <canvas id="galaxy" aria-hidden="true"></canvas>
   <div class="wrap">
     <span class="hello"><svg class="spark" style="margin:0;color:var(--pink)"><use href="#sp"/></svg> أهلاً بك في عالم بدر</span>
-    <h1>Rili</h1>
+    <h1 class="title" aria-label="Rili's World">
+      <svg class="tsp t1" aria-hidden="true"><use href="#sp"/></svg>
+      <svg class="tsp t2" aria-hidden="true"><use href="#sp"/></svg>
+      <svg class="tsp t3" aria-hidden="true"><use href="#sp"/></svg>
+      <svg class="tsp t4" aria-hidden="true"><use href="#sp"/></svg>
+      <span class="w" aria-hidden="true">R<span class="i">ı<b class="pl p1"></b></span>l<span class="i">ı<b class="pl p2"></b></span>'s</span>
+      <span class="w" aria-hidden="true">World</span>
+    </h1>
     <p class="tag" id="heroTag"></p>
     <div class="cta">
       <a class="btn main" href="#videos">✦ شاهد الملخصات</a>
@@ -437,7 +482,7 @@ footer .brand{justify-content:center;color:#fff;margin-bottom:6px}
 
 <footer>
   <div class="wrap">
-    <div class="brand"><span class="dot"></span>Rili</div>
+    <div class="brand"><span class="dot"></span>Rili's World</div>
     <div id="foot"></div>
   </div>
 </footer>
@@ -464,7 +509,7 @@ footer .brand{justify-content:center;color:#fff;margin-bottom:6px}
 const SITE = {
   channel: "Rili",
   creator: "بدر",
-  tagline: "قناة <b>Rili</b> مع <b>بدر</b> — نسافر سوا بين النجوم والمجرات ونبسّط أكبر أسرار الكون برسوم ملونة وقصص ممتعة ✨",
+  tagline: "أهلاً بك في <b>Rili's World</b> — عالم <b>بدر</b>. نسافر سوا بين النجوم والمجرات ونبسّط أكبر أسرار الكون برسوم ملونة وقصص ممتعة ✨",
   aboutRole: "صانع محتوى على يوتيوب وتيك توك",
   about: [
     "هلا! أنا بدر، صاحب قناة Rili 👋",
@@ -607,7 +652,7 @@ $("#stats").innerHTML = SITE.stats.map(s=>`<div class="stat"><b>${esc(s.value)}<
 $("#aboutName").textContent = SITE.creator + " ✦ " + SITE.channel;
 $("#aboutRole").textContent = SITE.aboutRole;
 $("#aboutText").innerHTML = SITE.about.map(p=>`<p>${esc(p)}</p>`).join("");
-$("#foot").innerHTML = `صُنع بحب 💜 بواسطة ${esc(SITE.creator)} — © ${new Date().getFullYear()} ${esc(SITE.channel)}`;
+$("#foot").innerHTML = `صُنع بحب 💜 بواسطة ${esc(SITE.creator)} — © ${new Date().getFullYear()} ${esc(SITE.channel)}'s World`;
 
 /* ---------- socials ---------- */
 const ICONS = {
@@ -787,8 +832,8 @@ document.querySelectorAll(".reveal").forEach(el=>rObs.observe(el));
     dpr=Math.min(devicePixelRatio||1,2); W=innerWidth; H=innerHeight;
     c.width=W*dpr; c.height=H*dpr; x.setTransform(dpr,0,0,dpr,0,0);
     const n=Math.round(W*H/2600);
-    stars=Array.from({length:n},()=>({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.3+.3,p:Math.random()*6.28,s:Math.random()*.02+.005,sq:Math.random()<.5}));
-    sparks=Array.from({length:Math.round(W*H/60000)+6},()=>({x:Math.random()*W,y:Math.random()*H*.9,r:Math.random()*10+6,p:Math.random()*6.28,s:Math.random()*.015+.006,pink:Math.random()<.35}));
+    stars=Array.from({length:n},()=>({x:Math.random()*W,y:Math.random()*H,z:Math.random()*.08+.015,r:Math.random()*1.3+.3,p:Math.random()*6.28,s:Math.random()*.02+.005,sq:Math.random()<.5}));
+    sparks=Array.from({length:Math.round(W*H/60000)+6},()=>({x:Math.random()*W,y:Math.random()*H,z:Math.random()*.1+.1,r:Math.random()*10+6,p:Math.random()*6.28,s:Math.random()*.015+.006,pink:Math.random()<.35}));
   }
   function sparkle(px,py,r,a,pink){
     const g=x.createRadialGradient(px,py,0,px,py,r*1.4);
@@ -799,55 +844,162 @@ document.querySelectorAll(".reveal").forEach(el=>rObs.observe(el));
     x.quadraticCurveTo(px,py,px-r*.75,py); x.quadraticCurveTo(px,py,px,py-r); x.fill();
   }
   function draw(){
-    x.clearRect(0,0,W,H);
+    x.clearRect(0,0,W,H); const sy=scrollY, wy=v=>((v%H)+H)%H;
     for(const s of stars){ s.p+=s.s; const a=.35+.65*Math.abs(Math.sin(s.p)); x.fillStyle=`rgba(235,230,255,${a})`;
-      if(s.sq) x.fillRect(s.x,s.y,s.r*1.6,s.r*1.6); else {x.beginPath();x.arc(s.x,s.y,s.r,0,6.28);x.fill()} }
-    for(const s of sparks){ s.p+=s.s; const a=.45+.55*Math.abs(Math.sin(s.p)); sparkle(s.x,s.y,s.r*(.75+.25*a),a,s.pink) }
+      const y=wy(s.y-sy*s.z);
+      if(s.sq) x.fillRect(s.x,y,s.r*1.6,s.r*1.6); else {x.beginPath();x.arc(s.x,y,s.r,0,6.28);x.fill()} }
+    for(const s of sparks){ s.p+=s.s; const a=.45+.55*Math.abs(Math.sin(s.p)); sparkle(s.x,wy(s.y-sy*s.z),s.r*(.75+.25*a),a,s.pink) }
     if(!reduce) requestAnimationFrame(draw);
   }
-  size(); addEventListener("resize",()=>{size(); if(reduce) draw()}); draw();
+  size(); addEventListener("resize",()=>{size(); if(reduce) draw()}); if(reduce) addEventListener("scroll",draw,{passive:true}); draw();
 })();
 
-/* ---------- spiral galaxy canvas (hero) ---------- */
+/* ---------- spiral galaxy + solar system around the title (hero) ---------- */
 (function(){
-  const c=$("#galaxy"), x=c.getContext("2d"); let W,H,dpr,pts=[],t=0,visible=true;
+  const c=$("#galaxy"), x=c.getContext("2d"), title=$(".title");
+  let W,H,dpr,pts=[],t=0,visible=true,cx=0,cy=0,tw=300,R0=300;
+  const ORB=[
+    {k:1.00,sp:.55,ph:.6, r:4.5,c:["#c9ecff","#3a9cf0"]},
+    {k:1.32,sp:.36,ph:2.6,r:6.5,c:["#ffe0fb","#e57ad9"],ring:true},
+    {k:1.68,sp:.24,ph:4.4,r:3.6,c:["#fff0c8","#f0a648"]},
+    {k:2.05,sp:.16,ph:1.4,r:5.2,c:["#d9ffe6","#3fbf6a"]}
+  ];
   function build(){
     const r=c.getBoundingClientRect(); dpr=Math.min(devicePixelRatio||1,2); W=r.width; H=r.height;
     c.width=W*dpr; c.height=H*dpr; x.setTransform(dpr,0,0,dpr,0,0);
-    const R=Math.min(W*.48,H*.62,520); pts=[];
-    const N = W<600?1100:2200;
+    const tr=title.getBoundingClientRect(); cx=tr.left-r.left+tr.width/2; cy=tr.top-r.top+tr.height/2; tw=tr.width;
+    const R=Math.min(W*.48,H*.62,520); R0=R; pts=[];
+    const N = W<600?1000:2000;
     for(let i=0;i<N;i++){
       const arm=i%2, d=Math.pow(Math.random(),.8), ang=d*3.6*Math.PI+arm*Math.PI + (Math.random()-.5)*.55*(1-d*.4);
       const spread=(Math.random()-.5)*R*.09*(1+d);
       const k=Math.random(); const col = k<.55?[255,255,255]:k<.8?[255,190,245]:[190,180,255];
       pts.push({d:d*R+spread,a:ang,s:Math.random()*1.8+.4,col,blob:Math.random()<.04});
     }
-    // inner halo dots
-    for(let i=0;i<300;i++){ const d=Math.random()*R*.35; pts.push({d,a:Math.random()*6.28,s:Math.random()*1.4+.3,col:[255,230,250],blob:false}) }
-    R0=R;
+    for(let i=0;i<260;i++){ const d=Math.random()*R*.35; pts.push({d,a:Math.random()*6.28,s:Math.random()*1.4+.3,col:[255,230,250],blob:false}) }
   }
-  let R0=300;
-  function frame(){
+  function planet(px,py,r,o,a){
+    x.globalAlpha=a;
+    const g=x.createRadialGradient(px-r*.35,py-r*.35,r*.1,px,py,r);
+    g.addColorStop(0,o.c[0]); g.addColorStop(1,o.c[1]);
+    x.fillStyle=g; x.beginPath(); x.arc(px,py,r,0,6.28); x.fill();
+    if(o.ring){ x.strokeStyle="rgba(255,235,255,.8)"; x.lineWidth=1.2; x.beginPath(); x.ellipse(px,py,r*1.9,r*.55,-.35,0,6.28); x.stroke() }
+    x.globalAlpha=1;
+  }
+  function frame(now){
     x.clearRect(0,0,W,H);
-    const cx=W/2, cy=H*.46, tilt=.5, rot=-.35;
-    const halo=x.createRadialGradient(cx,cy,0,cx,cy,R0*.55);
-    halo.addColorStop(0,"rgba(255,255,255,.95)");halo.addColorStop(.12,"rgba(255,220,252,.75)");halo.addColorStop(.4,"rgba(190,140,255,.25)");halo.addColorStop(1,"rgba(120,90,255,0)");
-    x.fillStyle=halo; x.beginPath(); x.ellipse(cx,cy,R0*.55,R0*.55*tilt*1.3,rot,0,6.28); x.fill();
+    const tilt=.5, rot=-.35;
+    const halo=x.createRadialGradient(cx,cy,0,cx,cy,R0*.6);
+    halo.addColorStop(0,"rgba(255,245,252,.75)");halo.addColorStop(.15,"rgba(255,215,250,.5)");halo.addColorStop(.45,"rgba(190,140,255,.2)");halo.addColorStop(1,"rgba(120,90,255,0)");
+    x.fillStyle=halo; x.beginPath(); x.ellipse(cx,cy,R0*.6,R0*.6*tilt*1.3,rot,0,6.28); x.fill();
     const cr=Math.cos(rot), sr=Math.sin(rot);
     for(const p of pts){
       const a=p.a - t*(0.6/(0.3+p.d/R0));
       const px=Math.cos(a)*p.d, py=Math.sin(a)*p.d*tilt;
       const X=cx+px*cr-py*sr, Y=cy+px*sr+py*cr;
-      const al=.35+.65*(1-p.d/R0*.6);
-      if(p.blob){ x.fillStyle=`rgba(${p.col},${.28*al})`; x.beginPath(); x.ellipse(X,Y,p.s*5,p.s*2.6,rot,0,6.28); x.fill(); }
+      const al=(.25+.55*(1-p.d/R0*.6));
+      if(p.blob){ x.fillStyle=`rgba(${p.col},${.22*al})`; x.beginPath(); x.ellipse(X,Y,p.s*5,p.s*2.6,rot,0,6.28); x.fill(); }
       x.fillStyle=`rgba(${p.col[0]},${p.col[1]},${p.col[2]},${al})`; x.fillRect(X,Y,p.s,p.s);
     }
+    // faint solar-system orbits: the title is the sun
+    const sec=(now||0)/1000, base=Math.max(tw*.56,150), oRot=-.08;
+    x.save(); x.translate(cx,cy); x.rotate(oRot);
+    x.setLineDash([2,7]); x.lineWidth=1;
+    for(const o of ORB){ const rx=base*o.k, ry=rx*.24;
+      x.strokeStyle="rgba(220,205,255,.16)"; x.beginPath(); x.ellipse(0,0,rx,ry,0,0,6.28); x.stroke(); }
+    x.setLineDash([]);
+    for(const o of ORB){ const rx=base*o.k, ry=rx*.24, ang=o.ph+sec*o.sp*.22;
+      const px=Math.cos(ang)*rx, py=Math.sin(ang)*ry, front=Math.sin(ang)>0;
+      planet(px,py,o.r*(front?1:.75),o,front?.75:.35); }
+    x.restore();
     t+=.0009;
     if(!reduce && visible) requestAnimationFrame(frame);
   }
-  build(); frame();
-  addEventListener("resize",()=>{build(); if(reduce) frame()});
-  new IntersectionObserver(([e])=>{ const was=visible; visible=e.isIntersecting; if(visible&&!was&&!reduce) frame() }).observe(c);
+  build(); frame(0);
+  (document.fonts?document.fonts.ready:Promise.resolve()).then(()=>{build(); if(reduce) frame(0)});
+  addEventListener("resize",()=>{build(); if(reduce) frame(0)});
+  new IntersectionObserver(([e])=>{ const was=visible; visible=e.isIntersecting; if(visible&&!was&&!reduce) requestAnimationFrame(frame) }).observe(c);
+})();
+
+/* ---------- deep space: things you discover while scrolling ---------- */
+(function(){
+  const deep=$("#deep"), rnd=(a,b)=>a+Math.random()*(b-a);
+  const S={
+    ringed:()=>`<svg viewBox="0 0 100 100"><defs><radialGradient id="g1" cx="35%" cy="32%"><stop offset="0" stop-color="#ffe3fb"/><stop offset=".55" stop-color="#e57ad9"/><stop offset="1" stop-color="#8f45c9"/></radialGradient></defs>
+      <circle cx="50" cy="50" r="40" fill="#f39ae8" opacity=".18"/><path d="M8 58 A44 13 -15 0 0 92 42" fill="none" stroke="#ffd9fa" stroke-width="4" opacity=".55"/>
+      <circle cx="50" cy="50" r="26" fill="url(#g1)"/><path d="M26 44 Q50 38 74 44" stroke="#ffffff" stroke-opacity=".25" stroke-width="4" fill="none"/>
+      <path d="M8 58 A44 13 -15 0 1 92 42" fill="none" stroke="#ffe9fd" stroke-width="4"/></svg>`,
+    ocean:()=>`<svg viewBox="0 0 100 100"><defs><radialGradient id="g2" cx="35%" cy="32%"><stop offset="0" stop-color="#8fe0ff"/><stop offset=".6" stop-color="#2a86e8"/><stop offset="1" stop-color="#1450b8"/></radialGradient></defs>
+      <circle cx="50" cy="50" r="44" fill="#3fa0ff" opacity=".2"/><circle cx="50" cy="50" r="30" fill="url(#g2)"/>
+      <ellipse cx="40" cy="42" rx="12" ry="7" fill="#3fbf6a"/><ellipse cx="62" cy="60" rx="10" ry="6" fill="#c08e45"/><rect x="34" y="54" width="20" height="6" rx="3" fill="#fff" opacity=".9"/></svg>`,
+    giant:()=>`<svg viewBox="0 0 100 100"><defs><clipPath id="cg"><circle cx="50" cy="50" r="32"/></clipPath></defs><circle cx="50" cy="50" r="44" fill="#ffb86b" opacity=".15"/>
+      <g clip-path="url(#cg)"><rect x="0" y="0" width="100" height="100" fill="#f0a648"/><rect y="30" width="100" height="8" fill="#ffd08a"/><rect y="46" width="100" height="10" fill="#d98236"/><rect y="62" width="100" height="6" fill="#ffd08a"/><ellipse cx="62" cy="52" rx="8" ry="4" fill="#c0602a"/>
+      <circle cx="74" cy="66" r="34" fill="#4a2a8a" opacity=".3"/></g></svg>`,
+    galaxy:()=>`<svg viewBox="0 0 100 100"><g transform="rotate(-25 50 50)"><ellipse cx="50" cy="50" rx="44" ry="26" fill="#c09aff" opacity=".14"/>
+      <path d="M50 50 C66 44 78 54 72 64 C64 76 40 72 34 60" fill="none" stroke="#ff9fe6" stroke-width="3" stroke-dasharray="5 4" stroke-linecap="round"/>
+      <path d="M50 50 C34 56 22 46 28 36 C36 24 60 28 66 40" fill="none" stroke="#ff9fe6" stroke-width="3" stroke-dasharray="5 4" stroke-linecap="round"/>
+      <circle cx="50" cy="50" r="7" fill="#fff"/><circle cx="50" cy="50" r="13" fill="#ffd6fb" opacity=".4"/></g></svg>`,
+    moon:()=>`<svg viewBox="0 0 100 100"><defs><mask id="mk"><rect width="100" height="100" fill="#fff"/><circle cx="64" cy="40" r="28" fill="#000"/></mask></defs>
+      <circle cx="50" cy="50" r="40" fill="#fff3c4" opacity=".12"/><circle cx="50" cy="50" r="30" fill="#fff1c9" mask="url(#mk)"/></svg>`,
+    comet:()=>`<svg viewBox="0 0 160 60"><defs><linearGradient id="ct" x1="0" x2="1"><stop offset="0" stop-color="#b9a8ff" stop-opacity="0"/><stop offset="1" stop-color="#ffe6fb"/></linearGradient></defs>
+      <path d="M0 22 L140 26 L140 34 L0 38 Z" fill="url(#ct)" opacity=".8"/><path d="M20 30 L140 30" stroke="#fff" stroke-opacity=".6"/><circle cx="142" cy="30" r="9" fill="#fff"/><circle cx="142" cy="30" r="16" fill="#ffd6fb" opacity=".35"/></svg>`,
+    constel:()=>{ const P=[[12,70],[30,40],[52,50],[70,22],[88,38],[62,80]];
+      return `<svg viewBox="0 0 100 100"><path d="M${P.slice(0,5).join(" L")} M52 50 L62 80" fill="none" stroke="#cfc2ff" stroke-opacity=".45" stroke-width="1.2" stroke-dasharray="3 3"/>
+      ${P.map(([a,b],i)=>`<use href="#sp" x="${a-(i%2?5:4)}" y="${b-(i%2?5:4)}" width="${i%2?10:8}" height="${i%2?10:8}" style="color:#fff"/>`).join("")}</svg>`},
+    nebula:()=>`<svg viewBox="0 0 100 100"><defs><filter id="bl"><feGaussianBlur stdDeviation="6"/></filter></defs><g filter="url(#bl)" opacity=".55">
+      <circle cx="40" cy="45" r="26" fill="#f39ae8"/><circle cx="62" cy="55" r="24" fill="#8c7bff"/><circle cx="50" cy="35" r="16" fill="#7fd6ff"/></g>
+      <use href="#sp" x="44" y="40" width="12" height="12" style="color:#fff"/></svg>`,
+    hole:()=>`<svg viewBox="0 0 100 100"><ellipse cx="50" cy="50" rx="46" ry="14" fill="none" stroke="#ffb3e8" stroke-width="5" opacity=".5" transform="rotate(-12 50 50)"/>
+      <circle cx="50" cy="50" r="22" fill="#ff9ad6" opacity=".25"/><circle cx="50" cy="50" r="16" fill="#0b0626"/><circle cx="50" cy="50" r="16" fill="none" stroke="#ffe0f6" stroke-width="2"/>
+      <path d="M4 52 A46 14 -12 0 0 96 48" fill="none" stroke="#ffd9f3" stroke-width="5" opacity=".9" transform="rotate(-12 50 50)"/></svg>`,
+    sat:()=>`<svg viewBox="0 0 100 60"><rect x="4" y="22" width="32" height="16" fill="#3b7bea" stroke="#9cc1ff"/><rect x="64" y="22" width="32" height="16" fill="#3b7bea" stroke="#9cc1ff"/>
+      <path d="M20 22 V38 M80 22 V38" stroke="#9cc1ff"/><rect x="40" y="18" width="20" height="24" rx="5" fill="#eef"/><circle cx="50" cy="12" r="3" fill="#ff9fe6"/><path d="M50 18 V14" stroke="#eef"/></svg>`,
+    star:()=>`<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="30" fill="#ffd6fb" opacity=".18"/><use href="#sp" x="22" y="22" width="56" height="56" style="color:#fff"/></svg>`,
+    rocket:()=>`<svg viewBox="0 0 60 100"><path d="M30 4 C44 18 46 44 42 66 H18 C14 44 16 18 30 4Z" fill="#f4f1ff"/><circle cx="30" cy="36" r="7" fill="#3fa0ff" stroke="#9b7bff" stroke-width="3"/>
+      <path d="M18 56 L6 74 L18 70Z M42 56 L54 74 L42 70Z" fill="#f08ce6"/><path d="M22 66 Q30 96 38 66Z" fill="#ffc36b"/><path d="M26 66 Q30 84 34 66Z" fill="#fff3c4"/></svg>`
+  };
+  // order = what you discover as you go deeper
+  const ORDER=["moon","constel","ocean","comet","ringed","star","galaxy","sat","nebula","giant","rocket","constel","hole","star","galaxy","ringed","nebula","comet"];
+  const SPIN={galaxy:1,hole:1};
+  let items=[];
+  function place(){
+    deep.innerHTML=""; items=[];
+    const docH=document.documentElement.scrollHeight, vh=innerHeight, W=innerWidth, phone=W<700;
+    deep.style.height=docH+"px";
+    const step=phone?340:300; let y=vh*.85, i=0, side=Math.random()<.5?0:1;
+    while(y<docH-120){
+      const kind=ORDER[i%ORDER.length], f=rnd(.08,.3);
+      const size=(kind==="comet"?1.6:1)*(phone?rnd(42,64):rnd(64,120));
+      const xPct = side? rnd(phone?78:86,phone?92:95) : rnd(phone?-4:1,phone?8:9);
+      const el=document.createElement("div"); el.className="di";
+      const top=y-(y-vh/2)*f;
+      el.style.cssText=`top:${top}px;left:${xPct}%;width:${size}px;margin-left:${-size/2}px;--o:${phone?.6:.9}`;
+      el.innerHTML=`<div class="dr"><div class="df${SPIN[kind]?" rot":""}" style="--d:${SPIN[kind]?rnd(40,70):rnd(7,12)}s;animation-delay:-${rnd(0,8)}s">${S[kind]()}</div></div>`;
+      deep.appendChild(el); items.push({el,f});
+      y+=step*rnd(.8,1.25); i++; side=1-side;
+    }
+    obs.disconnect(); items.forEach(it=>obs.observe(it.el)); move();
+  }
+  const obs=new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting) e.target.classList.add("seen") }),{rootMargin:"0px 0px -10% 0px"});
+  let ticking=false;
+  function move(){
+    ticking=false; const sy=scrollY, max=Math.max(1,document.documentElement.scrollHeight-innerHeight);
+    document.documentElement.style.setProperty("--p",(sy/max).toFixed(3));
+    if(!reduce) for(const it of items) it.el.style.transform=`translate3d(0,${(sy*it.f).toFixed(1)}px,0)`;
+  }
+  addEventListener("scroll",()=>{ if(!ticking){ticking=true;requestAnimationFrame(move)} },{passive:true});
+  let rt; addEventListener("resize",()=>{clearTimeout(rt);rt=setTimeout(place,250)});
+  (document.fonts?document.fonts.ready:Promise.resolve()).then(()=>setTimeout(place,50));
+
+  // shooting stars
+  if(!reduce) (function shoot(){
+    const s=document.createElement("div"); s.className="shoot";
+    const x0=rnd(.1,.9)*innerWidth, y0=rnd(.05,.5)*innerHeight, ang=rnd(150,170), len=rnd(250,450), rad=ang*Math.PI/180;
+    s.style.left=x0+"px"; s.style.top=y0+"px"; document.body.appendChild(s);
+    s.animate([{transform:`rotate(${ang}deg) translateX(0)`,opacity:0},{opacity:1,offset:.2},{transform:`rotate(${ang}deg) translateX(${len}px)`,opacity:0}],
+      {duration:rnd(900,1400),easing:"ease-out"}).onfinish=()=>s.remove();
+    setTimeout(shoot,rnd(3500,8000));
+  })();
 })();
 </script>
 </body>
