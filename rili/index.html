@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Rili | قناة بدر</title>
+<meta name="description" content="Rili — قناة بدر. ملخصات الفيديوهات، حسابات التواصل، الدعم، واقتراحات الفيديوهات.">
+<meta name="theme-color" content="#211a6b">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lalezar&family=Baloo+Bhaijaan+2:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --sky-1:#15114a;
+  --sky-2:#241c78;
+  --sky-3:#3a2fb0;
+  --cloud:#5a4bd6;
+  --cloud-2:#6f5fe6;
+  --glass:rgba(80,64,200,.38);
+  --glass-2:rgba(120,100,240,.22);
+  --line:rgba(190,175,255,.28);
+  --text:#f4f1ff;
+  --mut:#c4bcf2;
+  --pink:#f39ae8;
+  --lav:#b9a8ff;
+  --glow:#fff2fb;
+  --blue:#2f8cf0;
+  --green:#3fbf6a;
+  --yt:#ff4d5e;
+  --tt:#25f4ee;
+  --radius:22px;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+html,body{margin:0}
+body{
+  background:var(--sky-1);
+  color:var(--text);
+  font-family:"Baloo Bhaijaan 2",system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif;
+  font-size:17px;line-height:1.75;
+  min-height:100vh;overflow-x:hidden;
+}
+h1,h2,h3,.brand,.btn,.tag-title{font-family:"Lalezar","Baloo Bhaijaan 2",system-ui,sans-serif;font-weight:400;letter-spacing:.3px}
+a{color:inherit}
+img{max-width:100%;display:block}
+.hide{display:none!important}
+
+/* ---------- cosmic backdrop ---------- */
+.sky{position:fixed;inset:0;z-index:-3;
+  background:
+    radial-gradient(1200px 700px at 85% -10%,rgba(160,120,255,.35),transparent 60%),
+    radial-gradient(900px 600px at 0% 10%,rgba(240,150,230,.18),transparent 60%),
+    linear-gradient(180deg,var(--sky-1) 0%,var(--sky-2) 45%,var(--sky-3) 100%);}
+#stars{position:fixed;inset:0;z-index:-2;width:100%;height:100%;pointer-events:none}
+.clouds{position:fixed;left:0;right:0;bottom:-2px;z-index:-1;pointer-events:none;height:46vh;min-height:220px;max-height:420px}
+.clouds svg{position:absolute;bottom:0;width:max(140%,1100px);height:auto;aspect-ratio:1400/400;left:calc((100% - max(140%,1100px))/2)}
+.clouds .c1{animation:drift 90s linear infinite alternate;opacity:.55}
+.clouds .c2{animation:drift 120s linear infinite alternate-reverse;opacity:.75}
+@keyframes drift{from{transform:translateX(-4%)}to{transform:translateX(4%)}}
+
+/* ---------- layout ---------- */
+.wrap{max-width:1120px;margin:0 auto;padding:0 16px}
+section{padding:72px 0 24px;scroll-margin-top:70px}
+.sec-head{text-align:center;margin-bottom:28px}
+.sec-head h2{font-size:clamp(30px,5vw,44px);margin:0;line-height:1.2;
+  background:linear-gradient(90deg,#fff,#f6c8ff,#c9bbff);-webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 0 18px rgba(240,170,255,.35))}
+.sec-head p{color:var(--mut);margin:6px auto 0;max-width:560px}
+.spark{display:inline-block;width:18px;height:18px;vertical-align:middle;margin:0 8px}
+
+/* ---------- nav ---------- */
+nav.top{position:sticky;top:0;z-index:20;
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  background:rgba(21,17,74,.55);border-bottom:1px solid var(--line)}
+nav.top .wrap{display:flex;align-items:center;justify-content:space-between;height:62px;gap:12px}
+.brand{display:flex;align-items:center;gap:10px;font-size:28px;text-decoration:none}
+.brand .dot{width:30px;height:30px;border-radius:50%;
+  background:radial-gradient(circle at 40% 40%,#fff 0 18%,#ffd3f7 30%,#b48cff 60%,transparent 72%);
+  box-shadow:0 0 18px 4px rgba(255,190,250,.55)}
+.links{display:flex;gap:4px;list-style:none;margin:0;padding:0}
+.links a{text-decoration:none;color:var(--mut);padding:6px 12px;border-radius:999px;font-weight:600;font-size:15px;transition:.2s}
+.links a:hover,.links a.on{color:#fff;background:var(--glass-2)}
+.menu-btn{display:none;background:none;border:1px solid var(--line);color:var(--text);border-radius:12px;width:42px;height:42px;font-size:20px;cursor:pointer}
+@media (max-width:760px){
+  .menu-btn{display:block}
+  .links{position:absolute;top:62px;right:0;left:0;flex-direction:column;padding:10px 16px 16px;
+    background:rgba(21,17,74,.95);border-bottom:1px solid var(--line);display:none}
+  .links.open{display:flex}
+  .links a{display:block;padding:10px 14px}
+}
+
+/* ---------- hero ---------- */
+.hero{position:relative;min-height:calc(100vh - 62px);display:flex;align-items:center;padding:30px 0 60px}
+#galaxy{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+.hero .wrap{position:relative;z-index:1;text-align:center}
+.hello{display:inline-flex;align-items:center;gap:8px;padding:6px 16px;border-radius:999px;
+  background:var(--glass);border:1px solid var(--line);color:var(--mut);font-weight:600;font-size:15px}
+.hero h1{font-size:clamp(84px,18vw,180px);line-height:1;margin:18px 0 6px;
+  color:#fff;text-shadow:0 0 30px rgba(255,200,250,.85),0 0 80px rgba(180,140,255,.7),0 6px 0 rgba(60,40,160,.6)}
+.hero .tag{font-size:clamp(18px,2.6vw,22px);color:#efeaff;max-width:620px;margin:0 auto 26px}
+.hero .tag b{color:var(--pink)}
+.cta{display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;cursor:pointer;
+  font-size:19px;padding:12px 24px;border-radius:999px;border:0;color:#fff;transition:transform .2s,box-shadow .2s}
+.btn:hover{transform:translateY(-2px)}
+.btn.main{background:linear-gradient(135deg,#f08ce6,#9b7bff);box-shadow:0 8px 30px -6px rgba(240,140,230,.7)}
+.btn.ghost{background:var(--glass);border:1px solid var(--line)}
+.btn.sm{font-size:16px;padding:8px 16px}
+.stats{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:34px}
+.stat{min-width:96px;padding:10px 14px;border-radius:18px;background:var(--glass);border:1px solid var(--line);backdrop-filter:blur(6px)}
+.stat b{display:block;font-family:"Lalezar",sans-serif;font-weight:400;font-size:28px;line-height:1.2}
+.stat span{color:var(--mut);font-size:14px}
+.scroll-hint{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);z-index:1;color:var(--mut);font-size:13px;text-align:center;animation:bob 2.4s ease-in-out infinite}
+@keyframes bob{50%{transform:translate(-50%,6px)}}
+
+/* ---------- glass card ---------- */
+.card{background:var(--glass);border:1px solid var(--line);border-radius:var(--radius);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  box-shadow:0 20px 50px -25px rgba(10,5,50,.9), inset 0 1px 0 rgba(255,255,255,.08)}
+
+/* ---------- videos ---------- */
+.toolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-bottom:20px}
+.search{flex:1 1 260px;position:relative}
+.search input{width:100%;font:inherit;color:var(--text);background:var(--glass);border:1px solid var(--line);border-radius:999px;padding:10px 44px 10px 18px;outline:none}
+.search input::placeholder{color:var(--mut)}
+.search input:focus{border-color:var(--pink);box-shadow:0 0 0 3px rgba(243,154,232,.2)}
+.search svg{position:absolute;right:16px;top:50%;transform:translateY(-50%);opacity:.7}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font:inherit;font-size:15px;font-weight:600;color:var(--mut);background:transparent;border:1px solid var(--line);border-radius:999px;padding:6px 14px;cursor:pointer;transition:.2s}
+.chip:hover{color:#fff}
+.chip.on{color:#1b1550;background:linear-gradient(135deg,#ffd6f8,#c9bbff);border-color:transparent}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:18px}
+.vid{overflow:hidden;cursor:pointer;display:flex;flex-direction:column;transition:transform .25s,box-shadow .25s;text-align:right;font:inherit;color:inherit;padding:0}
+.vid:hover{transform:translateY(-4px);box-shadow:0 26px 60px -24px rgba(240,140,230,.55)}
+.vid:focus-visible{outline:3px solid var(--pink);outline-offset:3px}
+.thumb{position:relative;aspect-ratio:16/9;overflow:hidden;background:linear-gradient(135deg,#2a1f86,#5c3fc4)}
+.thumb img{width:100%;height:100%;object-fit:cover}
+.thumb .art{position:absolute;inset:0}
+.thumb .badge{position:absolute;top:10px;right:10px;display:flex;gap:6px}
+.pill{font-size:12px;font-weight:700;padding:2px 10px;border-radius:999px;background:rgba(15,10,50,.65);border:1px solid var(--line);backdrop-filter:blur(4px)}
+.pill.yt{color:#ffb3bb}
+.pill.tt{color:#9ffcf9}
+.thumb .dur{position:absolute;bottom:10px;left:10px}
+.vid .body{padding:14px 16px 18px;display:flex;flex-direction:column;gap:6px;flex:1}
+.vid h3{font-size:22px;margin:0;line-height:1.35}
+.vid p{margin:0;color:var(--mut);font-size:15px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.vid .meta{margin-top:auto;padding-top:8px;display:flex;justify-content:space-between;align-items:center;color:var(--mut);font-size:13px}
+.vid .more{color:var(--pink);font-weight:700}
+.empty{text-align:center;color:var(--mut);padding:40px 0}
+
+/* ---------- modal ---------- */
+.modal{position:fixed;inset:0;z-index:50;background:rgba(8,5,35,.7);backdrop-filter:blur(6px);display:flex;align-items:flex-start;justify-content:center;padding:24px 16px;overflow-y:auto}
+.mbox{width:100%;max-width:760px;position:relative;overflow:hidden;margin:auto 0;background:linear-gradient(180deg,rgba(52,40,160,.96),rgba(34,26,110,.97))}
+.mbox .x{position:absolute;top:12px;left:12px;z-index:2;width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:rgba(15,10,50,.6);color:#fff;font-size:20px;cursor:pointer}
+.player{aspect-ratio:16/9;background:#0e0a36}
+.player iframe{width:100%;height:100%;border:0;display:block}
+.mcontent{padding:20px 22px 26px}
+.mcontent h3{font-size:clamp(26px,4vw,34px);margin:0 0 4px;line-height:1.3}
+.mmeta{color:var(--mut);font-size:14px;display:flex;flex-wrap:wrap;gap:8px 16px;margin-bottom:14px}
+.mcontent h4{font-family:"Lalezar",sans-serif;font-weight:400;font-size:21px;margin:20px 0 6px;color:var(--pink)}
+.mcontent p{margin:0 0 10px}
+.points{list-style:none;padding:0;margin:0;display:grid;gap:8px}
+.points li{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:14px;background:rgba(255,255,255,.06)}
+.points li::before{content:"✦";color:var(--pink);flex:none}
+.chapters{display:grid;gap:6px;margin:0;padding:0;list-style:none}
+.chapters li{display:flex;gap:12px}
+.chapters time{font-family:monospace;color:var(--lav);direction:ltr;min-width:52px}
+.mactions{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.btn.yt{background:linear-gradient(135deg,#ff5c6c,#d9304a)}
+.btn.tt{background:linear-gradient(135deg,#1b1b2e,#3a2f6b);border:1px solid rgba(37,244,238,.5)}
+
+/* ---------- about / earth ---------- */
+.about{display:grid;grid-template-columns:1.1fr 1fr;gap:28px;align-items:center}
+@media (max-width:820px){.about{grid-template-columns:1fr}}
+.earth-wrap{position:relative;aspect-ratio:1;max-width:440px;margin:0 auto;width:100%}
+.earth-wrap svg{width:100%;height:100%;overflow:visible}
+.earth-spin{animation:float 8s ease-in-out infinite}
+.moon-orbit{transform-origin:200px 200px;animation:spin 24s linear infinite}
+.sat{animation:float 6s ease-in-out infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes float{50%{transform:translateY(-8px)}}
+.about .card{padding:26px}
+.about h3{font-size:34px;margin:0 0 4px}
+.about .role{color:var(--pink);font-weight:700;margin:0 0 12px}
+.about p{margin:0 0 12px;color:#e9e4ff}
+
+/* ---------- socials ---------- */
+.socials{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px}
+.soc{display:flex;align-items:center;gap:14px;padding:16px 18px;text-decoration:none;transition:transform .2s,border-color .2s}
+.soc:hover{transform:translateY(-3px);border-color:var(--c,var(--pink))}
+.soc .ic{width:52px;height:52px;border-radius:16px;display:grid;place-items:center;flex:none;background:var(--bgc,rgba(255,255,255,.1))}
+.soc .ic svg{width:28px;height:28px}
+.soc b{display:block;font-family:"Lalezar",sans-serif;font-weight:400;font-size:21px;line-height:1.2}
+.soc span{color:var(--mut);font-size:14px;direction:ltr;display:block;text-align:right}
+
+/* ---------- support ---------- */
+.support{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+.sup{padding:22px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:8px}
+.sup .big{font-size:42px;line-height:1}
+.sup h3{font-size:24px;margin:4px 0 0}
+.sup p{color:var(--mut);margin:0 0 8px;font-size:15px;flex:1}
+.sup.star{border-color:rgba(243,154,232,.6);background:linear-gradient(180deg,rgba(243,154,232,.18),var(--glass))}
+.thanks{margin-top:22px;padding:18px 22px;text-align:center;color:#efeaff}
+.thanks b{color:var(--pink)}
+
+/* ---------- requests ---------- */
+.req{display:grid;grid-template-columns:1.2fr .8fr;gap:20px;align-items:start}
+@media (max-width:860px){.req{grid-template-columns:1fr}}
+form.card{padding:24px}
+.f-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:560px){.f-row{grid-template-columns:1fr}}
+.field{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+.field label{font-weight:700;font-size:15px}
+.field label small{color:var(--mut);font-weight:500}
+.field input,.field textarea,.field select{
+  font:inherit;font-size:16px;color:var(--text);background:rgba(15,10,60,.45);
+  border:1px solid var(--line);border-radius:14px;padding:11px 14px;outline:none;width:100%}
+.field select option{background:#241c78}
+.field textarea{min-height:130px;resize:vertical}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--pink);box-shadow:0 0 0 3px rgba(243,154,232,.2)}
+.counter{font-size:12px;color:var(--mut);text-align:left}
+.req-side{padding:22px}
+.req-side h3{font-size:24px;margin:0 0 10px}
+.req-side ol{margin:0;padding-right:20px;color:#e9e4ff}
+.req-side li{margin-bottom:8px}
+.mine{margin-top:16px;border-top:1px dashed var(--line);padding-top:14px}
+.mine h4{margin:0 0 8px;font-size:16px}
+.mine ul{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.mine li{font-size:14px;padding:8px 12px;border-radius:12px;background:rgba(255,255,255,.06);display:flex;justify-content:space-between;gap:8px}
+.mine li span{color:var(--mut);font-size:12px;white-space:nowrap}
+
+/* ---------- footer ---------- */
+footer{padding:60px 0 40px;text-align:center;color:var(--mut);font-size:14px}
+footer .brand{justify-content:center;color:#fff;margin-bottom:6px}
+
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);opacity:0;z-index:60;
+  background:linear-gradient(135deg,#f08ce6,#9b7bff);color:#fff;padding:12px 20px;border-radius:999px;font-weight:700;
+  box-shadow:0 10px 30px -8px rgba(0,0,0,.6);transition:.3s;pointer-events:none;max-width:calc(100% - 32px);text-align:center}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+.reveal.in{opacity:1;transform:none}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+  .reveal{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<div class="sky"></div>
+<canvas id="stars" aria-hidden="true"></canvas>
+<div class="clouds" aria-hidden="true">
+  <svg class="c1" viewBox="0 0 1400 400" preserveAspectRatio="xMidYMax slice"><g id="cloudA" fill="#5a4bd6" fill-opacity=".55" stroke="#8f80ff" stroke-opacity=".35" stroke-width="3">
+    <circle cx="80" cy="260" r="120"/><circle cx="250" cy="200" r="140"/><circle cx="430" cy="250" r="110"/><circle cx="600" cy="190" r="150"/>
+    <circle cx="790" cy="250" r="120"/><circle cx="960" cy="200" r="140"/><circle cx="1150" cy="240" r="130"/><circle cx="1330" cy="200" r="150"/>
+    <rect x="0" y="260" width="1400" height="160"/></g></svg>
+  <svg class="c2" viewBox="0 0 1400 400" preserveAspectRatio="xMidYMax slice"><g fill="#4637c2" fill-opacity=".7" stroke="#8f80ff" stroke-opacity=".3" stroke-width="3">
+    <circle cx="150" cy="320" r="110"/><circle cx="330" cy="300" r="100"/><circle cx="520" cy="330" r="120"/><circle cx="720" cy="300" r="110"/>
+    <circle cx="900" cy="330" r="100"/><circle cx="1080" cy="300" r="120"/><circle cx="1270" cy="320" r="110"/>
+    <rect x="0" y="330" width="1400" height="80"/></g></svg>
+</div>
+
+<!-- sparkle symbol -->
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <symbol id="sp" viewBox="0 0 24 24"><path d="M12 0 C12.8 8 16 11.2 24 12 C16 12.8 12.8 16 12 24 C11.2 16 8 12.8 0 12 C8 11.2 11.2 8 12 0Z" fill="currentColor"/></symbol>
+  </defs>
+</svg>
+
+<nav class="top">
+  <div class="wrap">
+    <a href="#home" class="brand"><span class="dot"></span>Rili</a>
+    <button class="menu-btn" id="menuBtn" aria-label="القائمة">☰</button>
+    <ul class="links" id="links">
+      <li><a href="#videos">الفيديوهات</a></li>
+      <li><a href="#about">عن بدر</a></li>
+      <li><a href="#socials">تابعني</a></li>
+      <li><a href="#support">ادعمني</a></li>
+      <li><a href="#requests">اقترح فيديو</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ================= HERO ================= -->
+<header class="hero" id="home">
+  <canvas id="galaxy" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <span class="hello"><svg class="spark" style="margin:0;color:var(--pink)"><use href="#sp"/></svg> أهلاً بك في عالم بدر</span>
+    <h1>Rili</h1>
+    <p class="tag" id="heroTag"></p>
+    <div class="cta">
+      <a class="btn main" href="#videos">✦ شاهد الملخصات</a>
+      <a class="btn ghost" href="#requests">💡 اقترح فيديو</a>
+      <a class="btn ghost" href="#support">💜 ادعم القناة</a>
+    </div>
+    <div class="stats" id="stats"></div>
+  </div>
+  <div class="scroll-hint">↓ انزل للأسفل</div>
+</header>
+
+<main>
+<!-- ================= VIDEOS ================= -->
+<section id="videos">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <h2><svg class="spark" style="color:var(--pink)"><use href="#sp"/></svg>الفيديوهات<svg class="spark" style="color:var(--lav)"><use href="#sp"/></svg></h2>
+      <p>كل فيديو مع ملخص كامل، أهم النقاط، والفصول. اضغط على أي فيديو لقراءة التفاصيل.</p>
+    </div>
+    <div class="toolbar reveal">
+      <label class="search">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+        <input id="q" type="search" placeholder="ابحث عن فيديو…" aria-label="بحث">
+      </label>
+      <div class="chips" id="chips"></div>
+    </div>
+    <div class="grid" id="grid"></div>
+    <p class="empty hide" id="empty">ما لقيت فيديو بهذا الاسم 🔭 — جرّب كلمة ثانية أو <a href="#requests">اقترحه علي!</a></p>
+  </div>
+</section>
+
+<!-- ================= ABOUT ================= -->
+<section id="about">
+  <div class="wrap about">
+    <div class="earth-wrap reveal" aria-hidden="true">
+      <svg viewBox="0 0 400 400">
+        <defs>
+          <radialGradient id="glow" cx="50%" cy="50%" r="50%"><stop offset="55%" stop-color="#3fa0ff" stop-opacity=".55"/><stop offset="100%" stop-color="#3fa0ff" stop-opacity="0"/></radialGradient>
+          <radialGradient id="ocean" cx="35%" cy="30%" r="80%"><stop offset="0" stop-color="#4fc3ff"/><stop offset=".6" stop-color="#1f7fe0"/><stop offset="1" stop-color="#1350b8"/></radialGradient>
+          <radialGradient id="moonG" cx="35%" cy="35%" r="70%"><stop offset="0" stop-color="#f2f2f7"/><stop offset="1" stop-color="#a9a8ba"/></radialGradient>
+          <clipPath id="ball"><circle cx="200" cy="200" r="120"/></clipPath>
+        </defs>
+        <circle cx="200" cy="200" r="190" fill="url(#glow)"/>
+        <circle cx="200" cy="200" r="120" fill="url(#ocean)"/>
+        <g clip-path="url(#ball)">
+          <g class="earth-spin">
+            <g fill="#2fae5a"><ellipse cx="130" cy="150" rx="55" ry="34"/><ellipse cx="210" cy="140" rx="60" ry="40"/><ellipse cx="190" cy="205" rx="44" ry="30"/><ellipse cx="300" cy="300" rx="50" ry="30"/><ellipse cx="90" cy="290" rx="40" ry="26"/></g>
+            <g fill="#4bd07a" opacity=".7"><ellipse cx="120" cy="142" rx="20" ry="9"/><ellipse cx="225" cy="130" rx="22" ry="10"/><ellipse cx="182" cy="198" rx="14" ry="7"/></g>
+            <g fill="#b98942"><ellipse cx="270" cy="220" rx="56" ry="40"/><ellipse cx="250" cy="265" rx="48" ry="30"/></g>
+            <g fill="#2a8f4c"><ellipse cx="275" cy="190" rx="38" ry="26"/></g>
+            <g fill="#ffe9a6"><circle cx="262" cy="230" r="2"/><circle cx="280" cy="250" r="1.8"/><circle cx="245" cy="262" r="2"/><circle cx="292" cy="215" r="1.6"/><circle cx="230" cy="245" r="1.6"/><circle cx="268" cy="276" r="1.8"/></g>
+            <g fill="#fff"><g opacity=".95"><rect x="120" y="108" width="62" height="18" rx="9"/><rect x="150" y="160" width="74" height="20" rx="10"/><rect x="128" y="250" width="68" height="20" rx="10"/></g><g fill="#d9d8e8"><rect x="225" y="178" width="46" height="18" rx="9"/><rect x="290" y="150" width="40" height="16" rx="8"/></g></g>
+          </g>
+          <circle cx="200" cy="200" r="120" fill="none" stroke="#0b2b80" stroke-opacity=".35" stroke-width="40" transform="translate(16 16)"/>
+        </g>
+        <path d="M120 290 A118 118 0 0 1 270 96" fill="none" stroke="#9fe0ff" stroke-width="5" stroke-linecap="round" opacity=".85"/>
+        <g class="moon-orbit"><g transform="translate(46 70)"><circle r="30" fill="url(#moonG)"/><circle cx="-8" cy="-6" r="6" fill="#9a99ab"/><circle cx="8" cy="8" r="4" fill="#9a99ab"/><circle cx="10" cy="-10" r="3" fill="#9a99ab"/></g></g>
+        <g class="sat" transform="translate(340 170)"><rect x="-22" y="-5" width="16" height="10" fill="#3b7bea" stroke="#9cc1ff"/><rect x="6" y="-5" width="16" height="10" fill="#3b7bea" stroke="#9cc1ff"/><rect x="-6" y="-8" width="12" height="16" rx="3" fill="#eef"/></g>
+      </svg>
+    </div>
+    <div class="card reveal">
+      <h3 id="aboutName"></h3>
+      <p class="role" id="aboutRole"></p>
+      <div id="aboutText"></div>
+      <div class="cta" style="justify-content:flex-start;margin-top:14px">
+        <a class="btn sm main" href="#socials">تابعني ✦</a>
+        <a class="btn sm ghost" href="#requests">عندك فكرة؟</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SOCIALS ================= -->
+<section id="socials">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <h2><svg class="spark" style="color:var(--pink)"><use href="#sp"/></svg>تابعني<svg class="spark" style="color:var(--lav)"><use href="#sp"/></svg></h2>
+      <p>كل حساباتي في مكان واحد — لا تفوتك أي رحلة جديدة.</p>
+    </div>
+    <div class="socials" id="socialList"></div>
+  </div>
+</section>
+
+<!-- ================= SUPPORT ================= -->
+<section id="support">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <h2><svg class="spark" style="color:var(--pink)"><use href="#sp"/></svg>ادعم القناة<svg class="spark" style="color:var(--lav)"><use href="#sp"/></svg></h2>
+      <p>كل فيديو ياخذ ساعات من البحث والرسم والمونتاج. دعمك يساعدني أكمل وأطوّر المحتوى.</p>
+    </div>
+    <div class="support" id="supportList"></div>
+    <div class="card thanks reveal">💜 حتى لو ما تقدر تدعم مادياً — <b>اللايك، المشاركة، والتعليق</b> يفرقون معي جداً. شكراً لأنك هنا!</div>
+  </div>
+</section>
+
+<!-- ================= REQUESTS ================= -->
+<section id="requests">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <h2><svg class="spark" style="color:var(--pink)"><use href="#sp"/></svg>اقترح فيديو<svg class="spark" style="color:var(--lav)"><use href="#sp"/></svg></h2>
+      <p>عندك موضوع تبي تشوفه في Rili؟ اكتبه هنا وأنا أقرأ كل الاقتراحات.</p>
+    </div>
+    <div class="req">
+      <form class="card reveal" id="reqForm" novalidate>
+        <div class="f-row">
+          <div class="field"><label for="fName">اسمك <small>(اختياري)</small></label><input id="fName" name="name" maxlength="60" placeholder="مثلاً: سارة"></div>
+          <div class="field"><label for="fContact">حسابك أو إيميلك <small>(اختياري)</small></label><input id="fContact" name="contact" maxlength="100" placeholder="@username" dir="ltr" style="text-align:right"></div>
+        </div>
+        <div class="f-row">
+          <div class="field"><label for="fType">نوع الطلب</label>
+            <select id="fType" name="type">
+              <option>فكرة فيديو جديد</option>
+              <option>سؤال أبيك تجاوب عليه</option>
+              <option>جزء ثاني لفيديو سابق</option>
+              <option>تعاون / إعلان</option>
+              <option>شيء آخر</option>
+            </select>
+          </div>
+          <div class="field"><label for="fPlat">المنصة المفضلة</label>
+            <select id="fPlat" name="platform">
+              <option>يوتيوب (فيديو طويل)</option>
+              <option>تيك توك (فيديو قصير)</option>
+              <option>الاثنين</option>
+            </select>
+          </div>
+        </div>
+        <div class="field"><label for="fTitle">عنوان الفكرة *</label><input id="fTitle" name="title" required maxlength="120" placeholder="مثلاً: ماذا لو اختفى القمر؟"></div>
+        <div class="field"><label for="fIdea">اشرح فكرتك *</label><textarea id="fIdea" name="details" required maxlength="1500" placeholder="ليش الموضوع يهمك؟ وش تحب أركز عليه؟"></textarea><div class="counter"><span id="cnt">0</span>/1500</div></div>
+        <input type="text" name="_gotcha" class="hide" tabindex="-1" autocomplete="off">
+        <button class="btn main" type="submit" id="sendBtn" style="width:100%">🚀 أرسل الاقتراح</button>
+      </form>
+      <aside class="card req-side reveal">
+        <h3>✦ كيف أختار الأفكار؟</h3>
+        <ol>
+          <li>أقرأ كل اقتراح يوصلني.</li>
+          <li>أختار الأفكار اللي تقدر تتحول لقصة ممتعة ومرسومة.</li>
+          <li>إذا اخترت فكرتك وكتبت حسابك، بذكر اسمك في الفيديو 🌟</li>
+        </ol>
+        <div class="mine hide" id="mine"><h4>اقتراحاتك المرسلة</h4><ul id="mineList"></ul></div>
+      </aside>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="brand"><span class="dot"></span>Rili</div>
+    <div id="foot"></div>
+  </div>
+</footer>
+
+<!-- video modal -->
+<div class="modal hide" id="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+  <div class="card mbox">
+    <button class="x" id="mClose" aria-label="إغلاق">✕</button>
+    <div class="player" id="mPlayer"></div>
+    <div class="mcontent">
+      <h3 id="mTitle"></h3>
+      <div class="mmeta" id="mMeta"></div>
+      <div id="mBody"></div>
+      <div class="mactions" id="mActions"></div>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* =====================================================================
+   ✦ إعدادات الموقع — عدّل هذا الجزء فقط ✦
+   ===================================================================== */
+const SITE = {
+  channel: "Rili",
+  creator: "بدر",
+  tagline: "قناة <b>Rili</b> مع <b>بدر</b> — نسافر سوا بين النجوم والمجرات ونبسّط أكبر أسرار الكون برسوم ملونة وقصص ممتعة ✨",
+  aboutRole: "صانع محتوى على يوتيوب وتيك توك",
+  about: [
+    "هلا! أنا بدر، صاحب قناة Rili 👋",
+    "أصنع فيديوهات مرسومة بالكامل بأسلوبي الخاص: سماء بنفسجية، غيوم، نجوم، ومجرات — وأحاول أشرح فيها مواضيع معقدة بطريقة بسيطة وممتعة.",
+    "هذا الموقع هو بيت القناة: تلقى فيه ملخص كامل لكل فيديو، روابط حساباتي، طرق دعم القناة، ومكان ترسل فيه أفكارك للفيديوهات الجاية."
+  ],
+  stats: [
+    { value: "+10K", label: "متابع" },
+    { value: "+50",  label: "فيديو" },
+    { value: "∞",    label: "نجمة" }
+  ],
+
+  // روابط التواصل — ضع روابطك الحقيقية (اترك url فاضي لإخفاء الحساب)
+  socials: [
+    { id:"youtube",   name:"يوتيوب",    handle:"@Rili",      url:"https://youtube.com/@Rili" },
+    { id:"tiktok",    name:"تيك توك",   handle:"@rili",      url:"https://www.tiktok.com/@rili" },
+    { id:"instagram", name:"انستقرام",  handle:"@rili",      url:"https://instagram.com/rili" },
+    { id:"x",         name:"إكس (تويتر)", handle:"@rili",    url:"" },
+    { id:"discord",   name:"ديسكورد",   handle:"سيرفر Rili", url:"" },
+    { id:"email",     name:"الإيميل",   handle:"rili@example.com", url:"mailto:rili@example.com" }
+  ],
+
+  // طرق الدعم المادي — ضع روابطك الحقيقية (اترك url فاضي لإخفاء الطريقة)
+  support: [
+    { icon:"☕", title:"اشترِ لي قهوة", text:"دعم سريع لمرة وحدة يخليني أكمل السهرة على المونتاج.", btn:"ادعم الآن", url:"https://ko-fi.com/" , star:false },
+    { icon:"🌌", title:"عضوية القناة",  text:"انضم لعضوية يوتيوب واحصل على شارة خاصة ووصول مبكر للفيديوهات.", btn:"انضم للعضوية", url:"https://youtube.com/@Rili/join", star:true },
+    { icon:"💳", title:"PayPal",        text:"ادعم بأي مبلغ تحبه عبر باي بال بأمان.", btn:"ادعم عبر PayPal", url:"https://paypal.me/", star:false },
+    { icon:"🎁", title:"هدايا تيك توك", text:"ادخل بثوثي المباشرة على تيك توك وادعمني بالهدايا.", btn:"زر تيك توك", url:"https://www.tiktok.com/@rili/live", star:false }
+  ],
+
+  // إرسال الاقتراحات:
+  // 1) أنشئ نموذج مجاني في https://formspree.io وضع رابطه هنا (مثل https://formspree.io/f/abcdwxyz)
+  // 2) إذا تركته فاضي، يفتح الاقتراح في تطبيق الإيميل ويرسل إلى requestEmail
+  formEndpoint: "",
+  requestEmail: "rili@example.com"
+};
+
+/* =====================================================================
+   ✦ الفيديوهات — أضف كل فيديو جديد هنا ✦
+   youtubeId: الكود اللي بعد v= في رابط يوتيوب (مثلاً dQw4w9WgXcQ)
+   الفيديوهات تحت أمثلة — بدّلها بفيديوهاتك الحقيقية
+   ===================================================================== */
+const VIDEOS = [
+  {
+    title: "رحلة من الأرض إلى حافة الكون",
+    date: "2026-10-28",
+    duration: "12:40",
+    category: "الفضاء",
+    platforms: ["youtube","tiktok"],
+    youtubeId: "",
+    youtubeUrl: "https://youtube.com/@Rili",
+    tiktokUrl: "https://www.tiktok.com/@rili",
+    art: "galaxy",
+    short: "نطلع من كوكب الأرض ونكبر الصورة خطوة بخطوة: القمر، النظام الشمسي، درب التبانة، لين نوصل لأكبر تجمعات المجرات.",
+    summary: [
+      "يبدأ الفيديو من كوكبنا الأزرق الصغير، ونشوف كيف يدور حوله القمر والأقمار الصناعية. بعدها نبتعد شوي شوي عشان نفهم حجم الأرض مقارنة بالشمس وبقية الكواكب.",
+      "ننتقل بعدها لمجرة درب التبانة: مجرة حلزونية فيها مئات المليارات من النجوم، ونحن عايشين في أحد أذرعها بعيد عن المركز المضيء.",
+      "في الجزء الأخير نشوف إن مجرتنا وحدة من مليارات المجرات، وإنها تنتمي لمجموعات وعناقيد ضخمة تكوّن شبكة كونية تشبه الخيوط."
+    ],
+    points: [
+      "الضوء يحتاج حوالي 8 دقائق عشان يوصل من الشمس للأرض.",
+      "درب التبانة فيها تقريباً 100 إلى 400 مليار نجم.",
+      "الكون المرئي فيه أكثر من تريليون مجرة حسب التقديرات الحديثة."
+    ],
+    chapters: [["0:00","البداية من الأرض"],["2:15","القمر والأقمار الصناعية"],["4:30","النظام الشمسي"],["7:10","مجرة درب التبانة"],["10:20","الشبكة الكونية"]]
+  },
+  {
+    title: "ليش القمر ما يطيح على الأرض؟",
+    date: "2026-10-12",
+    duration: "0:58",
+    category: "أسئلة",
+    platforms: ["tiktok"],
+    youtubeId: "",
+    tiktokUrl: "https://www.tiktok.com/@rili",
+    art: "moon",
+    short: "سؤال بسيط جوابه مدهش: القمر فعلاً يطيح على الأرض… بس طول الوقت يفوتها!",
+    summary: [
+      "الجاذبية تسحب القمر باتجاه الأرض، لكن القمر يتحرك بسرعة جانبية كبيرة جداً.",
+      "النتيجة إنه يطيح باستمرار لكنه يفوت الأرض، فيرسم دائرة حولها — وهذا هو المدار."
+    ],
+    points: [
+      "سرعة القمر في مداره حوالي 1 كيلومتر في الثانية.",
+      "القمر يبتعد عن الأرض حوالي 3.8 سم كل سنة."
+    ],
+    chapters: []
+  },
+  {
+    title: "كيف تتولد النجوم داخل السُّحب الكونية",
+    date: "2026-09-30",
+    duration: "9:05",
+    category: "الفضاء",
+    platforms: ["youtube"],
+    youtubeId: "",
+    youtubeUrl: "https://youtube.com/@Rili",
+    art: "nebula",
+    short: "داخل سحب ضخمة من الغاز والغبار تنضغط المادة وتسخن لين تولد نجمة جديدة.",
+    summary: [
+      "نبدأ بسحابة سديمية باردة جداً من الهيدروجين والغبار. أي اضطراب بسيط يخلي أجزاء منها تنكمش بفعل الجاذبية.",
+      "كل ما انضغطت المادة زادت حرارتها، لين يوصل المركز لملايين الدرجات ويبدأ الاندماج النووي — وهنا تولد النجمة.",
+      "المادة اللي تبقى حول النجمة ممكن تتجمع وتصير كواكب، وهذا اللي صار مع نظامنا الشمسي قبل 4.6 مليار سنة."
+    ],
+    points: [
+      "النجوم تولد في مجموعات وليس بشكل فردي غالباً.",
+      "سديم الجبار من أقرب مناطق ولادة النجوم لنا."
+    ],
+    chapters: [["0:00","المقدمة"],["1:40","السحب السديمية"],["4:00","الانهيار والجاذبية"],["6:30","لحظة الولادة"]]
+  },
+  {
+    title: "لو عشت على كوكب ثاني… كم بيكون عمرك؟",
+    date: "2026-09-14",
+    duration: "1:02",
+    category: "تحديات",
+    platforms: ["tiktok","youtube"],
+    youtubeId: "",
+    youtubeUrl: "https://youtube.com/@Rili",
+    tiktokUrl: "https://www.tiktok.com/@rili",
+    art: "planet",
+    short: "السنة على كل كوكب طولها مختلف، فعمرك يتغير حسب المكان اللي تعيش فيه!",
+    summary: [
+      "السنة هي الوقت اللي يحتاجه الكوكب عشان يلف دورة كاملة حول الشمس. الكواكب القريبة سنتها قصيرة والبعيدة سنتها طويلة جداً.",
+      "يعني لو عمرك 20 سنة على الأرض، بيكون أكثر من 80 سنة على عطارد، وأقل من سنتين على المشتري!"
+    ],
+    points: ["سنة عطارد = 88 يوم أرضي.","سنة نبتون = حوالي 165 سنة أرضية."],
+    chapters: []
+  }
+];
+
+/* ===================================================================== */
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* ---------- toast ---------- */
+let tt;
+function toast(msg){const t=$("#toast");t.textContent=msg;t.classList.add("show");clearTimeout(tt);tt=setTimeout(()=>t.classList.remove("show"),3200)}
+
+/* ---------- static content ---------- */
+$("#heroTag").innerHTML = SITE.tagline;
+$("#stats").innerHTML = SITE.stats.map(s=>`<div class="stat"><b>${esc(s.value)}</b><span>${esc(s.label)}</span></div>`).join("");
+$("#aboutName").textContent = SITE.creator + " ✦ " + SITE.channel;
+$("#aboutRole").textContent = SITE.aboutRole;
+$("#aboutText").innerHTML = SITE.about.map(p=>`<p>${esc(p)}</p>`).join("");
+$("#foot").innerHTML = `صُنع بحب 💜 بواسطة ${esc(SITE.creator)} — © ${new Date().getFullYear()} ${esc(SITE.channel)}`;
+
+/* ---------- socials ---------- */
+const ICONS = {
+  youtube:{c:"#ff4d5e",bg:"rgba(255,77,94,.18)",svg:'<svg viewBox="0 0 24 24" fill="#ff4d5e"><path d="M23 7.2a3 3 0 0 0-2.1-2.1C19 4.6 12 4.6 12 4.6s-7 0-8.9.5A3 3 0 0 0 1 7.2 31 31 0 0 0 .5 12a31 31 0 0 0 .5 4.8 3 3 0 0 0 2.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 0 0 2.1-2.1 31 31 0 0 0 .5-4.8 31 31 0 0 0-.5-4.8ZM9.7 15.1V8.9L15.5 12l-5.8 3.1Z"/></svg>'},
+  tiktok:{c:"#25f4ee",bg:"rgba(37,244,238,.14)",svg:'<svg viewBox="0 0 24 24" fill="#fff"><path d="M16.6 2h-3.3v13.4a2.9 2.9 0 1 1-2.9-2.9c.3 0 .6 0 .9.1V9.2a6.3 6.3 0 1 0 5.3 6.2V8.6a8 8 0 0 0 4.6 1.5V6.8a4.6 4.6 0 0 1-4.6-4.8Z"/></svg>'},
+  instagram:{c:"#f39ae8",bg:"rgba(243,154,232,.18)",svg:'<svg viewBox="0 0 24 24" fill="none" stroke="#f9b4ee" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="#f9b4ee"/></svg>'},
+  x:{c:"#ffffff",bg:"rgba(255,255,255,.1)",svg:'<svg viewBox="0 0 24 24" fill="#fff"><path d="M17.8 3h3.1l-6.8 7.7L22 21h-6.2l-4.9-6.4L5.3 21H2.2l7.3-8.3L2 3h6.4l4.4 5.8L17.8 3Zm-1.1 16.2h1.7L7.4 4.7H5.6l11.1 14.5Z"/></svg>'},
+  discord:{c:"#8c9eff",bg:"rgba(140,158,255,.18)",svg:'<svg viewBox="0 0 24 24" fill="#a9b6ff"><path d="M20 4.6A18 18 0 0 0 15.6 3l-.6 1.1a16 16 0 0 0-6 0L8.4 3A18 18 0 0 0 4 4.6 19 19 0 0 0 .7 17.4 18 18 0 0 0 6.2 20l1.2-1.8a11 11 0 0 1-1.8-.9l.4-.3a13 13 0 0 0 12 0l.4.3-1.8.9 1.2 1.8a18 18 0 0 0 5.5-2.6A19 19 0 0 0 20 4.6ZM8.5 14.8c-1.1 0-2-1-2-2.2s.9-2.2 2-2.2 2 1 2 2.2-.9 2.2-2 2.2Zm7 0c-1.1 0-2-1-2-2.2s.9-2.2 2-2.2 2 1 2 2.2-.9 2.2-2 2.2Z"/></svg>'},
+  email:{c:"#b9a8ff",bg:"rgba(185,168,255,.18)",svg:'<svg viewBox="0 0 24 24" fill="none" stroke="#cfc4ff" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m4 7 8 6 8-6"/></svg>'}
+};
+$("#socialList").innerHTML = SITE.socials.filter(s=>s.url).map(s=>{
+  const ic = ICONS[s.id] || ICONS.email;
+  return `<a class="card soc reveal" href="${esc(s.url)}" target="_blank" rel="noopener" style="--c:${ic.c};--bgc:${ic.bg}">
+    <span class="ic">${ic.svg}</span><span><b>${esc(s.name)}</b><span>${esc(s.handle)}</span></span></a>`;
+}).join("");
+
+/* ---------- support ---------- */
+$("#supportList").innerHTML = SITE.support.filter(s=>s.url).map(s=>`
+  <div class="card sup reveal ${s.star?"star":""}">
+    <div class="big">${s.icon}</div><h3>${esc(s.title)}</h3><p>${esc(s.text)}</p>
+    <a class="btn sm ${s.star?"main":"ghost"}" href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.btn)}</a>
+  </div>`).join("");
+
+/* ---------- video thumbnails art (flat cosmic style) ---------- */
+function artSVG(kind,seed){
+  const sparks = Array.from({length:7},(_,i)=>{
+    const x=(seed*37+i*53)%320, y=(seed*19+i*29)%180, s=4+((i*7+seed)%6);
+    return `<use href="#sp" x="${x}" y="${y}" width="${s}" height="${s}" style="color:#fff" opacity="${.5+((i%3)*.2)}"/>`;
+  }).join("");
+  const clouds = `<g fill="#6a58e0" fill-opacity=".55"><circle cx="20" cy="190" r="50"/><circle cx="90" cy="175" r="42"/><circle cx="160" cy="195" r="48"/><circle cx="240" cy="178" r="46"/><circle cx="310" cy="192" r="44"/></g>`;
+  let main="";
+  if(kind==="galaxy"){
+    main = `<g transform="translate(160 95) rotate(-18) scale(1 .55)">
+      <circle r="70" fill="#a98cff" opacity=".18"/>
+      <path d="M0 0 C40 -10 70 20 60 50 C50 80 0 85 -30 60" fill="none" stroke="#f0b9ff" stroke-width="8" stroke-dasharray="2 6" stroke-linecap="round"/>
+      <path d="M0 0 C-40 10 -70 -20 -60 -50 C-50 -80 0 -85 30 -60" fill="none" stroke="#c9bbff" stroke-width="8" stroke-dasharray="2 6" stroke-linecap="round"/>
+      <circle r="22" fill="#fff" opacity=".95"/><circle r="38" fill="#ffd0fb" opacity=".35"/></g>`;
+  } else if(kind==="moon"){
+    main = `<circle cx="165" cy="85" r="58" fill="#3fa0ff" opacity=".25"/><circle cx="165" cy="85" r="44" fill="#e6e6ef"/><circle cx="150" cy="72" r="9" fill="#a5a4b8"/><circle cx="180" cy="98" r="7" fill="#a5a4b8"/><circle cx="182" cy="66" r="5" fill="#a5a4b8"/>`;
+  } else if(kind==="nebula"){
+    main = `<circle cx="165" cy="85" r="70" fill="#f39ae8" opacity=".25"/><circle cx="140" cy="80" r="45" fill="#b48cff" opacity=".35"/><circle cx="195" cy="95" r="40" fill="#ff9fd6" opacity=".3"/><circle cx="165" cy="85" r="10" fill="#fff"/><circle cx="165" cy="85" r="24" fill="#fff4fd" opacity=".45"/>`;
+  } else {
+    main = `<circle cx="165" cy="88" r="62" fill="#3fa0ff" opacity=".3"/><circle cx="165" cy="88" r="46" fill="#2a86e8"/><ellipse cx="150" cy="75" rx="22" ry="13" fill="#3fbf6a"/><ellipse cx="180" cy="102" rx="20" ry="12" fill="#c08e45"/><rect x="138" y="94" width="30" height="9" rx="4.5" fill="#fff"/>
+      <ellipse cx="165" cy="88" rx="80" ry="16" fill="none" stroke="#f0c0ff" stroke-width="4" opacity=".7" transform="rotate(-12 165 88)"/>`;
+  }
+  return `<svg class="art" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="bg${seed}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1c1663"/><stop offset="1" stop-color="#4434b8"/></linearGradient></defs>
+    <rect width="320" height="180" fill="url(#bg${seed})"/>${sparks}${main}${clouds}</svg>`;
+}
+
+/* ---------- videos ---------- */
+const fmtDate = d => { try { return new Date(d).toLocaleDateString("ar",{year:"numeric",month:"long",day:"numeric"}) } catch(e){ return d } };
+const sorted = VIDEOS.map((v,i)=>({...v,_i:i})).sort((a,b)=>String(b.date).localeCompare(String(a.date)));
+const cats = ["الكل", ...new Set(VIDEOS.map(v=>v.category).filter(Boolean))];
+let curCat = "الكل";
+$("#chips").innerHTML = cats.map(c=>`<button class="chip ${c===curCat?"on":""}" data-c="${esc(c)}">${esc(c)}</button>`).join("");
+$("#chips").addEventListener("click",e=>{
+  const b=e.target.closest(".chip"); if(!b) return;
+  curCat=b.dataset.c; document.querySelectorAll(".chip").forEach(x=>x.classList.toggle("on",x===b)); renderVideos();
+});
+$("#q").addEventListener("input",renderVideos);
+
+function platPills(v){
+  return (v.platforms||[]).map(p=>p==="youtube"?'<span class="pill yt">يوتيوب</span>':'<span class="pill tt">تيك توك</span>').join("");
+}
+function renderVideos(){
+  const q = $("#q").value.trim().toLowerCase();
+  const list = sorted.filter(v=>(curCat==="الكل"||v.category===curCat) &&
+    (!q || [v.title,v.short,(v.summary||[]).join(" "),v.category].join(" ").toLowerCase().includes(q)));
+  $("#grid").innerHTML = list.map(v=>`
+    <button class="card vid" data-i="${v._i}">
+      <div class="thumb">
+        ${v.youtubeId?`<img loading="lazy" src="https://i.ytimg.com/vi/${encodeURIComponent(v.youtubeId)}/hqdefault.jpg" alt="">`:artSVG(v.art,v._i+3)}
+        <div class="badge">${platPills(v)}</div>
+        ${v.duration?`<span class="pill dur">${esc(v.duration)}</span>`:""}
+      </div>
+      <div class="body">
+        <h3>${esc(v.title)}</h3>
+        <p>${esc(v.short)}</p>
+        <div class="meta"><span>${esc(fmtDate(v.date))} · ${esc(v.category||"")}</span><span class="more">الملخص ←</span></div>
+      </div>
+    </button>`).join("");
+  $("#empty").classList.toggle("hide", list.length>0);
+}
+renderVideos();
+
+/* ---------- modal ---------- */
+const modal = $("#modal");
+let lastFocus;
+$("#grid").addEventListener("click",e=>{const c=e.target.closest(".vid"); if(c) openVideo(+c.dataset.i)});
+function openVideo(i){
+  const v = VIDEOS[i]; lastFocus = document.activeElement;
+  $("#mPlayer").innerHTML = v.youtubeId
+    ? `<iframe src="https://www.youtube-nocookie.com/embed/${encodeURIComponent(v.youtubeId)}" title="${esc(v.title)}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`
+    : artSVG(v.art, i+3).replace('class="art"','style="width:100%;height:100%;display:block"');
+  $("#mTitle").textContent = v.title;
+  $("#mMeta").innerHTML = `<span>📅 ${esc(fmtDate(v.date))}</span>${v.duration?`<span>⏱ ${esc(v.duration)}</span>`:""}<span>🏷 ${esc(v.category||"")}</span><span>${platPills(v)}</span>`;
+  let h = `<h4>الملخص الكامل</h4>` + (v.summary||[v.short]).map(p=>`<p>${esc(p)}</p>`).join("");
+  if(v.points?.length) h += `<h4>أهم النقاط</h4><ul class="points">${v.points.map(p=>`<li>${esc(p)}</li>`).join("")}</ul>`;
+  if(v.chapters?.length) h += `<h4>فصول الفيديو</h4><ul class="chapters">${v.chapters.map(([t,n])=>`<li><time>${esc(t)}</time><span>${esc(n)}</span></li>`).join("")}</ul>`;
+  $("#mBody").innerHTML = h;
+  const yt = v.youtubeUrl || (v.youtubeId?`https://youtu.be/${v.youtubeId}`:"");
+  $("#mActions").innerHTML =
+    (yt?`<a class="btn sm yt" href="${esc(yt)}" target="_blank" rel="noopener">▶ شاهد على يوتيوب</a>`:"") +
+    (v.tiktokUrl?`<a class="btn sm tt" href="${esc(v.tiktokUrl)}" target="_blank" rel="noopener">♪ شاهد على تيك توك</a>`:"") +
+    `<button class="btn sm ghost" id="shareBtn">🔗 شارك</button>`;
+  $("#shareBtn").onclick = async ()=>{
+    const url = location.href.split("#")[0]+"#v"+i;
+    try{ if(navigator.share){await navigator.share({title:v.title,url})} else {await navigator.clipboard.writeText(url);toast("تم نسخ الرابط ✨")} }catch(e){}
+  };
+  modal.classList.remove("hide"); document.body.style.overflow="hidden";
+  modal.scrollTop=0; $("#mClose").focus();
+  history.replaceState(null,"","#v"+i);
+}
+function closeVideo(){
+  modal.classList.add("hide"); $("#mPlayer").innerHTML=""; document.body.style.overflow="";
+  history.replaceState(null,"","#videos"); lastFocus?.focus();
+}
+$("#mClose").onclick = closeVideo;
+modal.addEventListener("click",e=>{ if(e.target===modal) closeVideo() });
+addEventListener("keydown",e=>{ if(e.key==="Escape" && !modal.classList.contains("hide")) closeVideo() });
+const hv = location.hash.match(/^#v(\d+)$/); if(hv && VIDEOS[+hv[1]]) openVideo(+hv[1]);
+
+/* ---------- requests form ---------- */
+const MINE_KEY="rili-my-ideas";
+function loadMine(){ try{ return JSON.parse(localStorage.getItem(MINE_KEY)||"[]") }catch(e){ return [] } }
+function renderMine(){
+  const m = loadMine(); $("#mine").classList.toggle("hide", !m.length);
+  $("#mineList").innerHTML = m.slice(-5).reverse().map(x=>`<li>${esc(x.t)}<span>${esc(x.d)}</span></li>`).join("");
+}
+renderMine();
+$("#fIdea").addEventListener("input",e=>$("#cnt").textContent=e.target.value.length);
+$("#reqForm").addEventListener("submit", async e=>{
+  e.preventDefault();
+  const f = e.target, data = Object.fromEntries(new FormData(f));
+  if(data._gotcha) return;
+  if(!data.title.trim() || !data.details.trim()){ toast("اكتب عنوان الفكرة وشرحها أولاً ✍️"); (data.title.trim()?$("#fIdea"):$("#fTitle")).focus(); return; }
+  const btn=$("#sendBtn"); btn.disabled=true; btn.textContent="جاري الإرسال…";
+  let ok=false;
+  if(SITE.formEndpoint){
+    try{
+      const r = await fetch(SITE.formEndpoint,{method:"POST",headers:{"Accept":"application/json","Content-Type":"application/json"},
+        body:JSON.stringify({...data,_subject:"اقتراح فيديو لقناة Rili: "+data.title})});
+      ok=r.ok;
+    }catch(err){ ok=false }
+    if(!ok) toast("صار خطأ في الإرسال، جرّب مرة ثانية 🙏");
+  } else {
+    const body = `الاسم: ${data.name||"-"}\nالتواصل: ${data.contact||"-"}\nالنوع: ${data.type}\nالمنصة: ${data.platform}\n\n${data.details}`;
+    location.href = `mailto:${SITE.requestEmail}?subject=${encodeURIComponent("اقتراح فيديو: "+data.title)}&body=${encodeURIComponent(body)}`;
+    ok=true;
+  }
+  if(ok){
+    const m=loadMine(); m.push({t:data.title.trim(),d:new Date().toLocaleDateString("ar")});
+    try{ localStorage.setItem(MINE_KEY,JSON.stringify(m.slice(-20))) }catch(err){}
+    renderMine(); f.reset(); $("#cnt").textContent="0";
+    toast("وصل اقتراحك! شكراً لك 🚀");
+  }
+  btn.disabled=false; btn.textContent="🚀 أرسل الاقتراح";
+});
+
+/* ---------- nav ---------- */
+$("#menuBtn").onclick=()=>$("#links").classList.toggle("open");
+$("#links").addEventListener("click",e=>{ if(e.target.tagName==="A") $("#links").classList.remove("open") });
+const navLinks=[...document.querySelectorAll(".links a")];
+const secObs=new IntersectionObserver(es=>es.forEach(en=>{
+  if(en.isIntersecting) navLinks.forEach(a=>a.classList.toggle("on",a.getAttribute("href")==="#"+en.target.id));
+}),{rootMargin:"-45% 0px -50% 0px"});
+document.querySelectorAll("section[id]").forEach(s=>secObs.observe(s));
+
+/* ---------- reveal on scroll ---------- */
+const rObs=new IntersectionObserver(es=>es.forEach(en=>{ if(en.isIntersecting){en.target.classList.add("in");rObs.unobserve(en.target)} }),{threshold:.12});
+document.querySelectorAll(".reveal").forEach(el=>rObs.observe(el));
+
+/* ---------- starfield canvas ---------- */
+(function(){
+  const c=$("#stars"), x=c.getContext("2d"); let W,H,dpr,stars=[],sparks=[];
+  function size(){
+    dpr=Math.min(devicePixelRatio||1,2); W=innerWidth; H=innerHeight;
+    c.width=W*dpr; c.height=H*dpr; x.setTransform(dpr,0,0,dpr,0,0);
+    const n=Math.round(W*H/2600);
+    stars=Array.from({length:n},()=>({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.3+.3,p:Math.random()*6.28,s:Math.random()*.02+.005,sq:Math.random()<.5}));
+    sparks=Array.from({length:Math.round(W*H/60000)+6},()=>({x:Math.random()*W,y:Math.random()*H*.9,r:Math.random()*10+6,p:Math.random()*6.28,s:Math.random()*.015+.006,pink:Math.random()<.35}));
+  }
+  function sparkle(px,py,r,a,pink){
+    const g=x.createRadialGradient(px,py,0,px,py,r*1.4);
+    g.addColorStop(0,pink?`rgba(255,200,250,${.55*a})`:`rgba(220,215,255,${.5*a})`); g.addColorStop(1,"rgba(200,180,255,0)");
+    x.fillStyle=g; x.beginPath(); x.arc(px,py,r*1.4,0,6.28); x.fill();
+    x.fillStyle=`rgba(255,255,255,${a})`; x.beginPath();
+    x.moveTo(px,py-r); x.quadraticCurveTo(px,py,px+r*.75,py); x.quadraticCurveTo(px,py,px,py+r);
+    x.quadraticCurveTo(px,py,px-r*.75,py); x.quadraticCurveTo(px,py,px,py-r); x.fill();
+  }
+  function draw(){
+    x.clearRect(0,0,W,H);
+    for(const s of stars){ s.p+=s.s; const a=.35+.65*Math.abs(Math.sin(s.p)); x.fillStyle=`rgba(235,230,255,${a})`;
+      if(s.sq) x.fillRect(s.x,s.y,s.r*1.6,s.r*1.6); else {x.beginPath();x.arc(s.x,s.y,s.r,0,6.28);x.fill()} }
+    for(const s of sparks){ s.p+=s.s; const a=.45+.55*Math.abs(Math.sin(s.p)); sparkle(s.x,s.y,s.r*(.75+.25*a),a,s.pink) }
+    if(!reduce) requestAnimationFrame(draw);
+  }
+  size(); addEventListener("resize",()=>{size(); if(reduce) draw()}); draw();
+})();
+
+/* ---------- spiral galaxy canvas (hero) ---------- */
+(function(){
+  const c=$("#galaxy"), x=c.getContext("2d"); let W,H,dpr,pts=[],t=0,visible=true;
+  function build(){
+    const r=c.getBoundingClientRect(); dpr=Math.min(devicePixelRatio||1,2); W=r.width; H=r.height;
+    c.width=W*dpr; c.height=H*dpr; x.setTransform(dpr,0,0,dpr,0,0);
+    const R=Math.min(W*.48,H*.62,520); pts=[];
+    const N = W<600?1100:2200;
+    for(let i=0;i<N;i++){
+      const arm=i%2, d=Math.pow(Math.random(),.8), ang=d*3.6*Math.PI+arm*Math.PI + (Math.random()-.5)*.55*(1-d*.4);
+      const spread=(Math.random()-.5)*R*.09*(1+d);
+      const k=Math.random(); const col = k<.55?[255,255,255]:k<.8?[255,190,245]:[190,180,255];
+      pts.push({d:d*R+spread,a:ang,s:Math.random()*1.8+.4,col,blob:Math.random()<.04});
+    }
+    // inner halo dots
+    for(let i=0;i<300;i++){ const d=Math.random()*R*.35; pts.push({d,a:Math.random()*6.28,s:Math.random()*1.4+.3,col:[255,230,250],blob:false}) }
+    R0=R;
+  }
+  let R0=300;
+  function frame(){
+    x.clearRect(0,0,W,H);
+    const cx=W/2, cy=H*.46, tilt=.5, rot=-.35;
+    const halo=x.createRadialGradient(cx,cy,0,cx,cy,R0*.55);
+    halo.addColorStop(0,"rgba(255,255,255,.95)");halo.addColorStop(.12,"rgba(255,220,252,.75)");halo.addColorStop(.4,"rgba(190,140,255,.25)");halo.addColorStop(1,"rgba(120,90,255,0)");
+    x.fillStyle=halo; x.beginPath(); x.ellipse(cx,cy,R0*.55,R0*.55*tilt*1.3,rot,0,6.28); x.fill();
+    const cr=Math.cos(rot), sr=Math.sin(rot);
+    for(const p of pts){
+      const a=p.a - t*(0.6/(0.3+p.d/R0));
+      const px=Math.cos(a)*p.d, py=Math.sin(a)*p.d*tilt;
+      const X=cx+px*cr-py*sr, Y=cy+px*sr+py*cr;
+      const al=.35+.65*(1-p.d/R0*.6);
+      if(p.blob){ x.fillStyle=`rgba(${p.col},${.28*al})`; x.beginPath(); x.ellipse(X,Y,p.s*5,p.s*2.6,rot,0,6.28); x.fill(); }
+      x.fillStyle=`rgba(${p.col[0]},${p.col[1]},${p.col[2]},${al})`; x.fillRect(X,Y,p.s,p.s);
+    }
+    t+=.0009;
+    if(!reduce && visible) requestAnimationFrame(frame);
+  }
+  build(); frame();
+  addEventListener("resize",()=>{build(); if(reduce) frame()});
+  new IntersectionObserver(([e])=>{ const was=visible; visible=e.isIntersecting; if(visible&&!was&&!reduce) frame() }).observe(c);
+})();
+</script>
+</body>
+</html>
