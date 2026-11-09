@@ -18,23 +18,27 @@
 GitHub → Settings → Pages → اختر الفرع → يصير الموقع على:
 `https://<username>.github.io/BADERCAN/rili/`
 
-## لوحة التصويت على الأفكار (Firebase)
-الموقع يستخدم مشروع Firebase الخاص بك `badercan-63e2a` (نفس مشروع الصفحة الثانية)، في مجموعة منفصلة اسمها `rili_ideas`.
-
-1. افتح Firebase Console → Firestore Database → Rules، وأضف هذه القواعد (بدون حذف قواعدك الحالية):
+## لوحة التصويت (أفكار تكتبها أنت)
+اكتب الأفكار في `ideas: [ ... ]` داخل `SITE`:
+```js
+{ id:"moon-gone", title:"ماذا لو اختفى القمر؟", details:"ماذا سيحدث للمد والجزر والليل؟" },
 ```
-match /rili_ideas/{id} {
+- `id` اسم قصير بالإنجليزي بدون مسافات، لا تغيّره بعد النشر (الأصوات مربوطة به).
+- إذا القائمة فاضية، لوحة التصويت تختفي.
+- اقتراحات الناس من النموذج **ما تظهر للعامة**، توصلك أنت فقط (إيميل أو Formspree).
+
+الأصوات تُحفظ في Firebase (مشروعك `badercan-63e2a`، مجموعة `rili_votes`). أضف هذه القواعد في Firestore → Rules:
+```
+match /rili_votes/{id} {
   allow read: if true;
-  allow create: if request.resource.data.votes == 0
-    && request.resource.data.title is string && request.resource.data.title.size() <= 120
-    && request.resource.data.details is string && request.resource.data.details.size() <= 1500;
-  allow update: if request.resource.data.diff(resource.data).affectedKeys().hasOnly(['votes'])
-    && request.resource.data.votes == resource.data.votes + 1;
+  allow create: if request.resource.data.keys().hasOnly(['votes']) && request.resource.data.votes == 1;
+  allow update: if request.resource.data.keys().hasOnly(['votes']) && request.resource.data.votes == resource.data.votes + 1;
 }
 ```
-2. لإخفاء فكرة غير مناسبة: افتحها في Firestore وغيّر `hidden` إلى `true`.
-3. إذا الاتصال فشل، اللوحة تشتغل على جهاز الزائر فقط وتكتب ملاحظة بذلك.
-4. حساب/إيميل صاحب الاقتراح **لا يُحفظ** في اللوحة العامة؛ يوصلك فقط إذا ضبطت `formEndpoint`.
+إذا الاتصال فشل، الأصوات تُحفظ على جهاز الزائر فقط وتظهر ملاحظة بذلك.
+
+## الخطوط
+خطا Cairo (للعربي) وFredoka (للعنوان) **مضمّنان داخل الملف نفسه**، فيظهران صح حتى بدون إنترنت أو عند فتح الملف من الجوال.
 
 ## الاختبار
 اكتب أسئلتك في `const QUIZ` داخل `index.html`. كل سؤال بهذا الشكل:
