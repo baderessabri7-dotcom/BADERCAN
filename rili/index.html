@@ -198,7 +198,10 @@ nav.top .wrap{display:flex;align-items:center;justify-content:space-between;heig
 .aurora{animation:aur 4s ease-in-out infinite}
 @keyframes aur{50%{opacity:.15;transform:translateY(-2px)}}
 @media (max-width:560px){.pitem.low{margin-top:30px}.pnav{gap:2px}}
-.hero .tag{font-size:clamp(18px,2.6vw,22px);color:#efeaff;max-width:620px;margin:0 auto 26px}
+.hero .tag{font-size:clamp(17px,2.4vw,21px);color:#efeaff;max-width:640px;margin:6px auto 10px;padding:18px 22px;border-radius:22px;background:rgba(20,14,70,.45);border:1px solid var(--line);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.hero .tag .t-hi{display:block;font-size:1.35em;font-weight:800;color:#fff;margin-bottom:6px}
+.hero .tag p{margin:0}
+.hero .tag .t-thx{margin-top:8px;color:var(--pink);font-weight:700}
 .hero .tag b{color:var(--pink)}
 .cta{display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;cursor:pointer;
@@ -227,7 +230,7 @@ nav.top .wrap{display:flex;align-items:center;justify-content:space-between;heig
 .search input:focus{border-color:var(--pink);box-shadow:0 0 0 3px rgba(111,207,255,.2)}
 .search svg{position:absolute;right:16px;top:50%;transform:translateY(-50%);opacity:.7}
 .chips{display:flex;flex-wrap:wrap;gap:8px}
-.chip{font:inherit;font-size:15px;font-weight:600;color:var(--mut);background:transparent;border:1px solid var(--line);border-radius:999px;padding:6px 14px;cursor:pointer;transition:.2s}
+.chip{font:inherit;font-size:15px;font-weight:700;color:#fff;background:color-mix(in srgb,var(--cc,#9aa8ff) 22%,rgba(20,14,70,.88));border:1px solid color-mix(in srgb,var(--cc,#9aa8ff) 60%,transparent);border-radius:999px;padding:6px 14px;cursor:pointer;transition:.2s}
 .chip:hover{color:#fff}
 .chip.on{color:#1b1550;background:var(--cc,#cfe6ff);border-color:transparent;box-shadow:0 0 18px -2px var(--cc,#cfe6ff)}
 .chip small{opacity:.65;font-size:12px}
@@ -307,7 +310,7 @@ nav.top .wrap{display:flex;align-items:center;justify-content:space-between;heig
 .thanks b{color:var(--pink)}
 
 /* ---------- requests ---------- */
-.req{display:grid;grid-template-columns:1.2fr .8fr;gap:20px;align-items:start}
+.req{display:grid;grid-template-columns:1fr;gap:20px;max-width:760px;margin:0 auto}
 @media (max-width:860px){.req{grid-template-columns:1fr}}
 form.card{padding:24px}
 .f-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
@@ -367,7 +370,7 @@ footer .brand{justify-content:center;color:#fff;margin-bottom:6px}
 .q-rank{font-family:"Cairo",sans-serif;font-weight:900;font-size:clamp(26px,5vw,36px);background:linear-gradient(90deg,#fff,#cfe6ff,#c9bbff);-webkit-background-clip:text;background-clip:text;color:transparent}
 .q-best{color:var(--mut);font-size:14px}
 /* ideas board */
-.board{margin-top:22px;padding:22px}
+.board{margin:22px auto 0;padding:22px;max-width:760px}
 .board-head{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center}
 .board-head h3{font-size:22px;margin:0}
 .board-note{color:var(--mut);font-size:14px;margin:8px 0 12px}
@@ -455,7 +458,6 @@ footer .brand{justify-content:center;color:#fff;margin-bottom:6px}
     <a href="#home" class="brand"><span class="dot"></span>Rili's World</a>
     <ul class="links" id="links">
       <li><a href="#videos">الفيديوهات</a></li>
-      <li><a href="#about">عن بدر</a></li>
       <li><a href="#socials">تابعني</a></li>
       <li><a href="#support">ادعمني</a></li>
       <li><a href="#quiz">الاختبار</a></li>
@@ -472,7 +474,6 @@ footer .brand{justify-content:center;color:#fff;margin-bottom:6px}
 <header class="hero" id="home">
   <canvas id="galaxy" aria-hidden="true"></canvas>
   <div class="wrap">
-    <span class="hello"><svg class="spark" style="margin:0;color:var(--pink)"><use href="#sp"/></svg> أهلاً بك في عالم بدر</span>
     <h1 class="title" aria-label="Rili's World">
       <svg class="tsp t1" aria-hidden="true"><use href="#sp"/></svg>
       <svg class="tsp t2" aria-hidden="true"><use href="#sp"/></svg>
@@ -624,12 +625,7 @@ footer .brand{justify-content:center;color:#fff;margin-bottom:6px}
       </a>
     </nav>
 
-    <p class="tag" id="heroTag"></p>
-    <div class="cta">
-      <a class="btn main" href="#videos">✦ شاهد الملخصات</a>
-      <a class="btn ghost" href="#requests">💡 اقترح فيديو</a>
-    </div>
-    <div class="stats" id="stats"></div>
+    <div class="tag" id="heroTag"></div>
   </div>
   <div class="scroll-hint">↓ انزل للأسفل</div>
 </header>
@@ -672,47 +668,6 @@ footer .brand{justify-content:center;color:#fff;margin-bottom:6px}
         <p id="qScore"></p>
         <p class="q-best" id="qBest"></p>
         <button class="btn main" id="qAgain">🚀 العب مرة أخرى</button>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= ABOUT ================= -->
-<section id="about">
-  <div class="wrap about">
-    <div class="earth-wrap reveal" aria-hidden="true">
-      <svg viewBox="0 0 400 400">
-        <defs>
-          <radialGradient id="glow" cx="50%" cy="50%" r="50%"><stop offset="55%" stop-color="#3fa0ff" stop-opacity=".55"/><stop offset="100%" stop-color="#3fa0ff" stop-opacity="0"/></radialGradient>
-          <radialGradient id="ocean" cx="35%" cy="30%" r="80%"><stop offset="0" stop-color="#4fc3ff"/><stop offset=".6" stop-color="#1f7fe0"/><stop offset="1" stop-color="#1350b8"/></radialGradient>
-          <radialGradient id="moonG" cx="35%" cy="35%" r="70%"><stop offset="0" stop-color="#f2f2f7"/><stop offset="1" stop-color="#a9a8ba"/></radialGradient>
-          <clipPath id="ball"><circle cx="200" cy="200" r="120"/></clipPath>
-        </defs>
-        <circle cx="200" cy="200" r="190" fill="url(#glow)"/>
-        <circle cx="200" cy="200" r="120" fill="url(#ocean)"/>
-        <g clip-path="url(#ball)">
-          <g class="earth-spin">
-            <g fill="#2fae5a"><ellipse cx="130" cy="150" rx="55" ry="34"/><ellipse cx="210" cy="140" rx="60" ry="40"/><ellipse cx="190" cy="205" rx="44" ry="30"/><ellipse cx="300" cy="300" rx="50" ry="30"/><ellipse cx="90" cy="290" rx="40" ry="26"/></g>
-            <g fill="#4bd07a" opacity=".7"><ellipse cx="120" cy="142" rx="20" ry="9"/><ellipse cx="225" cy="130" rx="22" ry="10"/><ellipse cx="182" cy="198" rx="14" ry="7"/></g>
-            <g fill="#b98942"><ellipse cx="270" cy="220" rx="56" ry="40"/><ellipse cx="250" cy="265" rx="48" ry="30"/></g>
-            <g fill="#2a8f4c"><ellipse cx="275" cy="190" rx="38" ry="26"/></g>
-            <g fill="#ffe9a6"><circle cx="262" cy="230" r="2"/><circle cx="280" cy="250" r="1.8"/><circle cx="245" cy="262" r="2"/><circle cx="292" cy="215" r="1.6"/><circle cx="230" cy="245" r="1.6"/><circle cx="268" cy="276" r="1.8"/></g>
-            <g fill="#fff"><g opacity=".95"><rect x="120" y="108" width="62" height="18" rx="9"/><rect x="150" y="160" width="74" height="20" rx="10"/><rect x="128" y="250" width="68" height="20" rx="10"/></g><g fill="#d9d8e8"><rect x="225" y="178" width="46" height="18" rx="9"/><rect x="290" y="150" width="40" height="16" rx="8"/></g></g>
-          </g>
-          <circle cx="200" cy="200" r="120" fill="none" stroke="#0b2b80" stroke-opacity=".35" stroke-width="40" transform="translate(16 16)"/>
-        </g>
-        <path d="M120 290 A118 118 0 0 1 270 96" fill="none" stroke="#9fe0ff" stroke-width="5" stroke-linecap="round" opacity=".85"/>
-        <g class="moon-orbit"><g transform="translate(46 70)"><circle r="30" fill="url(#moonG)"/><circle cx="-8" cy="-6" r="6" fill="#9a99ab"/><circle cx="8" cy="8" r="4" fill="#9a99ab"/><circle cx="10" cy="-10" r="3" fill="#9a99ab"/></g></g>
-        <g class="sat" transform="translate(340 170)"><rect x="-22" y="-5" width="16" height="10" fill="#3b7bea" stroke="#9cc1ff"/><rect x="6" y="-5" width="16" height="10" fill="#3b7bea" stroke="#9cc1ff"/><rect x="-6" y="-8" width="12" height="16" rx="3" fill="#eef"/></g>
-      </svg>
-    </div>
-    <div class="card reveal">
-      <h3 id="aboutName"></h3>
-      <p class="role" id="aboutRole"></p>
-      <div id="aboutText"></div>
-      <div class="cta" style="justify-content:flex-start;margin-top:14px">
-        <a class="btn sm main" href="#socials">تابعني ✦</a>
-        <a class="btn sm ghost" href="#requests">عندك فكرة؟</a>
       </div>
     </div>
   </div>
@@ -780,16 +735,6 @@ footer .brand{justify-content:center;color:#fff;margin-bottom:6px}
         <input type="text" name="_gotcha" class="hide" tabindex="-1" autocomplete="off">
         <button class="btn main" type="submit" id="sendBtn" style="width:100%">🚀 أرسل الاقتراح</button>
       </form>
-      <aside class="card req-side reveal">
-        <h3>✦ كيف أختار الأفكار؟</h3>
-        <ol>
-          <li>أقرأ كل اقتراح يوصلني.</li>
-          <li>أختار الأفكار اللي تقدر تتحول لقصة ممتعة ومرسومة.</li>
-          <li>إذا اخترت فكرتك وكتبت حسابك، بذكر اسمك في الفيديو 🌟</li>
-          <li id="voteTip">صوّت تحت للفكرة التي تريدها أن تكون الفيديو القادم 👑</li>
-        </ol>
-        <div class="mine hide" id="mine"><h4>اقتراحاتك المرسلة</h4><ul id="mineList"></ul></div>
-      </aside>
     </div>
     <div class="card board reveal" id="board">
       <div class="board-head">
@@ -866,7 +811,7 @@ footer .brand{justify-content:center;color:#fff;margin-bottom:6px}
 const SITE = {
   channel: "Rili",
   creator: "بدر",
-  tagline: "أهلاً بك في <b>Rili's World</b> — عالم <b>بدر</b>. معلومات ممتعة في <b>الفلك</b> و<b>التقنية</b> و<b>الصحة</b> و<b>التاريخ</b> و<b>الألغاز</b> و<b>تطوير الذات</b>، برسوم ملونة وقصص بسيطة ✨",
+  tagline: "<strong class=\"t-hi\">مرحبا بيك في Rili's World</strong><p>أنا بدر صاحب قناة ريلي، ستجد هنا كل الملخصات والملفات لفيديوهاتي، وسائل التواصل، روابط للدعم وأيضًا للاقتراحات.</p><p class=\"t-thx\">شكرًا لكم</p>",
   aboutRole: "صانع محتوى على يوتيوب وتيك توك",
   about: [
     "هلا! أنا بدر، صاحب قناة Rili 👋",
@@ -893,8 +838,7 @@ const SITE = {
   support: [
     { icon:"☕", title:"اشترِ لي قهوة", text:"دعم سريع لمرة وحدة يخليني أكمل السهرة على المونتاج.", btn:"ادعم الآن", url:"https://ko-fi.com/" , star:false },
     { icon:"🌌", title:"عضوية القناة",  text:"انضم لعضوية يوتيوب واحصل على شارة خاصة ووصول مبكر للفيديوهات.", btn:"انضم للعضوية", url:"https://youtube.com/@Rili/join", star:true },
-    { icon:"💳", title:"PayPal",        text:"ادعم بأي مبلغ تحبه عبر باي بال بأمان.", btn:"ادعم عبر PayPal", url:"https://paypal.me/", star:false },
-    { icon:"🎁", title:"هدايا تيك توك", text:"ادخل بثوثي المباشرة على تيك توك وادعمني بالهدايا.", btn:"زر تيك توك", url:"https://www.tiktok.com/@rili/live", star:false }
+    { icon:"💳", title:"PayPal",        text:"ادعم بأي مبلغ تحبه عبر باي بال بأمان.", btn:"ادعم عبر PayPal", url:"https://paypal.me/", star:false }
   ],
 
   // إرسال الاقتراحات:
@@ -1123,10 +1067,10 @@ function toast(msg){const t=$("#toast");t.textContent=msg;t.classList.add("show"
 
 /* ---------- static content ---------- */
 $("#heroTag").innerHTML = SITE.tagline;
-$("#stats").innerHTML = SITE.stats.map(s=>`<div class="stat"><b>${esc(s.value)}</b><span>${esc(s.label)}</span></div>`).join("");
-$("#aboutName").textContent = SITE.creator + " ✦ " + SITE.channel;
-$("#aboutRole").textContent = SITE.aboutRole;
-$("#aboutText").innerHTML = SITE.about.map(p=>`<p>${esc(p)}</p>`).join("");
+if($("#stats")) $("#stats").innerHTML = SITE.stats.map(s=>`<div class="stat"><b>${esc(s.value)}</b><span>${esc(s.label)}</span></div>`).join("");
+if($("#aboutName")) $("#aboutName").textContent = SITE.creator + " ✦ " + SITE.channel;
+if($("#aboutRole")) $("#aboutRole").textContent = SITE.aboutRole;
+if($("#aboutText")) $("#aboutText").innerHTML = SITE.about.map(p=>`<p>${esc(p)}</p>`).join("");
 $("#foot").innerHTML = `© ${new Date().getFullYear()} ${esc(SITE.channel)}'s World · ${esc(SITE.creator)} — جميع الحقوق محفوظة`;
 
 /* ---------- socials ---------- */
@@ -1282,6 +1226,7 @@ const hv = location.hash.match(/^#v(\d+)$/); if(hv && VIDEOS[+hv[1]]) openVideo(
 const MINE_KEY="rili-my-ideas";
 function loadMine(){ try{ return JSON.parse(localStorage.getItem(MINE_KEY)||"[]") }catch(e){ return [] } }
 function renderMine(){
+  if(!$("#mine")) return;
   const m = loadMine(); $("#mine").classList.toggle("hide", !m.length);
   $("#mineList").innerHTML = m.slice(-5).reverse().map(x=>`<li>${esc(x.t)}<span>${esc(x.d)}</span></li>`).join("");
 }
