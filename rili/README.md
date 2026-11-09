@@ -15,7 +15,7 @@
 
 اضغط **«حفظ ونشر»** ← التغييرات تظهر في الموقع فورًا.
 
-### إعداد لمرة واحدة فقط (في Firebase Console لمشروع `badercan-63e2a`)
+### إعداد لمرة واحدة فقط (في Firebase Console لمشروع `rili-s-world-6b67e`)
 1. **Authentication → Get started → Sign-in method → Google → Enable → Save**
 2. **Authentication → Settings → Authorized domains → Add domain** وأضف نطاق موقعك (مثلًا `username.github.io`).
 3. **Firestore Database → Rules** وأضف داخل `match /databases/{database}/documents { ... }` (بدّل الإيميل بإيميلك أنت):
