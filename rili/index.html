@@ -464,7 +464,7 @@ footer .brand{justify-content:center;color:#fff;margin-bottom:6px}
       <li><a href="#requests">اقترح فيديو</a></li>
     </ul>
     <div class="nav-act">
-      <button class="snd" id="sndBtn" aria-pressed="false" aria-label="صوت الفضاء"><span class="sic" aria-hidden="true">🔈</span><span class="eq"><i></i><i></i><i></i></span><b>صوت الفضاء</b></button>
+      <button class="snd" id="sndBtn" aria-pressed="false" aria-label="موسيقى"><span class="sic" aria-hidden="true">🔈</span><span class="eq"><i></i><i></i><i></i></span><b>موسيقى</b></button>
       <button class="menu-btn" id="menuBtn" aria-label="القائمة">☰</button>
     </div>
   </div>
@@ -1350,34 +1350,68 @@ $("#reqForm").addEventListener("submit", async e=>{
 })();
 
 /* =====================================================================
-   ✦ صوت الفضاء (يُولَّد داخل المتصفح — بدون ملفات) ✦
+   ✦ موسيقى بيانو هادئة (تُولَّد داخل المتصفح، بدون ملفات) ✦
    ===================================================================== */
 (function(){
-  const btn=$("#sndBtn"); let ac=null, master=null, on=false, chimeT;
-  function build(){
-    ac=new (window.AudioContext||window.webkitAudioContext)(); master=ac.createGain(); master.gain.value=0; master.connect(ac.destination);
-    const lp=ac.createBiquadFilter(); lp.type="lowpass"; lp.frequency.value=900; lp.Q.value=.7; lp.connect(master);
-    const lfo=ac.createOscillator(), lg=ac.createGain(); lfo.frequency.value=.05; lg.gain.value=400; lfo.connect(lg); lg.connect(lp.frequency); lfo.start();
-    [[110,"sine",.07],[110.6,"sine",.05],[164.81,"triangle",.035],[220,"sine",.03],[329.63,"sine",.012]].forEach(([f,t,g])=>{
-      const o=ac.createOscillator(), gn=ac.createGain(); o.type=t; o.frequency.value=f; gn.gain.value=g; o.connect(gn); gn.connect(lp); o.start(); });
-    const buf=ac.createBuffer(1,ac.sampleRate*3,ac.sampleRate), d=buf.getChannelData(0); for(let i=0;i<d.length;i++) d[i]=Math.random()*2-1;
-    const ns=ac.createBufferSource(); ns.buffer=buf; ns.loop=true; const bp=ac.createBiquadFilter(); bp.type="bandpass"; bp.frequency.value=500; bp.Q.value=.6;
-    const ng=ac.createGain(); ng.gain.value=.012; ns.connect(bp); bp.connect(ng); ng.connect(master); ns.start();
-    const dl=ac.createDelay(1); dl.delayTime.value=.45; const fb=ac.createGain(); fb.gain.value=.45; dl.connect(fb); fb.connect(dl); dl.connect(master);
-    master._echo=dl;
+  const btn=$("#sndBtn"); let ac=null, master=null, wet=null, dry=null, on=false, timer=null, nextT=0, step=0, mel=4;
+  const hz=m=>440*Math.pow(2,(m-69)/12);
+  // Am9 → Fmaj7 → Cmaj7 → G6 (كل وتر مقطعان)
+  const CHORDS=[
+    {bass:45,arp:[57,60,64,67,71]},
+    {bass:41,arp:[53,57,60,64,67]},
+    {bass:48,arp:[55,60,64,67,71]},
+    {bass:43,arp:[55,59,62,64,67]}
+  ];
+  const ARP=[0,2,4,3,1,3,2,4];
+  const SCALE=[69,71,72,74,76,79,81,83,84];
+  const EIGHTH=.46;
+  function impulse(sec,decay){
+    const len=ac.sampleRate*sec, b=ac.createBuffer(2,len,ac.sampleRate);
+    for(let c=0;c<2;c++){ const d=b.getChannelData(c); for(let i=0;i<len;i++) d[i]=(Math.random()*2-1)*Math.pow(1-i/len,decay); }
+    return b;
   }
-  const NOTES=[880,1046.5,1174.66,1318.51,1567.98,1760];
-  function chime(){
-    if(!on) return; const t=ac.currentTime, o=ac.createOscillator(), g=ac.createGain();
-    o.type="sine"; o.frequency.value=NOTES[Math.random()*NOTES.length|0]; g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(.035,t+.02); g.gain.exponentialRampToValueAtTime(.0001,t+2.6);
-    o.connect(g); g.connect(master); g.connect(master._echo); o.start(t); o.stop(t+2.7);
-    chimeT=setTimeout(chime,2500+Math.random()*4500);
+  function build(){
+    ac=new (window.AudioContext||window.webkitAudioContext)();
+    master=ac.createGain(); master.gain.value=0;
+    const comp=ac.createDynamicsCompressor(); comp.threshold.value=-18; comp.ratio.value=3;
+    master.connect(comp); comp.connect(ac.destination);
+    dry=ac.createGain(); dry.gain.value=.75; dry.connect(master);
+    const rev=ac.createConvolver(); rev.buffer=impulse(3.8,2.6);
+    wet=ac.createGain(); wet.gain.value=.55; wet.connect(rev); rev.connect(master);
+  }
+  // صوت بيانو: توافقيات تتلاشى بسرعات مختلفة + فلتر يخفّف اللمعان مع الوقت
+  function note(m,t,vel,len){
+    const f=hz(m), out=ac.createGain(), lp=ac.createBiquadFilter();
+    lp.type="lowpass"; lp.frequency.setValueAtTime(Math.min(9000,f*9),t); lp.frequency.exponentialRampToValueAtTime(Math.max(400,f*2.2),t+1.6);
+    out.connect(lp); lp.connect(dry); lp.connect(wet);
+    const H=[1,.42,.22,.12,.07,.04], dur=len*(m<50?1.4:1);
+    H.forEach((a,i)=>{
+      const n=i+1, o=ac.createOscillator(), g=ac.createGain();
+      o.type="sine"; o.frequency.value=f*n*Math.sqrt(1+.0004*n*n); o.detune.value=(Math.random()-.5)*4;
+      const peak=vel*a*.22, d=dur/(1+i*.7);
+      g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(peak,t+.006);
+      g.gain.exponentialRampToValueAtTime(peak*.35,t+.18); g.gain.exponentialRampToValueAtTime(.0001,t+d);
+      o.connect(g); g.connect(out); o.start(t); o.stop(t+d+.05);
+    });
+  }
+  function schedule(){
+    while(nextT<ac.currentTime+.6){
+      const bar=Math.floor(step/8), pos=step%8, ch=CHORDS[Math.floor(bar/2)%CHORDS.length], hum=()=>(Math.random()-.5)*.02;
+      if(pos===0){ note(ch.bass,nextT,.55,4.2); note(ch.bass+12,nextT+.01,.25,3.5); }
+      if(!(pos===7&&Math.random()<.4)) note(ch.arp[ARP[pos]],nextT+hum(),.22+Math.random()*.08,2.6);
+      if((pos===0||pos===4||pos===6)&&Math.random()<.55){
+        mel=Math.max(0,Math.min(SCALE.length-1,mel+[-2,-1,-1,0,1,1,2][Math.random()*7|0]));
+        note(SCALE[mel],nextT+hum(),.32+Math.random()*.1,3.2);
+      }
+      step++; nextT+=EIGHTH*(pos%2?0.94:1.06);
+    }
   }
   btn.onclick=async()=>{
-    if(!ac) build(); on=!on; btn.classList.toggle("on",on); btn.setAttribute("aria-pressed",on); btn.querySelector(".sic").textContent=on?"🔊":"🔈";
+    if(!ac) build(); on=!on; btn.classList.toggle("on",on); btn.setAttribute("aria-pressed",on);
+    const sic=btn.querySelector(".sic"); if(sic) sic.textContent=on?"🔊":"🔈";
     const t=ac.currentTime; master.gain.cancelScheduledValues(t); master.gain.setValueAtTime(master.gain.value,t);
-    if(on){ await ac.resume(); master.gain.linearRampToValueAtTime(.6,t+2); chime(); }
-    else { clearTimeout(chimeT); master.gain.linearRampToValueAtTime(0,t+.8); setTimeout(()=>{ if(!on) ac.suspend() },900); }
+    if(on){ await ac.resume(); nextT=ac.currentTime+.1; step=0; master.gain.linearRampToValueAtTime(1.5,t+1.5); schedule(); timer=setInterval(schedule,150); }
+    else { clearInterval(timer); master.gain.linearRampToValueAtTime(0,t+1); setTimeout(()=>{ if(!on) ac.suspend() },1200); }
   };
 })();
 
