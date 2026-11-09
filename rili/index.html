@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Rili's World | بدر</title>
-<meta name="description" content="Rili's World، قناة بدر: معلومات في الفلك والتقنية والصحة والتاريخ والألغاز وتطوير الذات. ملخصات الفيديوهات، حسابات التواصل، الدعم، واقتراحات الفيديوهات.">
+<meta name="description" content="Rili's World — قناة بدر: معلومات في الفلك والتقنية والصحة والتاريخ والألغاز وتطوير الذات. ملخصات الفيديوهات، حسابات التواصل، الدعم، واقتراحات الفيديوهات.">
 <meta name="theme-color" content="#211a6b">
 <style>/* الخطوط مضمّنة داخل الملف: Cairo (عربي) + Fredoka (العنوان) */
 @font-face {
@@ -231,7 +231,6 @@ nav.top .wrap{display:flex;align-items:center;justify-content:space-between;heig
 .chip:hover{color:#fff}
 .chip.on{color:#1b1550;background:var(--cc,#cfe6ff);border-color:transparent;box-shadow:0 0 18px -2px var(--cc,#cfe6ff)}
 .chip small{opacity:.65;font-size:12px}
-.cdot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--cc);margin-left:6px;vertical-align:middle}
 .chip:hover{border-color:var(--cc,var(--pink))}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:18px}
 .vid{overflow:hidden;cursor:pointer;display:flex;flex-direction:column;transition:transform .25s,box-shadow .25s;text-align:right;font:inherit;color:inherit;padding:0}
@@ -265,7 +264,7 @@ nav.top .wrap{display:flex;align-items:center;justify-content:space-between;heig
 .mcontent p{margin:0 0 10px}
 .points{list-style:none;padding:0;margin:0;display:grid;gap:8px}
 .points li{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:14px;background:rgba(255,255,255,.06)}
-.points li::before{content:"";width:6px;height:6px;margin-top:.7em;border-radius:50%;background:var(--pink);flex:none}
+.points li::before{content:"✦";color:var(--pink);flex:none}
 .chapters{display:grid;gap:6px;margin:0;padding:0;list-style:none}
 .chapters li{display:flex;gap:12px}
 .chapters time{font-family:monospace;color:var(--lav);direction:ltr;min-width:52px}
@@ -473,6 +472,7 @@ footer .brand{justify-content:center;color:#fff;margin-bottom:6px}
 <header class="hero" id="home">
   <canvas id="galaxy" aria-hidden="true"></canvas>
   <div class="wrap">
+    <span class="hello"><svg class="spark" style="margin:0;color:var(--pink)"><use href="#sp"/></svg> أهلاً بك في عالم بدر</span>
     <h1 class="title" aria-label="Rili's World">
       <svg class="tsp t1" aria-hidden="true"><use href="#sp"/></svg>
       <svg class="tsp t2" aria-hidden="true"><use href="#sp"/></svg>
@@ -535,7 +535,7 @@ footer .brand{justify-content:center;color:#fff;margin-bottom:6px}
           <g><circle r="5.5" fill="#e9e3f0"/><circle r="5.5" fill="url(#plShade)"/><circle cx="-1.5" cy="-1" r="1.4" fill="#b9b1c8"/>
             <animateMotion dur="9s" repeatCount="indefinite" path="M60 60 m-56 6 a56 15 0 1 0 112 -12 a56 15 0 1 0 -112 12"/></g>
         </svg></span>
-        <b>الفيديوهات</b><small>الملخصات</small>
+        <b>الفيديوهات</b><small>ملخصات كاملة</small>
       </a>
 
       <!-- 2. socials: ocean world + clouds + satellite -->
@@ -566,7 +566,7 @@ footer .brand{justify-content:center;color:#fff;margin-bottom:6px}
           <g><g transform="scale(.8)"><rect x="-11" y="-3" width="7" height="6" fill="#3b7bea" stroke="#cfe0ff" stroke-width=".8"/><rect x="4" y="-3" width="7" height="6" fill="#3b7bea" stroke="#cfe0ff" stroke-width=".8"/><rect x="-4" y="-4.5" width="8" height="9" rx="2" fill="#f4f1ff"/></g>
             <animateMotion dur="7s" repeatCount="indefinite" path="M60 60 m56 -8 a56 18 0 1 0 -112 16 a56 18 0 1 0 112 -16"/></g>
         </svg></span>
-        <b>تابعني</b><small>الحسابات</small>
+        <b>تابعني</b><small>حساباتي</small>
       </a>
 
       <!-- 3. support: golden gas giant with rings -->
@@ -593,7 +593,7 @@ footer .brand{justify-content:center;color:#fff;margin-bottom:6px}
             <path class="ring-flow" d="M-54 0 A54 13.5 0 0 0 54 0" fill="none" stroke="#fff" stroke-width="1.6" stroke-dasharray="2 7" opacity=".8"/></g>
           <path d="M60 49 L63.5 57.5 L72.5 58 L65.5 63.5 L68 72.5 L60 67.5 L52 72.5 L54.5 63.5 L47.5 58 L56.5 57.5Z" fill="#fff" opacity=".92"/>
         </svg></span>
-        <b>الدعم</b><small>دعم القناة</small>
+        <b>الدعم</b><small>ادعم القناة</small>
       </a>
 
       <!-- 4. requests: green jungle world + aurora + idea lights -->
@@ -620,17 +620,18 @@ footer .brand{justify-content:center;color:#fff;margin-bottom:6px}
           <ellipse cx="45" cy="40" rx="11" ry="6" fill="#fff" opacity=".22" transform="rotate(-30 45 40)"/>
           <g fill="#fff"><path d="M60 47 a9 9 0 0 1 5 16.5 v3.5 h-10 v-3.5 A9 9 0 0 1 60 47Z" opacity=".9"/><rect x="56" y="68.5" width="8" height="2.6" rx="1.3" opacity=".9"/></g>
         </svg></span>
-        <b>اقترح فيديو</b><small>أرسل فكرتك</small>
+        <b>اقترح فيديو</b><small>شاركني فكرتك</small>
       </a>
     </nav>
 
     <p class="tag" id="heroTag"></p>
     <div class="cta">
-      <a class="btn main" href="#videos">شاهد الفيديوهات</a>
-      <a class="btn ghost" href="#requests">اقترح فيديو</a>
+      <a class="btn main" href="#videos">✦ شاهد الملخصات</a>
+      <a class="btn ghost" href="#requests">💡 اقترح فيديو</a>
     </div>
     <div class="stats" id="stats"></div>
   </div>
+  <div class="scroll-hint">↓ انزل للأسفل</div>
 </header>
 
 <main>
@@ -638,8 +639,8 @@ footer .brand{justify-content:center;color:#fff;margin-bottom:6px}
 <section id="videos">
   <div class="wrap">
     <div class="sec-head reveal">
-      <h2>الفيديوهات</h2>
-      <p>اضغط على أي فيديو لقراءة ملخصه وأهم نقاطه.</p>
+      <h2><svg class="spark" style="color:var(--pink)"><use href="#sp"/></svg>الفيديوهات<svg class="spark" style="color:var(--lav)"><use href="#sp"/></svg></h2>
+      <p>كل فيديو مع ملخص كامل، أهم النقاط، والفصول. اضغط على أي فيديو لقراءة التفاصيل.</p>
     </div>
     <div class="toolbar reveal">
       <label class="search">
@@ -649,7 +650,7 @@ footer .brand{justify-content:center;color:#fff;margin-bottom:6px}
       <div class="chips" id="chips"></div>
     </div>
     <div class="grid" id="grid"></div>
-    <p class="empty hide" id="empty">لا توجد نتائج. جرّب كلمة أخرى، أو <a href="#requests">اقترح الموضوع</a>.</p>
+    <p class="empty hide" id="empty">ما لقيت فيديو بهذا الاسم 🔭 — جرّب كلمة ثانية أو <a href="#requests">اقترحه علي!</a></p>
   </div>
 </section>
 
@@ -657,8 +658,8 @@ footer .brand{justify-content:center;color:#fff;margin-bottom:6px}
 <section id="quiz">
   <div class="wrap">
     <div class="sec-head reveal">
-      <h2>اختبر معلوماتك</h2>
-      <p>أسئلة من فيديوهات القناة.</p>
+      <h2><svg class="spark" style="color:var(--pink)"><use href="#sp"/></svg>اختبار الفضاء<svg class="spark" style="color:var(--lav)"><use href="#sp"/></svg></h2>
+      <p>أسئلة من فيديوهات Rili — اجمع النجوم واكتشف رتبتك الفضائية!</p>
     </div>
     <div class="card quiz reveal" id="quizBox">
       <div class="q-top"><span id="qProg">السؤال 1 من 5</span><span class="q-stars" id="qStars"></span></div>
@@ -670,7 +671,7 @@ footer .brand{justify-content:center;color:#fff;margin-bottom:6px}
         <div class="q-rank" id="qRank"></div>
         <p id="qScore"></p>
         <p class="q-best" id="qBest"></p>
-        <button class="btn main" id="qAgain">أعد الاختبار</button>
+        <button class="btn main" id="qAgain">🚀 العب مرة أخرى</button>
       </div>
     </div>
   </div>
@@ -710,8 +711,8 @@ footer .brand{justify-content:center;color:#fff;margin-bottom:6px}
       <p class="role" id="aboutRole"></p>
       <div id="aboutText"></div>
       <div class="cta" style="justify-content:flex-start;margin-top:14px">
-        <a class="btn sm main" href="#socials">تابعني</a>
-        <a class="btn sm ghost" href="#requests">اقترح فكرة</a>
+        <a class="btn sm main" href="#socials">تابعني ✦</a>
+        <a class="btn sm ghost" href="#requests">عندك فكرة؟</a>
       </div>
     </div>
   </div>
@@ -721,8 +722,8 @@ footer .brand{justify-content:center;color:#fff;margin-bottom:6px}
 <section id="socials">
   <div class="wrap">
     <div class="sec-head reveal">
-      <h2>تابعني</h2>
-      <p>حساباتي على المنصات.</p>
+      <h2><svg class="spark" style="color:var(--pink)"><use href="#sp"/></svg>تابعني<svg class="spark" style="color:var(--lav)"><use href="#sp"/></svg></h2>
+      <p>كل حساباتي في مكان واحد — لا تفوتك أي رحلة جديدة.</p>
     </div>
     <div class="socials" id="socialList"></div>
   </div>
@@ -732,11 +733,11 @@ footer .brand{justify-content:center;color:#fff;margin-bottom:6px}
 <section id="support">
   <div class="wrap">
     <div class="sec-head reveal">
-      <h2>ادعم القناة</h2>
-      <p>كل فيديو يأخذ ساعات من البحث والرسم والمونتاج، ودعمك يساعد على الاستمرار.</p>
+      <h2><svg class="spark" style="color:var(--pink)"><use href="#sp"/></svg>ادعم القناة<svg class="spark" style="color:var(--lav)"><use href="#sp"/></svg></h2>
+      <p>كل فيديو ياخذ ساعات من البحث والرسم والمونتاج. دعمك يساعدني أكمل وأطوّر المحتوى.</p>
     </div>
     <div class="support" id="supportList"></div>
-    <div class="card thanks reveal">يمكنك أيضًا دعم القناة مجانًا بالإعجاب والمشاركة والتعليق.</div>
+    <div class="card thanks reveal">✦ الدعم لا يقتصر على المال — <b>الإعجاب والمشاركة والتعليق</b> تساعد القناة على الوصول إلى عدد أكبر من الناس. شكرًا لك.</div>
   </div>
 </section>
 
@@ -744,21 +745,21 @@ footer .brand{justify-content:center;color:#fff;margin-bottom:6px}
 <section id="requests">
   <div class="wrap">
     <div class="sec-head reveal">
-      <h2>اقترح فيديو</h2>
-      <p>إذا كان عندك موضوع تريد أن أتحدث عنه، اكتبه هنا.</p>
+      <h2><svg class="spark" style="color:var(--pink)"><use href="#sp"/></svg>اقترح فيديو<svg class="spark" style="color:var(--lav)"><use href="#sp"/></svg></h2>
+      <p>عندك موضوع تبي تشوفه في Rili؟ اكتبه هنا وأنا أقرأ كل الاقتراحات.</p>
     </div>
     <div class="req">
       <form class="card reveal" id="reqForm" novalidate>
         <div class="f-row">
-          <div class="field"><label for="fName">اسمك <small>(اختياري)</small></label><input id="fName" name="name" maxlength="60" placeholder="الاسم"></div>
+          <div class="field"><label for="fName">اسمك <small>(اختياري)</small></label><input id="fName" name="name" maxlength="60" placeholder="مثلاً: سارة"></div>
           <div class="field"><label for="fContact">حسابك أو إيميلك <small>(اختياري)</small></label><input id="fContact" name="contact" maxlength="100" placeholder="@username" dir="ltr" style="text-align:right"></div>
         </div>
         <div class="f-row">
           <div class="field"><label for="fType">نوع الطلب</label>
             <select id="fType" name="type">
               <option>فكرة فيديو جديد</option>
-              <option>سؤال تريد إجابته</option>
-              <option>جزء ثانٍ لفيديو سابق</option>
+              <option>سؤال أبيك تجاوب عليه</option>
+              <option>جزء ثاني لفيديو سابق</option>
               <option>تعاون / إعلان</option>
               <option>شيء آخر</option>
             </select>
@@ -767,32 +768,32 @@ footer .brand{justify-content:center;color:#fff;margin-bottom:6px}
             <select id="fPlat" name="platform">
               <option>يوتيوب (فيديو طويل)</option>
               <option>تيك توك (فيديو قصير)</option>
-              <option>كلاهما</option>
+              <option>الاثنين</option>
             </select>
           </div>
         </div>
         <div class="field"><label for="fCat">المجال</label>
           <select id="fCat" name="category"><option>الفلك</option><option>التقنية</option><option>الصحة</option><option>التاريخ</option><option>الألغاز</option><option>تطوير الذات</option><option>مجال آخر</option></select>
         </div>
-        <div class="field"><label for="fTitle">عنوان الفكرة *</label><input id="fTitle" name="title" required maxlength="120" placeholder="مثال: ماذا لو لم يكن للأرض قمر؟"></div>
-        <div class="field"><label for="fIdea">اشرح فكرتك *</label><textarea id="fIdea" name="details" required maxlength="1500" placeholder="اشرح الفكرة باختصار"></textarea><div class="counter"><span id="cnt">0</span>/1500</div></div>
+        <div class="field"><label for="fTitle">عنوان الفكرة *</label><input id="fTitle" name="title" required maxlength="120" placeholder="مثلًا: ماذا لو لم يكن للأرض قمر؟"></div>
+        <div class="field"><label for="fIdea">اشرح فكرتك *</label><textarea id="fIdea" name="details" required maxlength="1500" placeholder="ليش الموضوع يهمك؟ وش تحب أركز عليه؟"></textarea><div class="counter"><span id="cnt">0</span>/1500</div></div>
         <input type="text" name="_gotcha" class="hide" tabindex="-1" autocomplete="off">
-        <button class="btn main" type="submit" id="sendBtn" style="width:100%">أرسل الاقتراح</button>
+        <button class="btn main" type="submit" id="sendBtn" style="width:100%">🚀 أرسل الاقتراح</button>
       </form>
       <aside class="card req-side reveal">
-        <h3>كيف أختار الأفكار؟</h3>
+        <h3>✦ كيف أختار الأفكار؟</h3>
         <ol>
-          <li>أقرأ كل الاقتراحات.</li>
-          <li>أختار الأفكار التي يمكن تحويلها إلى فيديو مرسوم.</li>
-          <li>إذا اخترت فكرتك وكتبت حسابك، أذكر اسمك في الفيديو.</li>
-          <li id="voteTip">يمكنك التصويت على الفيديو القادم في الأسفل.</li>
+          <li>أقرأ كل اقتراح يوصلني.</li>
+          <li>أختار الأفكار اللي تقدر تتحول لقصة ممتعة ومرسومة.</li>
+          <li>إذا اخترت فكرتك وكتبت حسابك، بذكر اسمك في الفيديو 🌟</li>
+          <li id="voteTip">صوّت تحت للفكرة التي تريدها أن تكون الفيديو القادم 👑</li>
         </ol>
         <div class="mine hide" id="mine"><h4>اقتراحاتك المرسلة</h4><ul id="mineList"></ul></div>
       </aside>
     </div>
     <div class="card board reveal" id="board">
       <div class="board-head">
-        <h3>صوّت للفيديو القادم</h3>
+        <h3>💫 الفيديو القادم — صوّت لفكرتك المفضلة</h3>
         <div class="chips" id="boardSort"><button class="chip on" data-s="top">الأكثر تصويتًا</button><button class="chip" data-s="all">الترتيب الأصلي</button></div>
       </div>
       <p class="board-note" id="boardNote">جارٍ تحميل الأصوات…</p>
@@ -828,7 +829,7 @@ footer .brand{justify-content:center;color:#fff;margin-bottom:6px}
 <div class="astro" id="astro" aria-live="polite">
   <div class="bubble">
     <button class="astro-x" id="astroX" aria-label="إخفاء رائد الفضاء">✕</button>
-    <b id="factHead">رائد Rili</b>
+    <b id="factHead">👨‍🚀 رائد Rili</b>
     <p id="fact"></p>
   </div>
   <button class="astro-man" id="astroMan" aria-label="معلومة جديدة">
@@ -865,16 +866,17 @@ footer .brand{justify-content:center;color:#fff;margin-bottom:6px}
 const SITE = {
   channel: "Rili",
   creator: "بدر",
-  tagline: "معلومات في الفلك والتقنية والصحة والتاريخ والألغاز وتطوير الذات، بفيديوهات مرسومة.",
+  tagline: "أهلاً بك في <b>Rili's World</b> — عالم <b>بدر</b>. معلومات ممتعة في <b>الفلك</b> و<b>التقنية</b> و<b>الصحة</b> و<b>التاريخ</b> و<b>الألغاز</b> و<b>تطوير الذات</b>، برسوم ملونة وقصص بسيطة ✨",
   aboutRole: "صانع محتوى على يوتيوب وتيك توك",
   about: [
-    "أنا بدر، صاحب قناة Rili.",
-    "أصنع فيديوهات مرسومة أشرح فيها معلومات من الفلك والتقنية والصحة والتاريخ والألغاز وتطوير الذات.",
-    "هنا تجد ملخصات الفيديوهات وروابط حساباتي، ويمكنك اقتراح مواضيع للفيديوهات القادمة."
+    "هلا! أنا بدر، صاحب قناة Rili 👋",
+    "أصنع فيديوهات مرسومة بالكامل بأسلوبي الخاص، أشرح فيها معلومات من الفلك والتقنية والصحة والتاريخ والألغاز وتطوير الذات بطريقة بسيطة وممتعة.",
+    "هذا الموقع هو بيت القناة: تلقى فيه ملخص كامل لكل فيديو، روابط حساباتي، طرق دعم القناة، ومكان ترسل فيه أفكارك للفيديوهات الجاية."
   ],
   stats: [
     { value: "+10K", label: "متابع" },
-    { value: "+50",  label: "فيديو" }
+    { value: "+50",  label: "فيديو" },
+    { value: "∞",    label: "نجمة" }
   ],
 
   // روابط التواصل — ضع روابطك الحقيقية (اترك url فاضي لإخفاء الحساب)
@@ -889,10 +891,10 @@ const SITE = {
 
   // طرق الدعم المادي — ضع روابطك الحقيقية (اترك url فاضي لإخفاء الطريقة)
   support: [
-    { icon:"☕", title:"Ko-fi", text:"دعم لمرة واحدة بالمبلغ الذي تختاره.", btn:"ادعم", url:"https://ko-fi.com/" , star:false },
-    { icon:"🌌", title:"عضوية القناة",  text:"اشتراك شهري على يوتيوب مع شارة خاصة ووصول مبكر للفيديوهات.", btn:"انضم", url:"https://youtube.com/@Rili/join", star:true },
-    { icon:"💳", title:"PayPal",        text:"دعم مباشر عبر PayPal.", btn:"ادعم", url:"https://paypal.me/", star:false },
-    { icon:"🎁", title:"هدايا تيك توك", text:"الهدايا أثناء البث المباشر على تيك توك.", btn:"البث المباشر", url:"https://www.tiktok.com/@rili/live", star:false }
+    { icon:"☕", title:"اشترِ لي قهوة", text:"دعم سريع لمرة وحدة يخليني أكمل السهرة على المونتاج.", btn:"ادعم الآن", url:"https://ko-fi.com/" , star:false },
+    { icon:"🌌", title:"عضوية القناة",  text:"انضم لعضوية يوتيوب واحصل على شارة خاصة ووصول مبكر للفيديوهات.", btn:"انضم للعضوية", url:"https://youtube.com/@Rili/join", star:true },
+    { icon:"💳", title:"PayPal",        text:"ادعم بأي مبلغ تحبه عبر باي بال بأمان.", btn:"ادعم عبر PayPal", url:"https://paypal.me/", star:false },
+    { icon:"🎁", title:"هدايا تيك توك", text:"ادخل بثوثي المباشرة على تيك توك وادعمني بالهدايا.", btn:"زر تيك توك", url:"https://www.tiktok.com/@rili/live", star:false }
   ],
 
   // إرسال الاقتراحات:
@@ -930,44 +932,44 @@ const SITE = {
   ],
 
   // رائد الفضاء: أول جملة يقولها، ثم معلومة كل 20 ثانية، وبعد كل 3 معلومات جملة من جمل بدر
-  astroGreeting: "مرحبا بيك، اش كدير هنا؟",
+  astroGreeting: "مرحبا بيك، اش كدير هنا؟ 👀",
   astroJokes: [
-    "بدر نعاس ياك؟",
-    "هد بدر كيتعطل فالفيديوات"
+    "بدر نعاس ياك؟ 😴",
+    "هد بدر كيتعطل فالفيديوات 😅"
   ],
 
   // معلومات رائد الفضاء — تظهر معلومة جديدة كل 20 ثانية
   factEvery: 20,
   facts: [
-    { c:"الفلك", t:"اليوم الواحد على كوكب الزهرة أطول من سنته الكاملة!" },
-    { c:"الفلك", t:"ضوء الشمس الذي يصلك الآن غادرها قبل نحو ثماني دقائق وعشرين ثانية" },
-    { c:"الفلك", t:"لا يوجد هواء في الفضاء لينقل الصوت، لذا تحدث الانفجارات هناك في صمت تام" },
-    { c:"الفلك", t:"المشتري ضخم إلى درجة أنه يتسع لأكثر من 1300 كوكب بحجم الأرض" },
-    { c:"الفلك", t:"كثافة زحل أقل من كثافة الماء، فلو وُجد حوض ماء ضخم بما يكفي لطفا فوقه!" },
-    { c:"الفلك", t:"عندما تنظر إلى نجم بعيد، فأنت ترى ضوءًا غادره قبل مئات أو آلاف السنين، أي أنك ترى الماضي!" },
-    { c:"التقنية", t:"أُرسلت أول رسالة بريد إلكتروني عام 1971، وأرسلها المهندس راي توملينسون" },
-    { c:"التقنية", t:"أطلق تيم بيرنرز-لي أول موقع إلكتروني في العالم عام 1991، وكان صفحة نصية بسيطة" },
-    { c:"التقنية", t:"هاتفك الذكي يتفوق بفارق هائل على حاسوب مركبة أبولو 11 التي أوصلت الإنسان إلى القمر" },
-    { c:"التقنية", t:"أول «خطأ برمجي» مسجّل عام 1947 كان عثّة حقيقية علقت داخل حاسوب، ومن هنا جاءت كلمة Bug" },
-    { c:"الصحة", t:"يولد الطفل بنحو 300 عظمة، يلتحم بعضها مع النمو ليصبح عددها 206 عظام عند البالغ" },
-    { c:"الصحة", t:"يضخ القلب نحو 7000 لتر من الدم يوميًا" },
-    { c:"الصحة", t:"يشكّل الماء نحو 60% من وزن جسم الإنسان البالغ" },
-    { c:"الصحة", t:"يتجدد سطح جلدك بالكامل تقريبًا كل أربعة إلى ستة أسابيع" },
-    { c:"الصحة", t:"النوم الجيد يساعد الدماغ على تثبيت ما تعلّمته خلال اليوم" },
-    { c:"التاريخ", t:"كانت كليوباترا أقرب زمنيًا إلى هبوط الإنسان على القمر منها إلى بناء الهرم الأكبر!" },
-    { c:"التاريخ", t:"تُعد جامعة القرويين في فاس، التي أسستها فاطمة الفهرية عام 859م، من أقدم الجامعات العاملة في العالم" },
-    { c:"التاريخ", t:"أسس ابن الهيثم علم البصريات الحديث، وأثّر كتابه «المناظر» في علماء أوروبا قرونًا" },
-    { c:"التاريخ", t:"دامت حرب المئة عام بين إنجلترا وفرنسا 116 عامًا" },
-    { c:"التاريخ", t:"أقصر حرب في التاريخ كانت بين بريطانيا وزنجبار عام 1896، ودامت نحو 38 دقيقة ⏱" },
-    { c:"الألغاز", t:"ما زال مخطوط فوينيتش، الذي يعود إلى نحو 600 عام، مكتوبًا بلغة لم يستطع أحد فك رموزها" },
-    { c:"الألغاز", t:"تشكّل المادة المظلمة نحو 27% من الكون، ولا يعرف العلماء بعد مما تتكوّن" },
-    { c:"الألغاز", t:"خطوط نازكا في البيرو رسوم عملاقة لا تُرى كاملة إلا من الأعلى، وما زال الغرض منها محل نقاش" },
-    { c:"الألغاز", t:"اختفى سكان مستعمرة رونوك الإنجليزية في أمريكا نحو عام 1590، وما زال مصيرهم غير معروف يقينًا" },
-    { c:"تطوير الذات", t:"وجدت دراسة أن تكوين عادة جديدة يستغرق في المتوسط نحو 66 يومًا، لا 21 يومًا كما يُشاع" },
-    { c:"تطوير الذات", t:"قاعدة الدقيقتين: إذا كانت المهمة تستغرق أقل من دقيقتين، فأنجزها فورًا" },
-    { c:"تطوير الذات", t:"تقنية بومودورو: اعمل 25 دقيقة بتركيز كامل، ثم استرح 5 دقائق" },
-    { c:"تطوير الذات", t:"يتعلم الدماغ أفضل عندما توزّع المراجعة على أيام متباعدة بدل الحفظ دفعة واحدة" },
-    { c:"تطوير الذات", t:"تدوين أهدافك يساعدك على توضيحها ومتابعة تقدّمك نحوها" }
+    { c:"الفلك", t:"اليوم الواحد على كوكب الزهرة أطول من سنته الكاملة! 🪐" },
+    { c:"الفلك", t:"ضوء الشمس الذي يصلك الآن غادرها قبل نحو ثماني دقائق وعشرين ثانية ☀️" },
+    { c:"الفلك", t:"لا يوجد هواء في الفضاء لينقل الصوت، لذا تحدث الانفجارات هناك في صمت تام 🤫" },
+    { c:"الفلك", t:"المشتري ضخم إلى درجة أنه يتسع لأكثر من 1300 كوكب بحجم الأرض 🤯" },
+    { c:"الفلك", t:"كثافة زحل أقل من كثافة الماء، فلو وُجد حوض ماء ضخم بما يكفي لطفا فوقه! 🛁" },
+    { c:"الفلك", t:"عندما تنظر إلى نجم بعيد، فأنت ترى ضوءًا غادره قبل مئات أو آلاف السنين، أي أنك ترى الماضي! ✨" },
+    { c:"التقنية", t:"أُرسلت أول رسالة بريد إلكتروني عام 1971، وأرسلها المهندس راي توملينسون 📧" },
+    { c:"التقنية", t:"أطلق تيم بيرنرز-لي أول موقع إلكتروني في العالم عام 1991، وكان صفحة نصية بسيطة 🌐" },
+    { c:"التقنية", t:"هاتفك الذكي يتفوق بفارق هائل على حاسوب مركبة أبولو 11 التي أوصلت الإنسان إلى القمر 📱" },
+    { c:"التقنية", t:"أول «خطأ برمجي» مسجّل عام 1947 كان عثّة حقيقية علقت داخل حاسوب، ومن هنا جاءت كلمة Bug 🐛" },
+    { c:"الصحة", t:"يولد الطفل بنحو 300 عظمة، يلتحم بعضها مع النمو ليصبح عددها 206 عظام عند البالغ 🦴" },
+    { c:"الصحة", t:"يضخ القلب نحو 7000 لتر من الدم يوميًا 🩸" },
+    { c:"الصحة", t:"يشكّل الماء نحو 60% من وزن جسم الإنسان البالغ 💧" },
+    { c:"الصحة", t:"يتجدد سطح جلدك بالكامل تقريبًا كل أربعة إلى ستة أسابيع 🧴" },
+    { c:"الصحة", t:"النوم الجيد يساعد الدماغ على تثبيت ما تعلّمته خلال اليوم 😴" },
+    { c:"التاريخ", t:"كانت كليوباترا أقرب زمنيًا إلى هبوط الإنسان على القمر منها إلى بناء الهرم الأكبر! 🏺" },
+    { c:"التاريخ", t:"تُعد جامعة القرويين في فاس، التي أسستها فاطمة الفهرية عام 859م، من أقدم الجامعات العاملة في العالم 🎓" },
+    { c:"التاريخ", t:"أسس ابن الهيثم علم البصريات الحديث، وأثّر كتابه «المناظر» في علماء أوروبا قرونًا 🔍" },
+    { c:"التاريخ", t:"دامت حرب المئة عام بين إنجلترا وفرنسا 116 عامًا ⚔️" },
+    { c:"التاريخ", t:"أقصر حرب في التاريخ كانت بين بريطانيا وزنجبار عام 1896، ودامت نحو 38 دقيقة ⏱️" },
+    { c:"الألغاز", t:"ما زال مخطوط فوينيتش، الذي يعود إلى نحو 600 عام، مكتوبًا بلغة لم يستطع أحد فك رموزها 📜" },
+    { c:"الألغاز", t:"تشكّل المادة المظلمة نحو 27% من الكون، ولا يعرف العلماء بعد مما تتكوّن 🌑" },
+    { c:"الألغاز", t:"خطوط نازكا في البيرو رسوم عملاقة لا تُرى كاملة إلا من الأعلى، وما زال الغرض منها محل نقاش 🗿" },
+    { c:"الألغاز", t:"اختفى سكان مستعمرة رونوك الإنجليزية في أمريكا نحو عام 1590، وما زال مصيرهم غير معروف يقينًا 🕵️" },
+    { c:"تطوير الذات", t:"وجدت دراسة أن تكوين عادة جديدة يستغرق في المتوسط نحو 66 يومًا، لا 21 يومًا كما يُشاع 🌱" },
+    { c:"تطوير الذات", t:"قاعدة الدقيقتين: إذا كانت المهمة تستغرق أقل من دقيقتين، فأنجزها فورًا ✅" },
+    { c:"تطوير الذات", t:"تقنية بومودورو: اعمل 25 دقيقة بتركيز كامل، ثم استرح 5 دقائق 🍅" },
+    { c:"تطوير الذات", t:"يتعلم الدماغ أفضل عندما توزّع المراجعة على أيام متباعدة بدل الحفظ دفعة واحدة 🧠" },
+    { c:"تطوير الذات", t:"تدوين أهدافك يساعدك على توضيحها ومتابعة تقدّمك نحوها ✍️" }
   ]
 };
 
@@ -1113,10 +1115,10 @@ function toast(msg){const t=$("#toast");t.textContent=msg;t.classList.add("show"
 /* ---------- static content ---------- */
 $("#heroTag").innerHTML = SITE.tagline;
 $("#stats").innerHTML = SITE.stats.map(s=>`<div class="stat"><b>${esc(s.value)}</b><span>${esc(s.label)}</span></div>`).join("");
-$("#aboutName").textContent = SITE.creator;
+$("#aboutName").textContent = SITE.creator + " ✦ " + SITE.channel;
 $("#aboutRole").textContent = SITE.aboutRole;
 $("#aboutText").innerHTML = SITE.about.map(p=>`<p>${esc(p)}</p>`).join("");
-$("#foot").innerHTML = `© ${new Date().getFullYear()} ${esc(SITE.channel)}'s World · ${esc(SITE.creator)} · جميع الحقوق محفوظة`;
+$("#foot").innerHTML = `© ${new Date().getFullYear()} ${esc(SITE.channel)}'s World · ${esc(SITE.creator)} — جميع الحقوق محفوظة`;
 
 /* ---------- socials ---------- */
 const ICONS = {
@@ -1199,7 +1201,7 @@ const CATS = SITE.categories||[], catOf = n => CATS.find(c=>c.name===n);
 const cats = ["الكل", ...new Set([...CATS.map(c=>c.name), ...VIDEOS.map(v=>v.category).filter(Boolean)])];
 let curCat = "الكل";
 $("#chips").innerHTML = cats.map(c=>{ const k=catOf(c), n=c==="الكل"?VIDEOS.length:VIDEOS.filter(v=>v.category===c).length;
-  return `<button class="chip ${c===curCat?"on":""}" data-c="${esc(c)}" style="--cc:${k?k.color:"#cfe6ff"}">${k?`<i class="cdot"></i>`:""}${esc(c)} <small>${n}</small></button>`; }).join("");
+  return `<button class="chip ${c===curCat?"on":""}" data-c="${esc(c)}" style="--cc:${k?k.color:"#cfe6ff"}">${k?k.icon+" ":"✦ "}${esc(c)} <small>${n}</small></button>`; }).join("");
 $("#chips").addEventListener("click",e=>{
   const b=e.target.closest(".chip"); if(!b) return;
   curCat=b.dataset.c; document.querySelectorAll(".chip").forEach(x=>x.classList.toggle("on",x===b)); renderVideos();
@@ -1252,7 +1254,7 @@ function openVideo(i){
     `<button class="btn sm ghost" id="shareBtn">🔗 شارك</button>`;
   $("#shareBtn").onclick = async ()=>{
     const url = location.href.split("#")[0]+"#v"+i;
-    try{ if(navigator.share){await navigator.share({title:v.title,url})} else {await navigator.clipboard.writeText(url);toast("تم نسخ الرابط")} }catch(e){}
+    try{ if(navigator.share){await navigator.share({title:v.title,url})} else {await navigator.clipboard.writeText(url);toast("تم نسخ الرابط ✨")} }catch(e){}
   };
   modal.classList.remove("hide"); document.body.style.overflow="hidden";
   modal.scrollTop=0; $("#mClose").focus();
@@ -1280,7 +1282,7 @@ $("#reqForm").addEventListener("submit", async e=>{
   e.preventDefault();
   const f = e.target, data = Object.fromEntries(new FormData(f));
   if(data._gotcha) return;
-  if(!data.title.trim() || !data.details.trim()){ toast("اكتب عنوان الفكرة وشرحها أولًا"); (data.title.trim()?$("#fIdea"):$("#fTitle")).focus(); return; }
+  if(!data.title.trim() || !data.details.trim()){ toast("اكتب عنوان الفكرة وشرحها أولًا ✍️"); (data.title.trim()?$("#fIdea"):$("#fTitle")).focus(); return; }
   const btn=$("#sendBtn"); btn.disabled=true; btn.textContent="جارٍ الإرسال…";
   let ok=false;
   if(SITE.formEndpoint){
@@ -1298,9 +1300,9 @@ $("#reqForm").addEventListener("submit", async e=>{
     const m=loadMine(); m.push({t:data.title.trim(),d:new Date().toLocaleDateString("ar")});
     try{ localStorage.setItem(MINE_KEY,JSON.stringify(m.slice(-20))) }catch(err){}
     renderMine(); f.reset(); $("#cnt").textContent="0";
-    toast("تم إرسال اقتراحك، شكرًا لك.");
-  } else toast("تعذّر الإرسال، حاول مرة أخرى.");
-  btn.disabled=false; btn.textContent="أرسل الاقتراح";
+    toast("وصل اقتراحك! شكرًا لك 🚀");
+  } else toast("حدث خطأ في الإرسال، حاول مرة أخرى 🙏");
+  btn.disabled=false; btn.textContent="🚀 أرسل الاقتراح";
 });
 
 /* =====================================================================
@@ -1326,15 +1328,15 @@ $("#reqForm").addEventListener("submit", async e=>{
         const app=firebase.apps.find(a=>a.name==="rili")||firebase.initializeApp(cfg,"rili");
         db=app.firestore();
         db.collection(COL).onSnapshot(snap=>{ mode="live"; counts={}; snap.docs.forEach(d=>counts[d.id]=(d.data()||{}).votes||0); render(); },
-          err=>{ console.warn(err); db=null; local("تعذّر الاتصال، الأصوات محفوظة على جهازك فقط حاليًا."); });
+          err=>{ console.warn(err); db=null; local("تعذّر الاتصال بقاعدة البيانات — الأصوات تُحفظ على جهازك فقط حاليًا."); });
         return;
-      }catch(e){ console.warn(e); db=null; return local("تعذّر الاتصال، الأصوات محفوظة على جهازك فقط حاليًا."); }
+      }catch(e){ console.warn(e); db=null; return local("تعذّر الاتصال بقاعدة البيانات — الأصوات تُحفظ على جهازك فقط حاليًا."); }
     }
-    local("التصويت المشترك غير مفعّل، الأصوات محفوظة على جهازك فقط حاليًا.");
+    local("التصويت المشترك غير مفعّل — الأصوات تُحفظ على جهازك فقط حاليًا.");
   }
   function local(note){ mode="local"; lnote=note; counts=lsGet(LKEY,{}); render(); }
   function render(){
-    $("#boardNote").textContent = (mode==="local"&&lnote) || "الفكرة الأعلى تصويتًا لها الأولوية.";
+    $("#boardNote").textContent = (mode==="local"&&lnote) || "صوّت للفكرة التي تريد مشاهدتها — الفكرة الأعلى تصويتًا قد تكون الفيديو القادم! 🚀";
     const arr=IDEAS_LIST.map((x,i)=>({...x,i,votes:counts[x.id]||0}));
     if(sort==="top") arr.sort((a,b)=>b.votes-a.votes||a.i-b.i);
     const lead=sort==="top"&&arr[0]&&arr[0].votes>0;
@@ -1345,13 +1347,13 @@ $("#reqForm").addEventListener("submit", async e=>{
       </li>`).join("");
   }
   async function vote(id,btn){
-    if(voted.has(id)) return toast("سبق أن صوّتَّ لهذه الفكرة.");
+    if(voted.has(id)) return toast("لقد صوّتَّ لهذه الفكرة مسبقًا ✓");
     voted.add(id); lsSet(VKEY,[...voted]); counts[id]=(counts[id]||0)+1;
     btn.classList.add("done","pop"); btn.querySelector("b").textContent=counts[id];
     if(mode==="live"){ try{ await db.collection(COL).doc(id).set({votes:firebase.firestore.FieldValue.increment(1)},{merge:true}) }
-      catch(e){ voted.delete(id); lsSet(VKEY,[...voted]); counts[id]--; render(); return toast("تعذّر تسجيل صوتك، حاول مرة أخرى.") } }
+      catch(e){ voted.delete(id); lsSet(VKEY,[...voted]); counts[id]--; render(); return toast("تعذّر تسجيل صوتك، حاول مرة أخرى 🙏") } }
     else lsSet(LKEY,counts);
-    toast("تم تسجيل صوتك.");
+    toast("تم تسجيل صوتك ✨");
   }
   $("#ideas").addEventListener("click",e=>{ const b=e.target.closest(".vote"); if(b) vote(b.dataset.id,b) });
   $("#boardSort").addEventListener("click",e=>{ const b=e.target.closest(".chip"); if(!b) return; sort=b.dataset.s;
@@ -1365,28 +1367,28 @@ $("#reqForm").addEventListener("submit", async e=>{
 (function(){
   const Q=QUIZ.filter(q=>q&&q.q&&q.a&&q.a.length>1), N=Q.length;
   if(!N){ $("#quiz").remove(); document.querySelectorAll('a[href="#quiz"]').forEach(a=>a.closest("li")?a.closest("li").remove():a.remove()); return; }
-  const RANKS=[[1,"ممتاز"],[.6,"جيد جدًا"],[.2,"جيد"],[0,"حاول مرة أخرى"]];
+  const RANKS=[[1,"قائد مركبة فضائية 🚀"],[.6,"رائد فضاء ماهر 👨‍🚀"],[.2,"مستكشف ناشئ 🔭"],[0,"مرحبًا بك في الفضاء 🌙"]];
   const L=["أ","ب","ج","د"];
   let round=[], k=0, score=0;
   function start(){ round=Q.map(q=>({q:q.q,why:q.why,opts:q.a.map((t,i)=>({t,ok:i===(q.correct||1)-1}))})); k=0; score=0;
     $("#qEnd").classList.add("hide"); ["#qText","#qOpts","#qFb"].forEach(s=>$(s).classList.remove("hide")); show(); }
   function show(){
     const r=round[k]; $("#qProg").textContent=`السؤال ${k+1} من ${N}`; $("#qBar").style.width=(k/N*100)+"%";
-    $("#qStars").textContent=score+" / "+N;
+    $("#qStars").textContent="⭐".repeat(score)+"☆".repeat(N-score);
     $("#qText").textContent=r.q; $("#qFb").textContent="";
     $("#qOpts").innerHTML=r.opts.map((o,i)=>`<button class="q-opt" data-i="${i}"><span class="k">${L[i]}</span>${esc(o.t)}</button>`).join("");
   }
   $("#qOpts").addEventListener("click",e=>{
     const b=e.target.closest(".q-opt"); if(!b||b.disabled) return; const r=round[k], o=r.opts[+b.dataset.i];
     $("#qOpts").querySelectorAll(".q-opt").forEach((x,i)=>{ x.disabled=true; if(r.opts[i].ok) x.classList.add("ok") });
-    if(o.ok){ score++; $("#qFb").textContent="إجابة صحيحة. "+(r.why||""); } else { b.classList.add("no"); $("#qFb").textContent="إجابة خاطئة. "+(r.why||""); }
-    $("#qStars").textContent=score+" / "+N;
+    if(o.ok){ score++; $("#qFb").textContent="إجابة صحيحة! ✨ "+(r.why||""); } else { b.classList.add("no"); $("#qFb").textContent="ليست هذه الإجابة 🙈 "+(r.why||""); }
+    $("#qStars").textContent="⭐".repeat(score)+"☆".repeat(N-score);
     setTimeout(()=>{ k++; k<N? show() : end() }, 2200);
   });
   function end(){
     $("#qBar").style.width="100%"; ["#qText","#qOpts","#qFb"].forEach(s=>$(s).classList.add("hide"));
     $("#qProg").textContent="النتيجة"; $("#qRank").textContent=RANKS.find(([m])=>score/N>=m)[1];
-    $("#qScore").textContent=`${score} إجابات صحيحة من ${N}`;
+    $("#qScore").textContent=`أجبت عن ${score} من ${N} إجابات صحيحة`;
     let best=0; try{ best=Math.max(score,+localStorage.getItem("rili-quiz-best")||0); localStorage.setItem("rili-quiz-best",best) }catch(e){ best=score }
     $("#qBest").textContent=`أفضل نتيجة لك: ${best} من ${N}`; $("#qEnd").classList.remove("hide");
   }
@@ -1458,9 +1460,9 @@ document.querySelectorAll(".reveal").forEach(el=>rObs.observe(el));
     const ch=Array.from(txt); typeT=setInterval(()=>{ out.textContent=ch.slice(0,++k).join(""); if(k>=ch.length) clearInterval(typeT) },28); }
   const text=m=>m.say||m.t||"";
   function setHead(m){
-    if(m.say){ head.textContent="رائد Rili"; return; }
+    if(m.say){ head.textContent="👨‍🚀 رائد Rili"; return; }
     const k=m.c&&(SITE.categories||[]).find(c=>c.name===m.c);
-    head.textContent="هل تعلم؟"+(k?" · "+k.name:"");
+    head.textContent="👨‍🚀 هل تعلم؟"+(k?" · "+k.icon+" "+k.name:"");
   }
   function say(m){ cur=m; setHead(m); type(text(m)); schedHide(); }
   function show(){ box.classList.add("in"); const m=next(); setHead(m); cur=m; setTimeout(()=>type(text(m)),550); schedHide(); }
