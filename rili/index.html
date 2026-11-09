@@ -301,6 +301,57 @@ form.card{padding:24px}
 footer{padding:60px 0 40px;text-align:center;color:var(--mut);font-size:14px}
 footer .brand{justify-content:center;color:#fff;margin-bottom:6px}
 
+/* nav actions + sound */
+.nav-act{display:flex;gap:8px;align-items:center}
+.snd{display:flex;align-items:center;gap:6px;font:inherit;font-size:13px;font-weight:700;color:var(--mut);background:var(--glass-2);border:1px solid var(--line);border-radius:999px;height:38px;padding:0 12px;cursor:pointer;transition:.2s}
+.snd:hover,.snd.on{color:#fff;border-color:var(--pink)}
+.snd .eq{display:flex;gap:2px;align-items:flex-end;height:14px}
+.snd .eq i{width:3px;height:4px;background:currentColor;border-radius:2px}
+.snd.on .eq i{animation:eq .9s ease-in-out infinite}
+.snd.on .eq i:nth-child(2){animation-delay:-.3s}.snd.on .eq i:nth-child(3){animation-delay:-.6s}
+@keyframes eq{50%{height:14px}}
+@media (max-width:760px){.snd b{display:none}}
+/* warp */
+#warp{position:fixed;inset:0;width:100%;height:100%;display:block;z-index:70;pointer-events:none;opacity:0;transition:opacity .25s}
+#warp.on{opacity:1}
+.pball.launch{transform:scale(1.6)!important;filter:drop-shadow(0 0 40px var(--glow))!important;transition:transform .5s ease-in,filter .5s}
+/* quiz */
+.quiz{max-width:720px;margin:0 auto;padding:24px}
+.q-top{display:flex;justify-content:space-between;align-items:center;color:var(--mut);font-weight:700;font-size:14px}
+.q-stars{letter-spacing:2px;font-size:18px}
+.q-bar{height:8px;border-radius:99px;background:rgba(255,255,255,.08);margin:10px 0 18px;overflow:hidden}
+.q-bar i{display:block;height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,#f08ce6,#9b7bff);transition:width .5s}
+.quiz h3{font-size:clamp(21px,3.4vw,27px);margin:0 0 16px;line-height:1.5}
+.q-opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (max-width:560px){.q-opts{grid-template-columns:1fr}}
+.q-opt{font:inherit;font-size:16px;font-weight:600;color:var(--text);text-align:right;background:rgba(15,10,60,.45);border:1px solid var(--line);border-radius:16px;padding:12px 16px;cursor:pointer;transition:.2s;display:flex;gap:10px;align-items:center}
+.q-opt:hover:not(:disabled){border-color:var(--pink);transform:translateY(-2px)}
+.q-opt .k{width:28px;height:28px;flex:none;border-radius:50%;display:grid;place-items:center;background:var(--glass-2);font-size:13px}
+.q-opt.ok{background:rgba(63,191,106,.25);border-color:#4fe08a}
+.q-opt.no{background:rgba(255,77,94,.2);border-color:#ff6b7d}
+.q-opt:disabled{cursor:default}
+.q-fb{min-height:1.6em;margin:14px 0 0;font-weight:700;text-align:center}
+.q-end{text-align:center;padding:10px 0}
+.q-rank{font-family:"Cairo",sans-serif;font-weight:900;font-size:clamp(26px,5vw,36px);background:linear-gradient(90deg,#fff,#ffc8f6,#c9bbff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.q-best{color:var(--mut);font-size:14px}
+/* ideas board */
+.board{margin-top:22px;padding:22px}
+.board-head{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center}
+.board-head h3{font-size:22px;margin:0}
+.board-note{color:var(--mut);font-size:14px;margin:8px 0 12px}
+.ideas{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.ideas li{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;border-radius:16px;background:rgba(15,10,60,.35);border:1px solid var(--line)}
+.ideas li.top1{border-color:rgba(255,215,130,.7);background:linear-gradient(90deg,rgba(255,200,120,.12),rgba(15,10,60,.35))}
+.vote{flex:none;display:flex;flex-direction:column;align-items:center;justify-content:center;width:54px;min-height:54px;border-radius:14px;border:1px solid var(--line);background:var(--glass-2);color:var(--text);cursor:pointer;font:inherit;transition:.2s}
+.vote span{font-size:13px;line-height:1}
+.vote b{font-size:18px;line-height:1.2}
+.vote:hover{border-color:var(--pink)}
+.vote.done{background:linear-gradient(135deg,#f08ce6,#9b7bff);border-color:transparent;color:#fff}
+.vote.pop{animation:vpop .4s}
+@keyframes vpop{50%{transform:scale(1.2)}}
+.ideas h4{margin:0;font-size:17px;line-height:1.4}
+.ideas p{margin:2px 0 4px;color:#e2dcff;font-size:14px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.ideas small{color:var(--mut);font-size:12px}
 /* astronaut */
 .astro{position:fixed;left:14px;bottom:14px;z-index:40;display:flex;align-items:flex-end;gap:6px;direction:ltr;pointer-events:none;
   transform:translateX(-140%) rotate(-25deg);opacity:0;transition:transform 1.1s cubic-bezier(.3,1.3,.4,1),opacity .6s}
@@ -370,14 +421,18 @@ footer .brand{justify-content:center;color:#fff;margin-bottom:6px}
 <nav class="top">
   <div class="wrap">
     <a href="#home" class="brand"><span class="dot"></span>Rili's World</a>
-    <button class="menu-btn" id="menuBtn" aria-label="القائمة">☰</button>
     <ul class="links" id="links">
       <li><a href="#videos">الفيديوهات</a></li>
       <li><a href="#about">عن بدر</a></li>
       <li><a href="#socials">تابعني</a></li>
       <li><a href="#support">ادعمني</a></li>
+      <li><a href="#quiz">الاختبار</a></li>
       <li><a href="#requests">اقترح فيديو</a></li>
     </ul>
+    <div class="nav-act">
+      <button class="snd" id="sndBtn" aria-pressed="false" aria-label="صوت الفضاء"><span class="sic" aria-hidden="true">🔈</span><span class="eq"><i></i><i></i><i></i></span><b>صوت الفضاء</b></button>
+      <button class="menu-btn" id="menuBtn" aria-label="القائمة">☰</button>
+    </div>
   </div>
 </nav>
 
@@ -567,6 +622,29 @@ footer .brand{justify-content:center;color:#fff;margin-bottom:6px}
   </div>
 </section>
 
+<!-- ================= QUIZ ================= -->
+<section id="quiz">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <h2><svg class="spark" style="color:var(--pink)"><use href="#sp"/></svg>اختبار الفضاء<svg class="spark" style="color:var(--lav)"><use href="#sp"/></svg></h2>
+      <p>خمسة أسئلة من عالم Rili — اجمع النجوم واكتشف رتبتك الفضائية!</p>
+    </div>
+    <div class="card quiz reveal" id="quizBox">
+      <div class="q-top"><span id="qProg">السؤال 1 من 5</span><span class="q-stars" id="qStars"></span></div>
+      <div class="q-bar"><i id="qBar"></i></div>
+      <h3 id="qText"></h3>
+      <div class="q-opts" id="qOpts"></div>
+      <p class="q-fb" id="qFb"></p>
+      <div class="q-end hide" id="qEnd">
+        <div class="q-rank" id="qRank"></div>
+        <p id="qScore"></p>
+        <p class="q-best" id="qBest"></p>
+        <button class="btn main" id="qAgain">🚀 العب مرة أخرى</button>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ================= ABOUT ================= -->
 <section id="about">
   <div class="wrap about">
@@ -642,7 +720,7 @@ footer .brand{justify-content:center;color:#fff;margin-bottom:6px}
       <form class="card reveal" id="reqForm" novalidate>
         <div class="f-row">
           <div class="field"><label for="fName">اسمك <small>(اختياري)</small></label><input id="fName" name="name" maxlength="60" placeholder="مثلاً: سارة"></div>
-          <div class="field"><label for="fContact">حسابك أو إيميلك <small>(اختياري)</small></label><input id="fContact" name="contact" maxlength="100" placeholder="@username" dir="ltr" style="text-align:right"></div>
+          <div class="field"><label for="fContact">حسابك أو إيميلك <small>(اختياري، لا يظهر للعامة)</small></label><input id="fContact" name="contact" maxlength="100" placeholder="@username" dir="ltr" style="text-align:right"></div>
         </div>
         <div class="f-row">
           <div class="field"><label for="fType">نوع الطلب</label>
@@ -673,9 +751,18 @@ footer .brand{justify-content:center;color:#fff;margin-bottom:6px}
           <li>أقرأ كل اقتراح يوصلني.</li>
           <li>أختار الأفكار اللي تقدر تتحول لقصة ممتعة ومرسومة.</li>
           <li>إذا اخترت فكرتك وكتبت حسابك، بذكر اسمك في الفيديو 🌟</li>
+          <li>صوّت لأفكار الآخرين تحت — الفكرة الأعلى تصويتًا لها الأولوية 👑</li>
         </ol>
         <div class="mine hide" id="mine"><h4>اقتراحاتك المرسلة</h4><ul id="mineList"></ul></div>
       </aside>
+    </div>
+    <div class="card board reveal">
+      <div class="board-head">
+        <h3>💫 أفكار المتابعين — صوّت للفيديو القادم</h3>
+        <div class="chips" id="boardSort"><button class="chip on" data-s="top">الأكثر تصويتًا</button><button class="chip" data-s="new">الأحدث</button></div>
+      </div>
+      <p class="board-note" id="boardNote">جارٍ تحميل الأفكار…</p>
+      <ul class="ideas" id="ideas"></ul>
     </div>
   </div>
 </section>
@@ -702,6 +789,7 @@ footer .brand{justify-content:center;color:#fff;margin-bottom:6px}
   </div>
 </div>
 <div class="toast" id="toast"></div>
+<canvas id="warp" aria-hidden="true"></canvas>
 
 <!-- astronaut with space facts -->
 <div class="astro" id="astro" aria-live="polite">
@@ -778,6 +866,15 @@ const SITE = {
   // 1) أنشئ نموذج مجاني في https://formspree.io وضع رابطه هنا (مثل https://formspree.io/f/abcdwxyz)
   // 2) إذا تركته فاضي، يفتح الاقتراح في تطبيق الإيميل ويرسل إلى requestEmail
   formEndpoint: "",
+
+  // قاعدة بيانات التصويت على الأفكار (مشروع Firebase الخاص بك)
+  // اتركها null لتعطيل التصويت المشترك
+  firebase: {
+    apiKey: "AIzaSyBVWUXuR3AhZr7pDl1IBxuMKqf2ESswTr4",
+    authDomain: "badercan-63e2a.firebaseapp.com",
+    projectId: "badercan-63e2a"
+  },
+  ideasCollection: "rili_ideas",
   requestEmail: "rili@example.com",
 
   // معلومات رائد الفضاء — تظهر معلومة جديدة كل 20 ثانية
@@ -896,6 +993,27 @@ const VIDEOS = [
     points: ["سنة عطارد = 88 يوم أرضي.","سنة نبتون = حوالي 165 سنة أرضية."],
     chapters: []
   }
+];
+
+/* =====================================================================
+   ✦ أسئلة الاختبار — أول إجابة هي الصحيحة (تُخلط تلقائيًا) ✦
+   ===================================================================== */
+const QUIZ = [
+  { q:"ما أكبر كوكب في المجموعة الشمسية؟", a:["المشتري","زحل","نبتون","الأرض"], why:"يتسع المشتري لأكثر من 1300 كوكب بحجم الأرض." },
+  { q:"كم يستغرق ضوء الشمس تقريبًا ليصل إلى الأرض؟", a:["8 دقائق","8 ثوانٍ","8 ساعات","يومًا كاملًا"], why:"نحو ثماني دقائق وعشرين ثانية." },
+  { q:"أي كوكب يُلقَّب بالكوكب الأحمر؟", a:["المريخ","الزهرة","عطارد","المشتري"], why:"لونه الأحمر سببه أكسيد الحديد في تربته." },
+  { q:"ما اسم المجرة التي نعيش فيها؟", a:["درب التبانة","أندروميدا","المثلث","سحابة ماجلان الكبرى"], why:"وهي مجرة حلزونية فيها مئات المليارات من النجوم." },
+  { q:"أي كوكب هو الأشد حرارة في المجموعة الشمسية؟", a:["الزهرة","عطارد","المريخ","المشتري"], why:"غلافه الجوي الكثيف يحبس الحرارة فتصل إلى نحو 465°م." },
+  { q:"ما الذي لا يستطيع الإفلات من جاذبية الثقب الأسود؟", a:["ولا حتى الضوء","الصوت فقط","الكواكب الصغيرة فقط","الغبار فقط"], why:"جاذبيته شديدة إلى حد أن الضوء نفسه لا يفلت منها." },
+  { q:"كم عدد كواكب المجموعة الشمسية؟", a:["8","7","9","10"], why:"منذ عام 2006 صُنِّف بلوتو كوكبًا قزمًا." },
+  { q:"أي كوكب يدور وهو مائل على جانبه تقريبًا؟", a:["أورانوس","نبتون","زحل","الأرض"], why:"يميل محوره بنحو 98 درجة." },
+  { q:"ما أقرب نجم إلى الأرض؟", a:["الشمس","الشعرى اليمانية","بروكسيما سنتوري","نجم القطب"], why:"الشمس نجم! ويليها بروكسيما سنتوري." },
+  { q:"كم يُقدَّر عمر الكون؟", a:["13.8 مليار سنة","4.6 مليارات سنة","مليون سنة","100 مليار سنة"], why:"أما 4.6 مليارات سنة فهو عمر المجموعة الشمسية." },
+  { q:"أين يقع أعلى بركان في المجموعة الشمسية؟", a:["المريخ","الأرض","الزهرة","القمر"], why:"بركان أوليمبوس مونس، وارتفاعه نحو 22 كيلومترًا." },
+  { q:"من أول إنسان مشى على سطح القمر؟", a:["نيل أرمسترونغ","يوري غاغارين","باز ألدرين","مايكل كولنز"], why:"كان ذلك عام 1969 في رحلة أبولو 11." },
+  { q:"لماذا تبقى آثار الأقدام على القمر زمنًا طويلًا؟", a:["لانعدام الرياح والهواء","لأن تربته لزجة","لأنه بارد دائمًا","لأن جاذبيته قوية"], why:"لا شيء هناك يمحوها." },
+  { q:"أي كوكب كثافته أقل من كثافة الماء؟", a:["زحل","المشتري","الأرض","عطارد"], why:"نظريًا، كان سيطفو في حوض ماء ضخم!" },
+  { q:"كم تستغرق محطة الفضاء الدولية تقريبًا لتدور حول الأرض مرة واحدة؟", a:["90 دقيقة","24 ساعة","10 دقائق","أسبوعًا"], why:"لذا يشاهد روادها نحو 16 شروقًا يوميًا." }
 ];
 
 /* ===================================================================== */
@@ -1049,17 +1167,17 @@ $("#reqForm").addEventListener("submit", async e=>{
   e.preventDefault();
   const f = e.target, data = Object.fromEntries(new FormData(f));
   if(data._gotcha) return;
-  if(!data.title.trim() || !data.details.trim()){ toast("اكتب عنوان الفكرة وشرحها أولاً ✍️"); (data.title.trim()?$("#fIdea"):$("#fTitle")).focus(); return; }
-  const btn=$("#sendBtn"); btn.disabled=true; btn.textContent="جاري الإرسال…";
-  let ok=false;
+  if(!data.title.trim() || !data.details.trim()){ toast("اكتب عنوان الفكرة وشرحها أولًا ✍️"); (data.title.trim()?$("#fIdea"):$("#fTitle")).focus(); return; }
+  const btn=$("#sendBtn"); btn.disabled=true; btn.textContent="جارٍ الإرسال…";
+  let ok=false, live=false;
+  try{ live = await IDEAS.add(data); ok=true; }catch(err){ console.warn(err) }
   if(SITE.formEndpoint){
     try{
       const r = await fetch(SITE.formEndpoint,{method:"POST",headers:{"Accept":"application/json","Content-Type":"application/json"},
         body:JSON.stringify({...data,_subject:"اقتراح فيديو لقناة Rili: "+data.title})});
-      ok=r.ok;
-    }catch(err){ ok=false }
-    if(!ok) toast("صار خطأ في الإرسال، جرّب مرة ثانية 🙏");
-  } else {
+      ok = ok || r.ok;
+    }catch(err){}
+  } else if(!live){
     const body = `الاسم: ${data.name||"-"}\nالتواصل: ${data.contact||"-"}\nالنوع: ${data.type}\nالمنصة: ${data.platform}\n\n${data.details}`;
     location.href = `mailto:${SITE.requestEmail}?subject=${encodeURIComponent("اقتراح فيديو: "+data.title)}&body=${encodeURIComponent(body)}`;
     ok=true;
@@ -1068,10 +1186,165 @@ $("#reqForm").addEventListener("submit", async e=>{
     const m=loadMine(); m.push({t:data.title.trim(),d:new Date().toLocaleDateString("ar")});
     try{ localStorage.setItem(MINE_KEY,JSON.stringify(m.slice(-20))) }catch(err){}
     renderMine(); f.reset(); $("#cnt").textContent="0";
-    toast("وصل اقتراحك! شكراً لك 🚀");
-  }
+    toast(live ? "وصلت فكرتك وأُضيفت إلى لوحة التصويت! 🚀" : "وصل اقتراحك! شكرًا لك 🚀");
+  } else toast("حدث خطأ في الإرسال، حاول مرة أخرى 🙏");
   btn.disabled=false; btn.textContent="🚀 أرسل الاقتراح";
 });
+
+/* =====================================================================
+   ✦ اقتراحات + تصويت (Firebase) ✦
+   ===================================================================== */
+const IDEAS = (function(){
+  const LKEY="rili-ideas-local", VKEY="rili-voted";
+  let db=null, list=[], sort="top", mode="local", lnote="";
+  const lsGet=(k,d)=>{ try{ return JSON.parse(localStorage.getItem(k)||"")||d }catch(e){ return d } };
+  const lsSet=(k,v)=>{ try{ localStorage.setItem(k,JSON.stringify(v)) }catch(e){} };
+  const voted=new Set(lsGet(VKEY,[]));
+  const loadScript=src=>new Promise((ok,bad)=>{ const s=document.createElement("script"); s.src=src; s.onload=ok; s.onerror=bad; document.head.appendChild(s) });
+  async function init(){
+    const cfg=SITE.firebase;
+    if(cfg && cfg.apiKey){
+      try{
+        await loadScript("https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js");
+        await loadScript("https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js");
+        const app=firebase.apps.find(a=>a.name==="rili")||firebase.initializeApp(cfg,"rili");
+        db=app.firestore();
+        db.collection(SITE.ideasCollection||"rili_ideas").limit(300).onSnapshot(snap=>{
+          mode="live"; list=snap.docs.map(d=>({id:d.id,...d.data()})).filter(x=>x && x.title && !x.hidden); render();
+        }, err=>{ console.warn(err); db=null; local("تعذّر الاتصال بقاعدة البيانات — الأفكار تظهر على جهازك فقط حاليًا."); });
+        return;
+      }catch(e){ console.warn(e); db=null; return local("تعذّر الاتصال بقاعدة البيانات — الأفكار تظهر على جهازك فقط حاليًا."); }
+    }
+    local("التصويت المشترك غير مفعّل — الأفكار تظهر على جهازك فقط حاليًا.");
+  }
+  function local(note){ mode="local"; lnote=note; list=lsGet(LKEY,[]); render(); }
+  function ts(x){ const c=x.created; return c? (c.toMillis? c.toMillis() : c.seconds? c.seconds*1000 : +c) : 0 }
+  function render(note){
+    $("#boardNote").textContent = note || (mode==="local"&&lnote) || (list.length? "صوّت للأفكار التي تريد مشاهدتها — الفكرة الأعلى تصويتًا قد تكون الفيديو القادم! 🚀" : "لا توجد أفكار بعد — كن أول من يقترح! ✨");
+    const arr=[...list].sort((a,b)=> sort==="top" ? (b.votes||0)-(a.votes||0) || ts(b)-ts(a) : ts(b)-ts(a)).slice(0,30);
+    $("#ideas").innerHTML = arr.map((x,i)=>`
+      <li class="${sort==="top"&&i===0&&(x.votes||0)>0?"top1":""}">
+        <button class="vote ${voted.has(x.id)?"done":""}" data-id="${esc(x.id)}" aria-label="تصويت"><span>▲</span><b>${x.votes||0}</b></button>
+        <div><h4>${sort==="top"&&i===0&&(x.votes||0)>0?"👑 ":""}${esc(x.title)}</h4>${x.details?`<p>${esc(x.details)}</p>`:""}
+        <small>${esc(x.name||"متابع مجهول")} · ${esc(x.type||"")}${x.platform?" · "+esc(x.platform):""}</small></div>
+      </li>`).join("");
+  }
+  async function vote(id,btn){
+    if(voted.has(id)) return toast("لقد صوّتَّ لهذه الفكرة مسبقًا 💜");
+    voted.add(id); lsSet(VKEY,[...voted]);
+    const it=list.find(x=>x.id===id); if(it) it.votes=(it.votes||0)+1;
+    btn.classList.add("done","pop"); btn.querySelector("b").textContent=it?it.votes:"";
+    if(mode==="live"){ try{ await db.collection(SITE.ideasCollection||"rili_ideas").doc(id).update({votes:firebase.firestore.FieldValue.increment(1)}) }
+      catch(e){ voted.delete(id); lsSet(VKEY,[...voted]); if(it) it.votes--; render(); return toast("تعذّر تسجيل صوتك، حاول مرة أخرى 🙏") } }
+    else lsSet(LKEY,list);
+    toast("تم تسجيل صوتك ✨");
+  }
+  async function add(d){
+    const item={title:d.title.trim().slice(0,120),details:d.details.trim().slice(0,1500),type:d.type,platform:d.platform,name:(d.name||"").trim().slice(0,60),votes:0,hidden:false};
+    if(mode==="live"){ await db.collection(SITE.ideasCollection||"rili_ideas").add({...item,created:firebase.firestore.FieldValue.serverTimestamp()}); return true; }
+    const id="l"+Date.now(); list.push({...item,id,created:Date.now()}); lsSet(LKEY,list); render(); return false;
+  }
+  $("#ideas").addEventListener("click",e=>{ const b=e.target.closest(".vote"); if(b) vote(b.dataset.id,b) });
+  $("#boardSort").addEventListener("click",e=>{ const b=e.target.closest(".chip"); if(!b) return; sort=b.dataset.s;
+    $("#boardSort").querySelectorAll(".chip").forEach(c=>c.classList.toggle("on",c===b)); render(); });
+  init();
+  return { add, isLive:()=>mode==="live" };
+})();
+
+/* =====================================================================
+   ✦ اختبار الفضاء ✦
+   ===================================================================== */
+(function(){
+  const Q=QUIZ, N=Math.min(5,Q.length); if(!N) return;
+  const RANKS=[[5,"قائد مركبة فضائية 🚀"],[3,"رائد فضاء ماهر 👨‍🚀"],[1,"مستكشف ناشئ 🔭"],[0,"مرحبًا بك في الفضاء 🌙"]];
+  const L=["أ","ب","ج","د"];
+  let round=[], k=0, score=0;
+  const shuffle=a=>{ a=[...a]; for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]} return a };
+  function start(){ round=shuffle(Q).slice(0,N).map(q=>({q:q.q,why:q.why,opts:shuffle(q.a.map((t,i)=>({t,ok:i===0})))})); k=0; score=0;
+    $("#qEnd").classList.add("hide"); ["#qText","#qOpts","#qFb"].forEach(s=>$(s).classList.remove("hide")); show(); }
+  function show(){
+    const r=round[k]; $("#qProg").textContent=`السؤال ${k+1} من ${N}`; $("#qBar").style.width=(k/N*100)+"%";
+    $("#qStars").textContent="⭐".repeat(score)+"☆".repeat(N-score);
+    $("#qText").textContent=r.q; $("#qFb").textContent="";
+    $("#qOpts").innerHTML=r.opts.map((o,i)=>`<button class="q-opt" data-i="${i}"><span class="k">${L[i]}</span>${esc(o.t)}</button>`).join("");
+  }
+  $("#qOpts").addEventListener("click",e=>{
+    const b=e.target.closest(".q-opt"); if(!b||b.disabled) return; const r=round[k], o=r.opts[+b.dataset.i];
+    $("#qOpts").querySelectorAll(".q-opt").forEach((x,i)=>{ x.disabled=true; if(r.opts[i].ok) x.classList.add("ok") });
+    if(o.ok){ score++; $("#qFb").textContent="إجابة صحيحة! ✨ "+(r.why||""); } else { b.classList.add("no"); $("#qFb").textContent="ليست هذه الإجابة 🙈 "+(r.why||""); }
+    $("#qStars").textContent="⭐".repeat(score)+"☆".repeat(N-score);
+    setTimeout(()=>{ k++; k<N? show() : end() }, 2200);
+  });
+  function end(){
+    $("#qBar").style.width="100%"; ["#qText","#qOpts","#qFb"].forEach(s=>$(s).classList.add("hide"));
+    $("#qProg").textContent="النتيجة"; $("#qRank").textContent=RANKS.find(([m])=>score>=m)[1];
+    $("#qScore").textContent=`أجبت عن ${score} من ${N} إجابات صحيحة`;
+    let best=0; try{ best=Math.max(score,+localStorage.getItem("rili-quiz-best")||0); localStorage.setItem("rili-quiz-best",best) }catch(e){ best=score }
+    $("#qBest").textContent=`أفضل نتيجة لك: ${best} من ${N}`; $("#qEnd").classList.remove("hide");
+  }
+  $("#qAgain").onclick=start; start();
+})();
+
+/* =====================================================================
+   ✦ صوت الفضاء (يُولَّد داخل المتصفح — بدون ملفات) ✦
+   ===================================================================== */
+(function(){
+  const btn=$("#sndBtn"); let ac=null, master=null, on=false, chimeT;
+  function build(){
+    ac=new (window.AudioContext||window.webkitAudioContext)(); master=ac.createGain(); master.gain.value=0; master.connect(ac.destination);
+    const lp=ac.createBiquadFilter(); lp.type="lowpass"; lp.frequency.value=900; lp.Q.value=.7; lp.connect(master);
+    const lfo=ac.createOscillator(), lg=ac.createGain(); lfo.frequency.value=.05; lg.gain.value=400; lfo.connect(lg); lg.connect(lp.frequency); lfo.start();
+    [[110,"sine",.07],[110.6,"sine",.05],[164.81,"triangle",.035],[220,"sine",.03],[329.63,"sine",.012]].forEach(([f,t,g])=>{
+      const o=ac.createOscillator(), gn=ac.createGain(); o.type=t; o.frequency.value=f; gn.gain.value=g; o.connect(gn); gn.connect(lp); o.start(); });
+    const buf=ac.createBuffer(1,ac.sampleRate*3,ac.sampleRate), d=buf.getChannelData(0); for(let i=0;i<d.length;i++) d[i]=Math.random()*2-1;
+    const ns=ac.createBufferSource(); ns.buffer=buf; ns.loop=true; const bp=ac.createBiquadFilter(); bp.type="bandpass"; bp.frequency.value=500; bp.Q.value=.6;
+    const ng=ac.createGain(); ng.gain.value=.012; ns.connect(bp); bp.connect(ng); ng.connect(master); ns.start();
+    const dl=ac.createDelay(1); dl.delayTime.value=.45; const fb=ac.createGain(); fb.gain.value=.45; dl.connect(fb); fb.connect(dl); dl.connect(master);
+    master._echo=dl;
+  }
+  const NOTES=[880,1046.5,1174.66,1318.51,1567.98,1760];
+  function chime(){
+    if(!on) return; const t=ac.currentTime, o=ac.createOscillator(), g=ac.createGain();
+    o.type="sine"; o.frequency.value=NOTES[Math.random()*NOTES.length|0]; g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(.035,t+.02); g.gain.exponentialRampToValueAtTime(.0001,t+2.6);
+    o.connect(g); g.connect(master); g.connect(master._echo); o.start(t); o.stop(t+2.7);
+    chimeT=setTimeout(chime,2500+Math.random()*4500);
+  }
+  btn.onclick=async()=>{
+    if(!ac) build(); on=!on; btn.classList.toggle("on",on); btn.setAttribute("aria-pressed",on); btn.querySelector(".sic").textContent=on?"🔊":"🔈";
+    const t=ac.currentTime; master.gain.cancelScheduledValues(t); master.gain.setValueAtTime(master.gain.value,t);
+    if(on){ await ac.resume(); master.gain.linearRampToValueAtTime(.6,t+2); chime(); }
+    else { clearTimeout(chimeT); master.gain.linearRampToValueAtTime(0,t+.8); setTimeout(()=>{ if(!on) ac.suspend() },900); }
+  };
+})();
+
+/* =====================================================================
+   ✦ السفر إلى الأقسام (قفزة فضائية) ✦
+   ===================================================================== */
+(function(){
+  const c=$("#warp"), x=c.getContext("2d"); let busy=false;
+  document.addEventListener("click",e=>{
+    const a=e.target.closest('a[href^="#"]'); if(!a) return; const id=a.getAttribute("href"); if(id.length<2) return;
+    const tgt=document.querySelector(id); if(!tgt) return; e.preventDefault();
+    const top=tgt.getBoundingClientRect().top+scrollY-(id==="#home"?62:66);
+    if(reduce||busy){ scrollTo({top,behavior:"instant"}); return; }
+    busy=true; const ball=a.querySelector(".pball"); if(ball) ball.classList.add("launch");
+    const W=c.width=innerWidth, H=c.height=innerHeight, cx=W/2, cy=H/2;
+    const st=Array.from({length:W<700?160:320},()=>({a:Math.random()*6.283,d:Math.random()*40+5,v:Math.random()*.6+.4,c:["#fff","#ffd0f4","#bfe3ff","#c9a8ff"][Math.random()*4|0]}));
+    const t0=performance.now(), DUR=950; let jumped=false;
+    c.classList.add("on");
+    (function f(now){
+      const p=Math.min(1,(now-t0)/DUR), sp=p<.5? p*2 : (1-p)*2;
+      x.fillStyle=`rgba(14,9,52,${.22+.3*sp})`; x.fillRect(0,0,W,H); const vg=x.createRadialGradient(cx,cy,0,cx,cy,Math.max(W,H)*.6); vg.addColorStop(0,`rgba(255,200,250,${.12*sp})`); vg.addColorStop(1,'rgba(0,0,0,0)'); x.fillStyle=vg; x.fillRect(0,0,W,H);
+      for(const s of st){ const d0=s.d; s.d+=s.v*(4+sp*60); const len=Math.min(220,sp*90*s.v+4);
+        x.strokeStyle=s.c; x.globalAlpha=.4+.6*sp; x.lineWidth=1+sp*1.5; x.beginPath();
+        x.moveTo(cx+Math.cos(s.a)*d0,cy+Math.sin(s.a)*d0); x.lineTo(cx+Math.cos(s.a)*(s.d+len),cy+Math.sin(s.a)*(s.d+len)); x.stroke();
+        if(s.d>Math.max(W,H)) s.d=Math.random()*30; }
+      x.globalAlpha=1;
+      if(p>=.5 && !jumped){ jumped=true; scrollTo({top,behavior:"instant"}); if(ball) ball.classList.remove("launch"); }
+      if(p<1) requestAnimationFrame(f); else { c.classList.remove("on"); setTimeout(()=>{x.clearRect(0,0,W,H); busy=false},260); }
+    })(t0);
+  });
+})();
 
 /* ---------- nav ---------- */
 $("#menuBtn").onclick=()=>$("#links").classList.toggle("open");

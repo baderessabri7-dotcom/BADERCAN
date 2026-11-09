@@ -17,3 +17,24 @@
 ## النشر مجاناً
 GitHub → Settings → Pages → اختر الفرع → يصير الموقع على:
 `https://<username>.github.io/BADERCAN/rili/`
+
+## لوحة التصويت على الأفكار (Firebase)
+الموقع يستخدم مشروع Firebase الخاص بك `badercan-63e2a` (نفس مشروع الصفحة الثانية)، في مجموعة منفصلة اسمها `rili_ideas`.
+
+1. افتح Firebase Console → Firestore Database → Rules، وأضف هذه القواعد (بدون حذف قواعدك الحالية):
+```
+match /rili_ideas/{id} {
+  allow read: if true;
+  allow create: if request.resource.data.votes == 0
+    && request.resource.data.title is string && request.resource.data.title.size() <= 120
+    && request.resource.data.details is string && request.resource.data.details.size() <= 1500;
+  allow update: if request.resource.data.diff(resource.data).affectedKeys().hasOnly(['votes'])
+    && request.resource.data.votes == resource.data.votes + 1;
+}
+```
+2. لإخفاء فكرة غير مناسبة: افتحها في Firestore وغيّر `hidden` إلى `true`.
+3. إذا الاتصال فشل، اللوحة تشتغل على جهاز الزائر فقط وتكتب ملاحظة بذلك.
+4. حساب/إيميل صاحب الاقتراح **لا يُحفظ** في اللوحة العامة؛ يوصلك فقط إذا ضبطت `formEndpoint`.
+
+## الاختبار
+الأسئلة في `const QUIZ` — أول إجابة في كل سؤال هي الصحيحة (الموقع يخلطها تلقائيًا). كل جولة 5 أسئلة عشوائية.
