@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>لوحة تحكم Rili</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#15114a;--card:#241c78;--card2:#2e2490;--line:rgba(190,175,255,.28);--text:#f4f1ff;--mut:#c4bcf2;--pink:#f39ae8;--ok:#4fe08a;--bad:#ff6b7d;color-scheme:dark}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:linear-gradient(180deg,#15114a,#2a2190) fixed;color:var(--text);font-family:"Cairo",system-ui,sans-serif;font-size:16px;line-height:1.6;min-height:100vh}
+.wrap{max-width:860px;margin:0 auto;padding:16px 16px 120px}
+header{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+h1{font-size:24px;margin:0;font-weight:800}
+h1 span{font-family:system-ui;font-weight:700;direction:ltr;display:inline-block}
+#who{color:var(--mut);font-size:14px;display:flex;gap:8px;align-items:center}
+.card{background:rgba(36,28,120,.75);border:1px solid var(--line);border-radius:18px;padding:16px;margin-bottom:12px}
+.btn{font:inherit;font-weight:700;border:0;border-radius:999px;padding:10px 18px;cursor:pointer;color:#fff;background:rgba(255,255,255,.1);border:1px solid var(--line);text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+.btn.main{background:linear-gradient(135deg,#f08ce6,#9b7bff);border:0}
+.btn.sm{padding:6px 12px;font-size:14px}
+.savebar .btn{white-space:nowrap}
+@media (max-width:480px){.savebar .btn{padding:8px 12px;font-size:14px}#status{font-size:12px}}
+.btn.del{color:#ffb3bc;border-color:rgba(255,107,125,.5)}
+.btn:disabled{opacity:.5;cursor:default}
+.hide{display:none!important}
+.tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:6px;margin-bottom:10px;scrollbar-width:thin}
+.tab{flex:none;font:inherit;font-weight:700;font-size:14px;color:var(--mut);background:rgba(255,255,255,.06);border:1px solid var(--line);border-radius:999px;padding:7px 14px;cursor:pointer}
+.tab.on{color:#1b1550;background:linear-gradient(135deg,#ffd6f8,#c9bbff);border-color:transparent}
+.help{color:var(--mut);font-size:14px;margin:0 0 12px}
+.item{background:rgba(15,10,60,.45);border:1px solid var(--line);border-radius:16px;margin-bottom:10px;overflow:hidden}
+.item-h{display:flex;align-items:center;gap:8px;padding:10px 12px;cursor:pointer}
+.item-h b{flex:1;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.item-h .tools{display:flex;gap:4px}
+.item-h .tools button{font:inherit;width:32px;height:32px;border-radius:10px;border:1px solid var(--line);background:rgba(255,255,255,.06);color:var(--text);cursor:pointer}
+.item-b{padding:4px 12px 14px;border-top:1px solid var(--line)}
+.item:not(.open) .item-b{display:none}
+.f{display:flex;flex-direction:column;gap:4px;margin-top:10px}
+.f label{font-weight:700;font-size:14px}
+.f small{color:var(--mut);font-weight:400}
+.f input,.f textarea,.f select{font:inherit;font-size:15px;color:var(--text);background:rgba(10,6,45,.6);border:1px solid var(--line);border-radius:12px;padding:9px 12px;width:100%;outline:none}
+.f textarea{min-height:90px;resize:vertical}
+.f input:focus,.f textarea:focus,.f select:focus{border-color:var(--pink)}
+.f select option{background:#241c78}
+.f .ltr{direction:ltr;text-align:left}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (max-width:560px){.row2{grid-template-columns:1fr}}
+.chk{display:flex;align-items:center;gap:8px;margin-top:10px;font-weight:700;font-size:14px}
+.thumb{margin-top:8px;max-width:240px;border-radius:10px;border:1px solid var(--line)}
+.ok{color:var(--ok)}.bad{color:var(--bad)}
+.savebar{position:fixed;left:0;right:0;bottom:0;z-index:10;background:rgba(21,17,74,.95);backdrop-filter:blur(8px);border-top:1px solid var(--line);padding:12px 16px calc(12px + env(safe-area-inset-bottom))}
+.savebar .in{max-width:860px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:10px}
+#status{font-size:14px;color:var(--mut)}
+.add{width:100%;justify-content:center;margin-bottom:10px;border-style:dashed}
+.err{color:var(--bad);font-size:14px}
+.badge{font-size:12px;color:var(--mut);background:rgba(255,255,255,.08);border-radius:999px;padding:1px 8px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>✦ لوحة تحكم <span>Rili's World</span></h1>
+    <div id="who"></div>
+  </header>
+
+  <div class="card" id="loginCard">
+    <p>سجّل الدخول بحساب Google الخاص بك لتعديل محتوى الموقع. التعديلات تظهر في الموقع مباشرة بعد الحفظ.</p>
+    <button class="btn main" id="loginBtn">تسجيل الدخول بحساب Google</button>
+    <p class="err" id="loginErr"></p>
+  </div>
+
+  <div id="app" class="hide">
+    <nav class="tabs" id="tabs"></nav>
+    <div id="panel"></div>
+  </div>
+</div>
+<div class="savebar hide" id="saveBar"><div class="in"><span id="status">لا توجد تغييرات</span><span style="display:flex;gap:8px"><a class="btn sm" href="index.html" target="_blank">👁 عرض الموقع</a><button class="btn main" id="saveBtn">💾 حفظ ونشر</button></span></div></div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script>
+/* إعدادات Firebase — نفس المشروع المستخدم في الموقع */
+const FB = { apiKey:"AIzaSyBVWUXuR3AhZr7pDl1IBxuMKqf2ESswTr4", authDomain:"badercan-63e2a.firebaseapp.com", projectId:"badercan-63e2a" };
+const DOC = ["rili_site","content"];
+
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const SITE_KEYS=["tagline","aboutRole","about","stats","socials","support","categories","facts","factEvery","ideas","formEndpoint","requestEmail"];
+let C={site:{},videos:[],quiz:[]}, db=null, auth=null, dirty=false, tab="videos";
+
+function setDirty(v=true){ dirty=v; $("#status").innerHTML=v?'<span class="bad">● تغييرات غير محفوظة</span>':'<span class="ok">✓ كل شيء محفوظ</span>'; }
+addEventListener("beforeunload",e=>{ if(dirty){ e.preventDefault(); e.returnValue=""; } });
+
+/* ---------- defaults: read the data section from index.html ---------- */
+async function loadDefaults(){
+  try{
+    const html=await (await fetch("index.html",{cache:"no-store"})).text();
+    const a=html.indexOf("/*DATA-START*/"), b=html.indexOf("/*DATA-END*/");
+    if(a<0||b<0) throw 0;
+    const d=new Function(html.slice(a,b)+";return {SITE,VIDEOS,QUIZ};")();
+    const site={}; SITE_KEYS.forEach(k=>{ if(d.SITE[k]!==undefined) site[k]=d.SITE[k]; });
+    return {site,videos:d.VIDEOS||[],quiz:d.QUIZ||[]};
+  }catch(e){ return {site:{},videos:[],quiz:[]}; }
+}
+
+/* ---------- small form builder ---------- */
+const today=()=>new Date().toISOString().slice(0,10);
+function ytId(u){ u=String(u||"").trim(); if(!u) return ""; if(/^[\w-]{11}$/.test(u)) return u;
+  const m=u.match(/(?:youtu\.be\/|v=|\/shorts\/|\/embed\/|\/live\/)([\w-]{11})/); return m?m[1]:""; }
+function field(obj,f){
+  const w=document.createElement("div"); w.className="f";
+  const lab=`<label>${esc(f.label)}${f.hint?` <small>${esc(f.hint)}</small>`:""}</label>`;
+  let v=obj[f.k];
+  if(f.type==="check"){ w.className="chk"; w.innerHTML=`<input type="checkbox" ${v?"checked":""}> ${esc(f.label)}`; w.querySelector("input").onchange=e=>{obj[f.k]=e.target.checked;setDirty()}; return w; }
+  if(f.type==="select"){ const opts=typeof f.options==="function"?f.options():f.options;
+    w.innerHTML=lab+`<select>${opts.map(o=>`<option ${o===v?"selected":""}>${esc(o)}</option>`).join("")}</select>`;
+    w.querySelector("select").onchange=e=>{obj[f.k]=e.target.value;setDirty();f.onchange&&f.onchange()}; return w; }
+  let val=v, multi=false;
+  if(f.type==="lines"){ val=(v||[]).join("\n"); multi=true; }
+  if(f.type==="paras"){ val=(v||[]).join("\n\n"); multi=true; }
+  if(f.type==="chapters"){ val=(v||[]).map(c=>c.join(" ")).join("\n"); multi=true; }
+  if(f.type==="textarea"){ multi=true; }
+  if(f.type==="youtube"){ val=obj.youtubeUrl||(obj.youtubeId?"https://youtu.be/"+obj.youtubeId:""); }
+  w.innerHTML=lab+(multi?`<textarea class="${f.ltr?"ltr":""}" placeholder="${esc(f.ph||"")}">${esc(val??"")}</textarea>`
+    :`<input class="${f.ltr?"ltr":""}" type="${f.inputType||"text"}" value="${esc(val??"")}" placeholder="${esc(f.ph||"")}">`);
+  const inp=w.querySelector("input,textarea");
+  inp.oninput=()=>{ const t=inp.value;
+    if(f.type==="lines") obj[f.k]=t.split("\n").map(x=>x.trim()).filter(Boolean);
+    else if(f.type==="paras") obj[f.k]=t.split(/\n\s*\n/).map(x=>x.trim()).filter(Boolean);
+    else if(f.type==="chapters") obj[f.k]=t.split("\n").map(x=>x.trim()).filter(Boolean).map(x=>{const m=x.match(/^(\d{1,2}:\d{2}(?::\d{2})?)\s*[-–—]?\s*(.*)$/);return m?[m[1],m[2]]:["",x]});
+    else if(f.type==="youtube"){ obj.youtubeUrl=t.trim(); obj.youtubeId=ytId(t); showThumb(); }
+    else if(f.inputType==="number") obj[f.k]=+t;
+    else obj[f.k]=t;
+    setDirty(); f.onchange&&f.onchange(); };
+  function showThumb(){ let im=w.querySelector("img"), st=w.querySelector(".yt-st");
+    if(!st){ st=document.createElement("small"); st.className="yt-st"; w.appendChild(st); }
+    if(obj.youtubeId){ st.innerHTML='<span class="ok">✓ تم التعرّف على الفيديو</span>'; if(!im){ im=document.createElement("img"); im.className="thumb"; w.appendChild(im); } im.src=`https://i.ytimg.com/vi/${obj.youtubeId}/mqdefault.jpg`; }
+    else { st.innerHTML=obj.youtubeUrl?'<span class="bad">الرابط غير صحيح — انسخ رابط الفيديو من يوتيوب</span>':""; if(im) im.remove(); } }
+  if(f.type==="youtube") showThumb();
+  return w;
+}
+function listEditor(arr,{fields,title,addLabel,make,fixed,open}){
+  const box=document.createElement("div");
+  function draw(){
+    box.innerHTML="";
+    if(!fixed){ const add=document.createElement("button"); add.className="btn add"; add.textContent="＋ "+addLabel;
+      add.onclick=()=>{ arr.unshift(make()); setDirty(); draw(); box.querySelector(".item").classList.add("open"); }; box.appendChild(add); }
+    arr.forEach((it,i)=>{
+      const el=document.createElement("div"); el.className="item"+(open?" open":"");
+      el.innerHTML=`<div class="item-h"><b>${esc(title(it,i)||"(بدون عنوان)")}</b><span class="tools">${fixed?"":`<button data-a="up" title="لأعلى">↑</button><button data-a="dn" title="لأسفل">↓</button><button data-a="del" title="حذف">🗑</button>`}</span></div><div class="item-b"></div>`;
+      const body=el.querySelector(".item-b");
+      const hdr=el.querySelector(".item-h b");
+      fields.forEach(row=>{ const r=Array.isArray(row)?row:[row]; const g=document.createElement("div"); if(r.length>1) g.className="row2";
+        r.forEach(f=>g.appendChild(field(it,{...f,onchange:()=>{ hdr.textContent=title(it,i)||"(بدون عنوان)"; }}))); body.appendChild(g); });
+      el.querySelector(".item-h").onclick=e=>{ const a=e.target.dataset&&e.target.dataset.a;
+        if(a==="up"&&i>0){ [arr[i-1],arr[i]]=[arr[i],arr[i-1]]; setDirty(); draw(); }
+        else if(a==="dn"&&i<arr.length-1){ [arr[i+1],arr[i]]=[arr[i],arr[i+1]]; setDirty(); draw(); }
+        else if(a==="del"){ if(confirm("حذف هذا العنصر؟")){ arr.splice(i,1); setDirty(); draw(); } }
+        else if(!a) el.classList.toggle("open"); };
+      box.appendChild(el);
+    });
+    if(!arr.length&&fixed) box.innerHTML='<p class="help">لا توجد عناصر.</p>';
+  }
+  draw(); return box;
+}
+const catNames=()=>((C.site.categories||[]).map(c=>c.name)).concat(["أخرى"]);
+
+/* ---------- tabs ---------- */
+const TABS={
+  videos:{label:"📺 الفيديوهات",render(p){
+    p.innerHTML='<p class="help">أضف فيديو جديد بالزر، والصق رابط يوتيوب أو تيك توك. صورة الفيديو تظهر تلقائيًا من يوتيوب. الفيديوهات تُرتّب في الموقع حسب التاريخ.</p>';
+    p.appendChild(listEditor(C.videos,{addLabel:"إضافة فيديو",
+      make:()=>({title:"",date:today(),duration:"",category:catNames()[0],youtubeId:"",youtubeUrl:"",tiktokUrl:"",short:"",summary:[],points:[],chapters:[]}),
+      title:v=>`${v.title||"فيديو جديد"}  ·  ${v.date||""}`,
+      fields:[
+        {k:"title",label:"عنوان الفيديو"},
+        [{k:"date",label:"تاريخ النشر",inputType:"date",ltr:true},{k:"duration",label:"المدة",hint:"مثل 12:40",ltr:true}],
+        {k:"category",label:"المجال",type:"select",options:catNames},
+        {k:"youtube",label:"رابط يوتيوب",type:"youtube",ltr:true,ph:"https://youtu.be/..."},
+        {k:"tiktokUrl",label:"رابط تيك توك",ltr:true,ph:"https://www.tiktok.com/@.../video/..."},
+        {k:"short",label:"وصف قصير",hint:"يظهر على بطاقة الفيديو",type:"textarea"},
+        {k:"summary",label:"الملخص الكامل",hint:"افصل بين الفقرات بسطر فارغ",type:"paras"},
+        {k:"points",label:"أهم النقاط",hint:"كل نقطة في سطر",type:"lines"},
+        {k:"chapters",label:"فصول الفيديو",hint:"كل فصل في سطر: 0:00 المقدمة",type:"chapters",ph:"0:00 المقدمة\n2:15 الجزء الأول"}
+      ]}));
+  }},
+  links:{label:"🔗 الروابط والدعم",render(p){
+    p.innerHTML='<p class="help">ضع روابط حساباتك. اترك الرابط فارغًا لإخفاء الحساب من الموقع.</p><h3>حساباتي</h3>';
+    C.site.socials=C.site.socials||[];
+    p.appendChild(listEditor(C.site.socials,{fixed:true,open:true,title:s=>s.name,fields:[[{k:"handle",label:"اسم الحساب",ltr:true},{k:"url",label:"الرابط",ltr:true,ph:"https://"}]]}));
+    const h=document.createElement("h3"); h.textContent="طرق الدعم"; p.appendChild(h);
+    C.site.support=C.site.support||[];
+    p.appendChild(listEditor(C.site.support,{addLabel:"إضافة طريقة دعم",make:()=>({icon:"💜",title:"",text:"",btn:"ادعم الآن",url:"",star:false}),title:s=>`${s.icon||""} ${s.title||""}`,
+      fields:[[{k:"title",label:"العنوان"},{k:"icon",label:"أيقونة (إيموجي)"}],{k:"text",label:"الوصف",type:"textarea"},[{k:"btn",label:"نص الزر"},{k:"url",label:"الرابط",ltr:true}],{k:"star",label:"تمييزها (البطاقة المضيئة)",type:"check"}]}));
+  }},
+  ideas:{label:"🗳️ أفكار التصويت",render(p){
+    p.innerHTML='<p class="help">اكتب أفكار الفيديوهات القادمة، والمتابعون يصوّتون عليها. إذا حذفت كل الأفكار تختفي لوحة التصويت من الموقع.</p>';
+    C.site.ideas=C.site.ideas||[];
+    p.appendChild(listEditor(C.site.ideas,{addLabel:"إضافة فكرة",make:()=>({id:"i"+Date.now().toString(36),title:"",details:""}),title:x=>x.title||"فكرة جديدة",
+      fields:[{k:"title",label:"عنوان الفكرة"},{k:"details",label:"تفاصيل (اختياري)",type:"textarea"}]}));
+  }},
+  quiz:{label:"❓ الاختبار",render(p){
+    p.innerHTML='<p class="help">أسئلتك تظهر بنفس الترتيب. اكتب من خيارين إلى أربعة، واختر رقم الإجابة الصحيحة. إذا حذفت كل الأسئلة يختفي قسم الاختبار.</p>';
+    C.quiz.forEach(q=>{ q.a=q.a||[]; });
+    p.appendChild(listEditor(C.quiz,{addLabel:"إضافة سؤال",make:()=>({q:"",a:["","","",""],correct:1,why:""}),title:q=>q.q||"سؤال جديد",
+      fields:[{k:"q",label:"السؤال"},{k:"a",label:"الخيارات",hint:"كل خيار في سطر (2 إلى 4)",type:"lines"},
+        {k:"correct",label:"رقم الإجابة الصحيحة",hint:"1 = الخيار الأول",inputType:"number"},{k:"why",label:"شرح يظهر بعد الإجابة (اختياري)"}]}));
+  }},
+  facts:{label:"💡 معلومات رائد الفضاء",render(p){
+    p.innerHTML='<p class="help">المعلومات التي يقولها رائد الفضاء، معلومة كل 20 ثانية.</p>';
+    C.site.facts=(C.site.facts||[]).map(f=>typeof f==="string"?{c:"",t:f}:f);
+    p.appendChild(listEditor(C.site.facts,{addLabel:"إضافة معلومة",make:()=>({c:catNames()[0],t:""}),title:f=>`${f.c?"["+f.c+"] ":""}${f.t||"معلومة جديدة"}`,
+      fields:[{k:"c",label:"المجال",type:"select",options:catNames},{k:"t",label:"نص المعلومة",type:"textarea"}]}));
+  }},
+  general:{label:"⚙️ عام",render(p){
+    p.innerHTML='<p class="help">نصوص الصفحة الرئيسية وأرقام القناة وإعدادات استقبال الاقتراحات.</p>';
+    const s=C.site, g=document.createElement("div"); g.className="card";
+    [{k:"tagline",label:"النص تحت العنوان",hint:"يمكنك استخدام <b>…</b> للتمييز",type:"textarea"},
+     {k:"aboutRole",label:"وصفك القصير"},{k:"about",label:"النبذة عنك",hint:"افصل بين الفقرات بسطر فارغ",type:"paras"},
+     {k:"requestEmail",label:"إيميل استقبال الاقتراحات",ltr:true},{k:"formEndpoint",label:"رابط Formspree (اختياري)",ltr:true,ph:"https://formspree.io/f/..."}]
+     .forEach(f=>g.appendChild(field(s,f)));
+    p.appendChild(g);
+    const h=document.createElement("h3"); h.textContent="أرقام القناة"; p.appendChild(h);
+    s.stats=s.stats||[];
+    p.appendChild(listEditor(s.stats,{addLabel:"إضافة رقم",make:()=>({value:"",label:""}),title:x=>`${x.value} ${x.label}`,open:true,fields:[[{k:"value",label:"الرقم",ltr:true},{k:"label",label:"الوصف"}]]}));
+  }}
+};
+function renderTabs(){
+  $("#tabs").innerHTML=Object.entries(TABS).map(([k,t])=>`<button class="tab ${k===tab?"on":""}" data-t="${k}">${t.label}</button>`).join("");
+  const p=$("#panel"); p.innerHTML=""; TABS[tab].render(p);
+}
+$("#tabs").onclick=e=>{ const b=e.target.closest(".tab"); if(!b) return; tab=b.dataset.t; renderTabs(); };
+
+/* ---------- save ---------- */
+function normalize(){
+  C.videos.forEach(v=>{ v.youtubeId=ytId(v.youtubeUrl||v.youtubeId); v.platforms=[...(v.youtubeId||v.youtubeUrl?["youtube"]:[]),...(v.tiktokUrl?["tiktok"]:[])]; });
+  C.quiz=C.quiz.filter(q=>q.q&&(q.a||[]).filter(Boolean).length>1).map(q=>({...q,a:q.a.filter(Boolean),correct:Math.min(Math.max(1,+q.correct||1),q.a.filter(Boolean).length)}));
+  (C.site.ideas||[]).forEach(x=>{ if(!x.id) x.id="i"+Date.now().toString(36)+Math.random().toString(36).slice(2,5); });
+}
+$("#saveBtn").onclick=async()=>{
+  const b=$("#saveBtn"); b.disabled=true; $("#status").textContent="جارٍ الحفظ…";
+  try{
+    normalize();
+    await db.collection(DOC[0]).doc(DOC[1]).set({json:JSON.stringify(C),updated:firebase.firestore.FieldValue.serverTimestamp()});
+    setDirty(false); $("#status").innerHTML='<span class="ok">✓ تم الحفظ — التغييرات ظاهرة الآن في الموقع</span>'; renderTabs();
+  }catch(e){
+    console.warn(e);
+    $("#status").innerHTML=`<span class="bad">${e&&e.code==="permission-denied"?"ليس لديك صلاحية الحفظ — تأكد أن إيميلك مكتوب في قواعد Firestore (راجع الدليل)":"تعذّر الحفظ، تحقق من الاتصال وحاول مجددًا"}</span>`;
+  }
+  b.disabled=false;
+};
+
+/* ---------- auth + load ---------- */
+async function start(user){
+  $("#loginCard").classList.add("hide");
+  $("#who").innerHTML=`${esc(user.email||"")} <button class="btn sm" id="outBtn">خروج</button>`;
+  $("#outBtn").onclick=()=>auth.signOut().then(()=>location.reload());
+  $("#status").textContent="جارٍ تحميل المحتوى…";
+  const def=await loadDefaults();
+  let saved=null;
+  try{ const d=await db.collection(DOC[0]).doc(DOC[1]).get(); if(d.exists&&d.data().json) saved=JSON.parse(d.data().json); }catch(e){ console.warn(e); }
+  C={site:{...def.site,...(saved&&saved.site||{})},videos:(saved&&saved.videos)||def.videos,quiz:(saved&&saved.quiz)||def.quiz};
+  $("#app").classList.remove("hide"); $("#saveBar").classList.remove("hide");
+  renderTabs(); setDirty(false);
+  if(!saved) $("#status").innerHTML='<span class="bad">هذه القيم الافتراضية من الموقع — اضغط «حفظ ونشر» لتفعيل لوحة التحكم</span>';
+}
+try{
+  firebase.initializeApp(FB); auth=firebase.auth(); db=firebase.firestore();
+  auth.onAuthStateChanged(u=>{ if(u) start(u); });
+  auth.getRedirectResult().catch(e=>$("#loginErr").textContent="تعذّر تسجيل الدخول: "+(e.message||e));
+  $("#loginBtn").onclick=async()=>{
+    $("#loginErr").textContent="";
+    const pr=new firebase.auth.GoogleAuthProvider();
+    try{ await auth.signInWithPopup(pr); }
+    catch(e){ if(e.code==="auth/popup-blocked"||e.code==="auth/operation-not-supported-in-this-environment") return auth.signInWithRedirect(pr);
+      $("#loginErr").textContent = e.code==="auth/unauthorized-domain" ? "هذا النطاق غير مضاف في Firebase → Authentication → Settings → Authorized domains" :
+        e.code==="auth/operation-not-allowed" ? "فعّل تسجيل الدخول بـ Google في Firebase → Authentication → Sign-in method" : "تعذّر تسجيل الدخول: "+(e.message||e.code); }
+  };
+}catch(e){ $("#loginErr").textContent="تعذّر تحميل Firebase — افتح الصفحة من الموقع المنشور وتأكد من الاتصال بالإنترنت."; }
+</script>
+</body>
+</html>

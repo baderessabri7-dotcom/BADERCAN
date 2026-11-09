@@ -859,6 +859,7 @@ footer .brand{justify-content:center;color:#fff;margin-bottom:6px}
 </div>
 
 <script>
+/*DATA-START*/
 /* =====================================================================
    ✦ إعدادات الموقع — عدّل هذا الجزء فقط ✦
    ===================================================================== */
@@ -1066,6 +1067,30 @@ const QUIZ = [
 
 ];
 
+/*DATA-END*/
+
+/* =====================================================================
+   ✦ تحميل المحتوى من لوحة التحكم (admin.html) ✦
+   إذا حفظت محتوى من لوحة التحكم، يحلّ محل القيم المكتوبة أعلاه.
+   ===================================================================== */
+function applyContent(c){
+  if(!c||typeof c!=="object") return;
+  if(c.site&&typeof c.site==="object"){ const s={...c.site}; delete s.firebase; delete s.votesCollection; Object.assign(SITE,s); }
+  if(Array.isArray(c.videos)) VIDEOS.splice(0,VIDEOS.length,...c.videos);
+  if(Array.isArray(c.quiz)) QUIZ.splice(0,QUIZ.length,...c.quiz);
+}
+(function(){
+  let done=false; const go=()=>{ if(done) return; done=true; BOOT(); };
+  const fb=SITE.firebase;
+  if(!fb||!fb.projectId||!fb.apiKey||location.search.includes("local")){ go(); return; }
+  setTimeout(go,2500);
+  fetch(`https://firestore.googleapis.com/v1/projects/${fb.projectId}/databases/(default)/documents/rili_site/content?key=${fb.apiKey}`)
+    .then(r=>r.ok?r.json():null)
+    .then(d=>{ if(done) return; const j=d&&d.fields&&d.fields.json&&d.fields.json.stringValue; if(j) applyContent(JSON.parse(j)); })
+    .catch(()=>{}).finally(go);
+})();
+
+function BOOT(){
 /* ===================================================================== */
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
@@ -1713,6 +1738,7 @@ document.querySelectorAll(".reveal").forEach(el=>rObs.observe(el));
     setTimeout(shoot,rnd(3500,8000));
   })();
 })();
+} /* end BOOT */
 </script>
 </body>
 </html>
