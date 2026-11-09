@@ -28,6 +28,11 @@ match /rili_files/{doc} {
   allow read: if true;
   allow write: if request.auth != null && request.auth.token.email == "ضع_إيميلك_هنا@gmail.com";
 }
+match /rili_requests/{id} {
+  allow create: if request.resource.data.title is string && request.resource.data.title.size() > 0 && request.resource.data.title.size() <= 120
+    && request.resource.data.details is string && request.resource.data.details.size() <= 1500 && request.resource.data.read == false;
+  allow read, update, delete: if request.auth != null && request.auth.token.email == "ضع_إيميلك_هنا@gmail.com";
+}
 match /rili_votes/{id} {
   allow read: if true;
   allow create: if request.resource.data.keys().hasOnly(['votes']) && request.resource.data.votes == 1;
@@ -45,6 +50,6 @@ GitHub → Settings → Pages → اختر الفرع → الموقع يصير 
 ولوحة التحكم على `https://<username>.github.io/BADERCAN/rili/admin.html`
 
 ## ملاحظات
-- **اقتراحات الناس** من النموذج توصلك أنت فقط (إيميل، أو Formspree إذا وضعت رابطه في «عام»). ما تظهر للعامة.
+- **اقتراحات الناس** تظهر لك أنت فقط في تبويب **📬 الاقتراحات** في لوحة التحكم.
 - **الخطوط** (Cairo وFredoka) مضمّنة داخل `index.html` فتظهر صح حتى بدون إنترنت.
 - إذا ما قدر الموقع يتصل بقاعدة البيانات، يعرض القيم المكتوبة داخل `index.html` تلقائيًا.

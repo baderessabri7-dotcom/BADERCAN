@@ -97,6 +97,7 @@ details.how ol{margin:6px 0 0;padding-right:18px}
 @media (max-width:480px){.savebar .btn{padding:8px 12px;font-size:14px}#status{font-size:12px}}
 .add{width:100%;margin-bottom:12px;padding:14px;font-size:16px;border:1.5px dashed rgba(111,207,255,.6);background:rgba(111,207,255,.08)}
 .err{color:var(--bad);font-size:14px}
+.req.unread{border-color:rgba(111,207,255,.7);background:rgba(40,80,170,.35)}
 </style>
 </head>
 <body>
@@ -235,7 +236,7 @@ function listEditor(arr,{fields,title,head,addLabel,make,fixed,open}){
       el.querySelector(".item-h").onclick=e=>{ const a=e.target.dataset&&e.target.dataset.a;
         if(a==="up"&&i>0){ [arr[i-1],arr[i]]=[arr[i],arr[i-1]]; setDirty(); draw(); }
         else if(a==="dn"&&i<arr.length-1){ [arr[i+1],arr[i]]=[arr[i],arr[i+1]]; setDirty(); draw(); }
-        else if(a==="del"){ if(confirm("حذف هذا العنصر؟")){ arr.splice(i,1); setDirty(); draw(); } }
+        else if(a==="del"){ if(confirm("حذف هذا العنصر من الموقع؟")){ const gone=arr.splice(i,1)[0]; if(gone&&String(gone.pdf||"").startsWith("fs:")) deleteFile(gone.pdf.slice(3)); setDirty(); draw(); saveAll(); } }
         else if(!a) el.classList.toggle("open"); };
       box.appendChild(el);
     });
@@ -310,6 +311,10 @@ const TABS={
     p.appendChild(listEditor(C.site.facts,{addLabel:"إضافة معلومة",make:()=>({c:catNames()[0],t:""}),title:f=>`${f.c?"["+f.c+"] ":""}${f.t||"معلومة جديدة"}`,
       fields:[{k:"c",label:"المجال",type:"select",options:catNames},{k:"t",label:"نص المعلومة",type:"textarea"}]}));
   }},
+  inbox:{label:"📬 الاقتراحات",render(p){
+    p.innerHTML='<p class="help">اقتراحات المتابعين من نموذج «اقترح فيديو». أنت فقط من يراها.</p><div id="inboxList"><p class="help">جارٍ التحميل…</p></div>';
+    INBOX?renderInbox():loadInbox();
+  }},
   general:{label:"⚙️ عام",render(p){
     p.innerHTML='<p class="help">نصوص الصفحة الرئيسية وأرقام القناة وإعدادات استقبال الاقتراحات.</p>';
     const s=C.site, g=document.createElement("div"); g.className="card";
@@ -323,6 +328,35 @@ const TABS={
     p.appendChild(listEditor(s.stats,{addLabel:"إضافة رقم",make:()=>({value:"",label:""}),title:x=>`${x.value} ${x.label}`,open:true,fields:[[{k:"value",label:"الرقم",ltr:true},{k:"label",label:"الوصف"}]]}));
   }}
 };
+let INBOX=null;
+async function loadInbox(){
+  try{
+    const snap=await db.collection("rili_requests").orderBy("created","desc").limit(300).get();
+    INBOX=snap.docs.map(d=>({id:d.id,...d.data()}));
+  }catch(e){ console.warn(e); const box=$("#inboxList");
+    if(box) box.innerHTML=`<p class="bad">${e&&e.code==="permission-denied"?"لا توجد صلاحية، أضف قاعدة rili_requests في Firestore (راجع الدليل)":"تعذّر تحميل الاقتراحات"}</p>`; return; }
+  renderInbox();
+}
+function renderInbox(){
+  updateBadge(); const box=$("#inboxList"); if(!box||!INBOX) return;
+  if(!INBOX.length){ box.innerHTML='<p class="help">لا توجد اقتراحات بعد.</p>'; return; }
+  const fmt=t=>{ try{ const d=t&&t.toDate?t.toDate():new Date(t); return d.toLocaleString("ar",{dateStyle:"medium",timeStyle:"short"}) }catch(e){ return "" } };
+  const col=n=>(((C.site.categories||[]).find(c=>c.name===n))||{}).color||"#cfe6ff";
+  box.innerHTML=INBOX.map(r=>`<div class="item open req ${r.read?"":"unread"}" data-id="${esc(r.id)}">
+    <div class="item-h"><span class="ti"><span class="txt"><b>${r.read?"":"🔵 "}${esc(r.title)}</b>
+      <small><span>${esc(fmt(r.created))}</span>${r.category?`<span class="cbadge" style="--cc:${esc(col(r.category))}">${esc(r.category)}</span>`:""}</small></span></span>
+      <span class="tools">${r.read?"":`<button data-a="read" title="تمّت القراءة">✓</button>`}<button data-a="rdel" title="حذف">🗑</button></span></div>
+    <div class="item-b"><p style="white-space:pre-wrap;margin:8px 0">${esc(r.details)}</p>
+      <small class="help" style="display:block;margin:0">${esc([r.type,r.platform].filter(Boolean).join(" · "))}${r.name||r.contact?`<br>من: <b>${esc(r.name||"")}</b> ${r.contact?`<span dir="ltr">${esc(r.contact)}</span>`:""}`:""}</small></div></div>`).join("");
+  box.onclick=async e=>{ const btn=e.target.closest("button"); if(!btn) return; const id=btn.closest(".req").dataset.id, a=btn.dataset.a;
+    try{
+      if(a==="read"){ await db.collection("rili_requests").doc(id).update({read:true}); INBOX.find(x=>x.id===id).read=true; }
+      else if(a==="rdel"){ if(!confirm("حذف هذا الاقتراح؟")) return; await db.collection("rili_requests").doc(id).delete(); INBOX=INBOX.filter(x=>x.id!==id); }
+      renderInbox();
+    }catch(err){ console.warn(err); alert("تعذّر تنفيذ العملية"); } };
+}
+function updateBadge(){ const n=(INBOX||[]).filter(r=>!r.read).length; TABS.inbox.label="📬 الاقتراحات"+(n?` (${n})`:"");
+  const t=document.querySelector('.tab[data-t="inbox"]'); if(t) t.textContent=TABS.inbox.label; }
 function renderTabs(){
   $("#tabs").innerHTML=Object.entries(TABS).map(([k,t])=>`<button class="tab ${k===tab?"on":""}" data-t="${k}">${t.label}</button>`).join("");
   const p=$("#panel"); p.innerHTML=""; TABS[tab].render(p);
@@ -335,7 +369,7 @@ function normalize(){
   C.quiz=C.quiz.filter(q=>q.q&&(q.a||[]).filter(Boolean).length>1).map(q=>({...q,a:q.a.filter(Boolean),correct:Math.min(Math.max(1,+q.correct||1),q.a.filter(Boolean).length)}));
   (C.site.ideas||[]).forEach(x=>{ if(!x.id) x.id="i"+Date.now().toString(36)+Math.random().toString(36).slice(2,5); });
 }
-$("#saveBtn").onclick=async()=>{
+async function saveAll(){
   const cats=(C.site.categories||[]).map(c=>c.name), miss=C.videos.findIndex(v=>!cats.includes(v.category));
   if(miss>=0){ tab="videos"; renderTabs(); const it=$("#panel").querySelectorAll(".item")[miss]; if(it){ it.classList.add("open"); const f=it.querySelector(".cats"); if(f){ f.parentElement.classList.add("need"); it.scrollIntoView({behavior:"smooth",block:"center"}); } }
     $("#status").innerHTML='<span class="bad">اختر مجال الفيديو قبل الحفظ</span>'; return; }
@@ -349,7 +383,8 @@ $("#saveBtn").onclick=async()=>{
     $("#status").innerHTML=`<span class="bad">${e&&e.code==="permission-denied"?"ليس لديك صلاحية الحفظ — تأكد أن إيميلك مكتوب في قواعد Firestore (راجع الدليل)":"تعذّر الحفظ، تحقق من الاتصال وحاول مجددًا"}</span>`;
   }
   b.disabled=false;
-};
+}
+$("#saveBtn").onclick=()=>saveAll();
 
 /* ---------- auth + load ---------- */
 async function start(user){
@@ -359,10 +394,11 @@ async function start(user){
   $("#status").textContent="جارٍ تحميل المحتوى…";
   const def=await loadDefaults();
   let saved=null;
-  try{ const d=await db.collection(DOC[0]).doc(DOC[1]).get(); if(d.exists&&d.data().json) saved=JSON.parse(d.data().json); }catch(e){ console.warn(e); }
+  try{ const d=await db.collection(DOC[0]).doc(DOC[1]).get(); if(d.exists&&d.data().json) saved=JSON.parse(d.data().json); }
+  catch(e){ console.warn(e); $("#status").innerHTML='<span class="bad">تعذّر تحميل المحتوى المحفوظ. حدّث الصفحة وحاول مرة أخرى.</span>'; $("#saveBar").classList.remove("hide"); $("#saveBtn").disabled=true; return; }
   C={site:{...def.site,...(saved&&saved.site||{})},videos:(saved&&saved.videos)||def.videos,quiz:(saved&&saved.quiz)||def.quiz};
   $("#app").classList.remove("hide"); $("#saveBar").classList.remove("hide");
-  renderTabs(); setDirty(false);
+  renderTabs(); setDirty(false); loadInbox();
   if(!saved) $("#status").innerHTML='<span class="bad">هذه القيم الافتراضية من الموقع — اضغط «حفظ ونشر» لتفعيل لوحة التحكم</span>';
 }
 try{
