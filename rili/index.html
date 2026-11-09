@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Rili's World | بدر</title>
-<meta name="description" content="Rili's World — قناة بدر. ملخصات الفيديوهات، حسابات التواصل، الدعم، واقتراحات الفيديوهات.">
+<meta name="description" content="Rili's World — قناة بدر: معلومات في الفلك والصحة والتاريخ والألغاز وتطوير الذات. ملخصات الفيديوهات، حسابات التواصل، الدعم، واقتراحات الفيديوهات.">
 <meta name="theme-color" content="#211a6b">
 <style>/* الخطوط مضمّنة داخل الملف: Cairo (عربي) + Fredoka (العنوان) */
 @font-face {
@@ -229,7 +229,9 @@ nav.top .wrap{display:flex;align-items:center;justify-content:space-between;heig
 .chips{display:flex;flex-wrap:wrap;gap:8px}
 .chip{font:inherit;font-size:15px;font-weight:600;color:var(--mut);background:transparent;border:1px solid var(--line);border-radius:999px;padding:6px 14px;cursor:pointer;transition:.2s}
 .chip:hover{color:#fff}
-.chip.on{color:#1b1550;background:linear-gradient(135deg,#ffd6f8,#c9bbff);border-color:transparent}
+.chip.on{color:#1b1550;background:var(--cc,#ffd6f8);border-color:transparent;box-shadow:0 0 18px -2px var(--cc,#ffd6f8)}
+.chip small{opacity:.65;font-size:12px}
+.chip:hover{border-color:var(--cc,var(--pink))}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:18px}
 .vid{overflow:hidden;cursor:pointer;display:flex;flex-direction:column;transition:transform .25s,box-shadow .25s;text-align:right;font:inherit;color:inherit;padding:0}
 .vid:hover{transform:translateY(-4px);box-shadow:0 26px 60px -24px rgba(240,140,230,.55)}
@@ -770,7 +772,10 @@ footer .brand{justify-content:center;color:#fff;margin-bottom:6px}
             </select>
           </div>
         </div>
-        <div class="field"><label for="fTitle">عنوان الفكرة *</label><input id="fTitle" name="title" required maxlength="120" placeholder="مثلاً: ماذا لو اختفى القمر؟"></div>
+        <div class="field"><label for="fCat">المجال</label>
+          <select id="fCat" name="category"><option>الفلك</option><option>الصحة</option><option>التاريخ</option><option>الألغاز</option><option>تطوير الذات</option><option>مجال آخر</option></select>
+        </div>
+        <div class="field"><label for="fTitle">عنوان الفكرة *</label><input id="fTitle" name="title" required maxlength="120" placeholder="مثلًا: ماذا لو لم يكن للأرض قمر؟"></div>
         <div class="field"><label for="fIdea">اشرح فكرتك *</label><textarea id="fIdea" name="details" required maxlength="1500" placeholder="ليش الموضوع يهمك؟ وش تحب أركز عليه؟"></textarea><div class="counter"><span id="cnt">0</span>/1500</div></div>
         <input type="text" name="_gotcha" class="hide" tabindex="-1" autocomplete="off">
         <button class="btn main" type="submit" id="sendBtn" style="width:100%">🚀 أرسل الاقتراح</button>
@@ -824,7 +829,7 @@ footer .brand{justify-content:center;color:#fff;margin-bottom:6px}
 <div class="astro" id="astro" aria-live="polite">
   <div class="bubble">
     <button class="astro-x" id="astroX" aria-label="إخفاء رائد الفضاء">✕</button>
-    <b>👨‍🚀 هل تعلم؟</b>
+    <b>👨‍🚀 هل تعلم؟ <span id="factCat"></span></b>
     <p id="fact"></p>
   </div>
   <button class="astro-man" id="astroMan" aria-label="معلومة جديدة">
@@ -860,11 +865,11 @@ footer .brand{justify-content:center;color:#fff;margin-bottom:6px}
 const SITE = {
   channel: "Rili",
   creator: "بدر",
-  tagline: "أهلاً بك في <b>Rili's World</b> — عالم <b>بدر</b>. نسافر سوا بين النجوم والمجرات ونبسّط أكبر أسرار الكون برسوم ملونة وقصص ممتعة ✨",
+  tagline: "أهلاً بك في <b>Rili's World</b> — عالم <b>بدر</b>. معلومات ممتعة في <b>الفلك</b> و<b>الصحة</b> و<b>التاريخ</b> و<b>الألغاز</b> و<b>تطوير الذات</b>، برسوم ملونة وقصص بسيطة ✨",
   aboutRole: "صانع محتوى على يوتيوب وتيك توك",
   about: [
     "هلا! أنا بدر، صاحب قناة Rili 👋",
-    "أصنع فيديوهات مرسومة بالكامل بأسلوبي الخاص: سماء بنفسجية، غيوم، نجوم، ومجرات — وأحاول أشرح فيها مواضيع معقدة بطريقة بسيطة وممتعة.",
+    "أصنع فيديوهات مرسومة بالكامل بأسلوبي الخاص، أشرح فيها معلومات من الفلك والصحة والتاريخ والألغاز وتطوير الذات بطريقة بسيطة وممتعة.",
     "هذا الموقع هو بيت القناة: تلقى فيه ملخص كامل لكل فيديو، روابط حساباتي، طرق دعم القناة، ومكان ترسل فيه أفكارك للفيديوهات الجاية."
   ],
   stats: [
@@ -915,31 +920,43 @@ const SITE = {
   ],
   requestEmail: "rili@example.com",
 
+  // مجالات القناة — تظهر كأزرار تصفية فوق الفيديوهات
+  categories: [
+    { name:"الفلك",       icon:"🔭", color:"#b49bff", art:"galaxy"  },
+    { name:"الصحة",       icon:"🫀", color:"#ff8fae", art:"health"  },
+    { name:"التاريخ",     icon:"🏛️", color:"#ffc96b", art:"history" },
+    { name:"الألغاز",     icon:"🧩", color:"#5fe0d2", art:"mystery" },
+    { name:"تطوير الذات", icon:"🌱", color:"#7fe69c", art:"growth"  }
+  ],
+
   // معلومات رائد الفضاء — تظهر معلومة جديدة كل 20 ثانية
   factEvery: 20,
   facts: [
-    "اليوم الواحد على كوكب الزهرة أطول من سنته الكاملة! 🪐",
-    "ضوء الشمس الذي يصلك الآن غادرها قبل نحو ثماني دقائق وعشرين ثانية ☀️",
-    "لا يوجد هواء في الفضاء لينقل الصوت، لذا تحدث الانفجارات هناك في صمت تام 🤫",
-    "ملعقة صغيرة من مادة النجم النيوتروني تزن نحو مليار طن! ⚖️",
-    "يقع أعلى بركان في المجموعة الشمسية على المريخ، ويبلغ ارتفاعه نحو 22 كيلومترًا، أي ضعفي ونصف ارتفاع إيفرست تقريبًا 🌋",
-    "المشتري ضخم إلى درجة أنه يتسع لأكثر من 1300 كوكب بحجم الأرض 🤯",
-    "قد تبقى آثار أقدام رواد الفضاء على القمر ملايين السنين، لانعدام الرياح هناك 👣",
-    "كثافة زحل أقل من كثافة الماء، فلو وُجد حوض ماء ضخم بما يكفي لطفا فوقه! 🛁",
-    "تقترب مجرة أندروميدا منا، ويُتوقع أن تصطدم بمجرة درب التبانة بعد نحو 4.5 مليارات سنة 🌌",
-    "تشكّل الشمس وحدها نحو 99.8% من كتلة المجموعة الشمسية بأكملها ☀️",
-    "تدور محطة الفضاء الدولية حول الأرض مرة كل 90 دقيقة تقريبًا، فيشاهد روادها نحو 16 شروقًا في اليوم الواحد 🌅",
-    "جاذبية الثقب الأسود شديدة إلى حد أن الضوء نفسه لا يستطيع الإفلات منها 🕳️",
-    "يدور كوكب أورانوس وهو مائل على جانبه تقريبًا، كأنه كرة تتدحرج 🎳",
-    "يُعتقد أن تحت جليد قمر أوروبا التابع للمشتري محيطًا قد تفوق مياهه مياه محيطات الأرض كلها 🌊",
-    "رياح نبتون هي الأسرع في المجموعة الشمسية، إذ تتجاوز سرعتها 2000 كيلومتر في الساعة 💨",
-    "عندما تنظر إلى نجم بعيد، فأنت ترى ضوءًا غادره قبل مئات أو آلاف السنين، أي أنك ترى الماضي! ✨",
-    "يبتعد القمر عن الأرض بنحو 3.8 سنتيمترات كل عام 🌙",
-    "يزداد طول رواد الفضاء في الفضاء بنسبة قد تصل إلى 3%، لأن العمود الفقري يتمدد في غياب الجاذبية 📏",
-    "تبلغ حرارة سطح الزهرة نحو 465 درجة مئوية، فهي أشد حرارة من عطارد رغم أنه أقرب إلى الشمس 🔥",
-    "يشير ذيل المذنّب دائمًا بعيدًا عن الشمس، لا إلى الخلف من اتجاه حركته ☄️",
-    "يُقدَّر عمر الكون بنحو 13.8 مليار سنة ⏳",
-    "توجد نجوم يزيد قطرها على قطر شمسنا بأكثر من ألف مرة! ⭐"
+    { c:"الفلك", t:"اليوم الواحد على كوكب الزهرة أطول من سنته الكاملة! 🪐" },
+    { c:"الفلك", t:"ضوء الشمس الذي يصلك الآن غادرها قبل نحو ثماني دقائق وعشرين ثانية ☀️" },
+    { c:"الفلك", t:"لا يوجد هواء في الفضاء لينقل الصوت، لذا تحدث الانفجارات هناك في صمت تام 🤫" },
+    { c:"الفلك", t:"المشتري ضخم إلى درجة أنه يتسع لأكثر من 1300 كوكب بحجم الأرض 🤯" },
+    { c:"الفلك", t:"كثافة زحل أقل من كثافة الماء، فلو وُجد حوض ماء ضخم بما يكفي لطفا فوقه! 🛁" },
+    { c:"الفلك", t:"عندما تنظر إلى نجم بعيد، فأنت ترى ضوءًا غادره قبل مئات أو آلاف السنين، أي أنك ترى الماضي! ✨" },
+    { c:"الصحة", t:"يولد الطفل بنحو 300 عظمة، يلتحم بعضها مع النمو ليصبح عددها 206 عظام عند البالغ 🦴" },
+    { c:"الصحة", t:"يضخ القلب نحو 7000 لتر من الدم يوميًا ❤️" },
+    { c:"الصحة", t:"يشكّل الماء نحو 60% من وزن جسم الإنسان البالغ 💧" },
+    { c:"الصحة", t:"يتجدد سطح جلدك بالكامل تقريبًا كل أربعة إلى ستة أسابيع 🧴" },
+    { c:"الصحة", t:"النوم الجيد يساعد الدماغ على تثبيت ما تعلّمته خلال اليوم 😴" },
+    { c:"التاريخ", t:"كانت كليوباترا أقرب زمنيًا إلى هبوط الإنسان على القمر منها إلى بناء الهرم الأكبر! 🏺" },
+    { c:"التاريخ", t:"تُعد جامعة القرويين في فاس، التي أسستها فاطمة الفهرية عام 859م، من أقدم الجامعات العاملة في العالم 🎓" },
+    { c:"التاريخ", t:"أسس ابن الهيثم علم البصريات الحديث، وأثّر كتابه «المناظر» في علماء أوروبا قرونًا 🔍" },
+    { c:"التاريخ", t:"دامت حرب المئة عام بين إنجلترا وفرنسا 116 عامًا ⚔️" },
+    { c:"التاريخ", t:"أقصر حرب في التاريخ كانت بين بريطانيا وزنجبار عام 1896، ودامت نحو 38 دقيقة ⏱️" },
+    { c:"الألغاز", t:"ما زال مخطوط فوينيتش، الذي يعود إلى نحو 600 عام، مكتوبًا بلغة لم يستطع أحد فك رموزها 📜" },
+    { c:"الألغاز", t:"تشكّل المادة المظلمة نحو 27% من الكون، ولا يعرف العلماء بعد مما تتكوّن 🌑" },
+    { c:"الألغاز", t:"خطوط نازكا في البيرو رسوم عملاقة لا تُرى كاملة إلا من الأعلى، وما زال الغرض منها محل نقاش 🗿" },
+    { c:"الألغاز", t:"اختفى سكان مستعمرة رونوك الإنجليزية في أمريكا نحو عام 1590، وما زال مصيرهم غير معروف يقينًا 🕵️" },
+    { c:"تطوير الذات", t:"وجدت دراسة أن تكوين عادة جديدة يستغرق في المتوسط نحو 66 يومًا، لا 21 يومًا كما يُشاع 🌱" },
+    { c:"تطوير الذات", t:"قاعدة الدقيقتين: إذا كانت المهمة تستغرق أقل من دقيقتين، فأنجزها فورًا ✅" },
+    { c:"تطوير الذات", t:"تقنية بومودورو: اعمل 25 دقيقة بتركيز كامل، ثم استرح 5 دقائق 🍅" },
+    { c:"تطوير الذات", t:"يتعلم الدماغ أفضل عندما توزّع المراجعة على أيام متباعدة بدل الحفظ دفعة واحدة 🧠" },
+    { c:"تطوير الذات", t:"تدوين أهدافك يساعدك على توضيحها ومتابعة تقدّمك نحوها ✍️" }
   ]
 };
 
@@ -951,84 +968,86 @@ const SITE = {
 const VIDEOS = [
   {
     title: "رحلة من الأرض إلى حافة الكون",
-    date: "2026-10-28",
-    duration: "12:40",
-    category: "الفضاء",
-    platforms: ["youtube","tiktok"],
-    youtubeId: "",
-    youtubeUrl: "https://youtube.com/@Rili",
-    tiktokUrl: "https://www.tiktok.com/@rili",
-    art: "galaxy",
-    short: "نطلع من كوكب الأرض ونكبر الصورة خطوة بخطوة: القمر، النظام الشمسي، درب التبانة، لين نوصل لأكبر تجمعات المجرات.",
+    date: "2026-10-28", duration: "12:40", category: "الفلك",
+    platforms: ["youtube","tiktok"], youtubeId: "",
+    youtubeUrl: "https://youtube.com/@Rili", tiktokUrl: "https://www.tiktok.com/@rili",
+    short: "ننطلق من كوكب الأرض ونكبّر الصورة خطوة بخطوة: القمر، فالمجموعة الشمسية، فمجرة درب التبانة، حتى نصل إلى أكبر تجمّعات المجرات.",
     summary: [
-      "يبدأ الفيديو من كوكبنا الأزرق الصغير، ونشوف كيف يدور حوله القمر والأقمار الصناعية. بعدها نبتعد شوي شوي عشان نفهم حجم الأرض مقارنة بالشمس وبقية الكواكب.",
-      "ننتقل بعدها لمجرة درب التبانة: مجرة حلزونية فيها مئات المليارات من النجوم، ونحن عايشين في أحد أذرعها بعيد عن المركز المضيء.",
-      "في الجزء الأخير نشوف إن مجرتنا وحدة من مليارات المجرات، وإنها تنتمي لمجموعات وعناقيد ضخمة تكوّن شبكة كونية تشبه الخيوط."
+      "يبدأ الفيديو من كوكبنا الأزرق الصغير، ونرى كيف يدور حوله القمر والأقمار الصناعية، ثم نبتعد تدريجيًا لنفهم حجم الأرض مقارنةً بالشمس وبقية الكواكب.",
+      "ننتقل بعد ذلك إلى مجرة درب التبانة: مجرة حلزونية تضم مئات المليارات من النجوم، ونحن نعيش في أحد أذرعها بعيدًا عن مركزها المضيء.",
+      "وفي الجزء الأخير نكتشف أن مجرتنا واحدة من مليارات المجرات، تنتظم في مجموعات وعناقيد هائلة تشكّل ما يشبه شبكة كونية من الخيوط."
     ],
     points: [
-      "الضوء يحتاج حوالي 8 دقائق عشان يوصل من الشمس للأرض.",
-      "درب التبانة فيها تقريباً 100 إلى 400 مليار نجم.",
-      "الكون المرئي فيه أكثر من تريليون مجرة حسب التقديرات الحديثة."
+      "يحتاج ضوء الشمس نحو ثماني دقائق ليصل إلى الأرض.",
+      "تضم درب التبانة ما بين 100 و400 مليار نجم تقريبًا.",
+      "تشير التقديرات الحديثة إلى وجود أكثر من تريليون مجرة في الكون المرئي."
     ],
-    chapters: [["0:00","البداية من الأرض"],["2:15","القمر والأقمار الصناعية"],["4:30","النظام الشمسي"],["7:10","مجرة درب التبانة"],["10:20","الشبكة الكونية"]]
+    chapters: [["0:00","البداية من الأرض"],["2:15","القمر والأقمار الصناعية"],["4:30","المجموعة الشمسية"],["7:10","مجرة درب التبانة"],["10:20","الشبكة الكونية"]]
   },
   {
-    title: "ليش القمر ما يطيح على الأرض؟",
-    date: "2026-10-12",
-    duration: "0:58",
-    category: "أسئلة",
-    platforms: ["tiktok"],
-    youtubeId: "",
-    tiktokUrl: "https://www.tiktok.com/@rili",
-    art: "moon",
-    short: "سؤال بسيط جوابه مدهش: القمر فعلاً يطيح على الأرض… بس طول الوقت يفوتها!",
+    title: "ماذا يحدث لجسمك عندما لا تنام؟",
+    date: "2026-10-20", duration: "9:15", category: "الصحة",
+    platforms: ["youtube"], youtubeId: "", youtubeUrl: "https://youtube.com/@Rili",
+    short: "ليلة واحدة بلا نوم كافية لتؤثر في تركيزك ومزاجك. فماذا يحدث داخل جسمك ودماغك عندما تسهر؟",
     summary: [
-      "الجاذبية تسحب القمر باتجاه الأرض، لكن القمر يتحرك بسرعة جانبية كبيرة جداً.",
-      "النتيجة إنه يطيح باستمرار لكنه يفوت الأرض، فيرسم دائرة حولها — وهذا هو المدار."
+      "النوم ليس وقتًا ضائعًا؛ ففيه يرتّب الدماغ ما تعلّمه خلال اليوم ويثبّته في الذاكرة، ويستعيد الجسم طاقته.",
+      "عند قلة النوم يضعف التركيز وسرعة رد الفعل، ويصبح المزاج أكثر تقلبًا، وتتأثر قدرة الجسم على مقاومة الأمراض.",
+      "ومع تكرار السهر لفترات طويلة ترتفع مخاطر مشكلات صحية عديدة، لذلك يُنصح البالغون بالنوم سبع ساعات على الأقل كل ليلة."
     ],
     points: [
-      "سرعة القمر في مداره حوالي 1 كيلومتر في الثانية.",
-      "القمر يبتعد عن الأرض حوالي 3.8 سم كل سنة."
+      "يُنصح البالغون بسبع ساعات نوم أو أكثر كل ليلة.",
+      "يساعد النوم الدماغ على تثبيت المعلومات الجديدة في الذاكرة.",
+      "الشاشات قبل النوم قد تؤخر شعورك بالنعاس."
+    ],
+    chapters: [["0:00","لماذا ننام؟"],["2:30","الدماغ أثناء النوم"],["5:10","ليلة بلا نوم"],["7:20","نصائح لنوم أفضل"]]
+  },
+  {
+    title: "كيف بُنيت أهرامات الجيزة؟",
+    date: "2026-10-05", duration: "11:02", category: "التاريخ",
+    platforms: ["youtube","tiktok"], youtubeId: "",
+    youtubeUrl: "https://youtube.com/@Rili", tiktokUrl: "https://www.tiktok.com/@rili",
+    short: "أكثر من مليوني كتلة حجرية، قبل نحو 4500 عام. كيف استطاع المصريون القدماء بناء الهرم الأكبر؟",
+    summary: [
+      "بُني الهرم الأكبر في الجيزة للملك خوفو قبل نحو 4500 عام، وظل أعلى بناء صنعه الإنسان آلاف السنين.",
+      "تشير الاكتشافات الأثرية إلى أن البنّائين كانوا عمّالًا مهرة منظَّمين في فرق، عاشوا في قرى قريبة من موقع البناء، لا عبيدًا كما يُشاع.",
+      "أما طريقة رفع الكتل الضخمة فما زالت محل بحث، وأشهر التفسيرات استخدام منحدرات طويلة وزلاجات خشبية مع ترطيب الرمال لتسهيل السحب."
+    ],
+    points: [
+      "يتكوّن الهرم الأكبر من نحو 2.3 مليون كتلة حجرية.",
+      "كانت كليوباترا أقرب زمنيًا إلى هبوط الإنسان على القمر منها إلى بناء الهرم الأكبر.",
+      "عُثر قرب الأهرامات على بقايا قرى العمّال ومخابزهم."
+    ],
+    chapters: [["0:00","المقدمة"],["1:50","من بنى الأهرامات؟"],["5:00","رفع الحجارة"],["8:40","أسرار لم تُحل بعد"]]
+  },
+  {
+    title: "مخطوط فوينيتش: الكتاب الذي لم يستطع أحد قراءته",
+    date: "2026-09-22", duration: "1:05", category: "الألغاز",
+    platforms: ["tiktok","youtube"], youtubeId: "",
+    youtubeUrl: "https://youtube.com/@Rili", tiktokUrl: "https://www.tiktok.com/@rili",
+    short: "كتاب عمره نحو 600 عام، مكتوب بلغة مجهولة ومليء برسوم نباتات لا يعرفها أحد. فما سره؟",
+    summary: [
+      "يعود مخطوط فوينيتش إلى أوائل القرن الخامس عشر بحسب تحليل الكربون المشع، ويُحفظ اليوم في مكتبة جامعة ييل الأمريكية.",
+      "صفحاته مكتوبة بحروف غير معروفة، ومزيّنة برسوم نباتات وخرائط فلكية وأشكال غريبة، وقد حاول علماء ومحللو شفرات كثيرون فك رموزه دون نتيجة مؤكدة حتى الآن."
+    ],
+    points: [
+      "يحمل المخطوط اسم تاجر الكتب ويلفريد فوينيتش الذي اشتراه عام 1912.",
+      "لم يُثبت حتى اليوم أي تفسير كامل لنصه."
     ],
     chapters: []
   },
   {
-    title: "كيف تتولد النجوم داخل السُّحب الكونية",
-    date: "2026-09-30",
-    duration: "9:05",
-    category: "الفضاء",
-    platforms: ["youtube"],
-    youtubeId: "",
-    youtubeUrl: "https://youtube.com/@Rili",
-    art: "nebula",
-    short: "داخل سحب ضخمة من الغاز والغبار تنضغط المادة وتسخن لين تولد نجمة جديدة.",
+    title: "كم يومًا تحتاج لبناء عادة جديدة؟",
+    date: "2026-09-10", duration: "0:58", category: "تطوير الذات",
+    platforms: ["tiktok"], youtubeId: "", tiktokUrl: "https://www.tiktok.com/@rili",
+    short: "يقولون 21 يومًا… لكن الدراسات تقول شيئًا آخر!",
     summary: [
-      "نبدأ بسحابة سديمية باردة جداً من الهيدروجين والغبار. أي اضطراب بسيط يخلي أجزاء منها تنكمش بفعل الجاذبية.",
-      "كل ما انضغطت المادة زادت حرارتها، لين يوصل المركز لملايين الدرجات ويبدأ الاندماج النووي — وهنا تولد النجمة.",
-      "المادة اللي تبقى حول النجمة ممكن تتجمع وتصير كواكب، وهذا اللي صار مع نظامنا الشمسي قبل 4.6 مليار سنة."
+      "وجدت دراسة من جامعة كوليدج لندن أن تحوّل السلوك إلى عادة تلقائية استغرق في المتوسط نحو 66 يومًا، مع اختلاف كبير بين الأشخاص.",
+      "والخبر الجيد: تفويت يوم واحد لا يفسد العادة. الأهم هو الاستمرار، وربط العادة الجديدة بشيء تفعله يوميًا، مثل القراءة بعد شرب القهوة."
     ],
     points: [
-      "النجوم تولد في مجموعات وليس بشكل فردي غالباً.",
-      "سديم الجبار من أقرب مناطق ولادة النجوم لنا."
+      "تراوحت المدة في الدراسة بين 18 و254 يومًا.",
+      "اربط العادة الجديدة بعادة موجودة لتتذكرها بسهولة."
     ],
-    chapters: [["0:00","المقدمة"],["1:40","السحب السديمية"],["4:00","الانهيار والجاذبية"],["6:30","لحظة الولادة"]]
-  },
-  {
-    title: "لو عشت على كوكب ثاني… كم بيكون عمرك؟",
-    date: "2026-09-14",
-    duration: "1:02",
-    category: "تحديات",
-    platforms: ["tiktok","youtube"],
-    youtubeId: "",
-    youtubeUrl: "https://youtube.com/@Rili",
-    tiktokUrl: "https://www.tiktok.com/@rili",
-    art: "planet",
-    short: "السنة على كل كوكب طولها مختلف، فعمرك يتغير حسب المكان اللي تعيش فيه!",
-    summary: [
-      "السنة هي الوقت اللي يحتاجه الكوكب عشان يلف دورة كاملة حول الشمس. الكواكب القريبة سنتها قصيرة والبعيدة سنتها طويلة جداً.",
-      "يعني لو عمرك 20 سنة على الأرض، بيكون أكثر من 80 سنة على عطارد، وأقل من سنتين على المشتري!"
-    ],
-    points: ["سنة عطارد = 88 يوم أرضي.","سنة نبتون = حوالي 165 سنة أرضية."],
     chapters: []
   }
 ];
@@ -1102,6 +1121,26 @@ function artSVG(kind,seed){
       <circle r="22" fill="#fff" opacity=".95"/><circle r="38" fill="#ffd0fb" opacity=".35"/></g>`;
   } else if(kind==="moon"){
     main = `<circle cx="165" cy="85" r="58" fill="#3fa0ff" opacity=".25"/><circle cx="165" cy="85" r="44" fill="#e6e6ef"/><circle cx="150" cy="72" r="9" fill="#a5a4b8"/><circle cx="180" cy="98" r="7" fill="#a5a4b8"/><circle cx="182" cy="66" r="5" fill="#a5a4b8"/>`;
+  } else if(kind==="health"){
+    main = `<circle cx="160" cy="88" r="60" fill="#ff7a9c" opacity=".2"/>
+      <path d="M160 128 C120 100 108 82 116 66 C124 50 146 50 160 68 C174 50 196 50 204 66 C212 82 200 100 160 128Z" fill="#ff6f95"/>
+      <path d="M128 70 C132 62 140 60 146 62" stroke="#ffd0dd" stroke-width="5" stroke-linecap="round" fill="none"/>
+      <polyline points="96,92 130,92 140,74 152,110 164,82 172,92 224,92" fill="none" stroke="#fff" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>`;
+  } else if(kind==="history"){
+    main = `<circle cx="215" cy="58" r="22" fill="#ffd27a" opacity=".9"/><circle cx="215" cy="58" r="36" fill="#ffd27a" opacity=".2"/>
+      <path d="M90 140 L150 60 L210 140Z" fill="#e6b45c"/><path d="M150 60 L210 140 L170 140Z" fill="#b9803a"/>
+      <path d="M180 140 L220 92 L260 140Z" fill="#d9a24c"/><path d="M220 92 L260 140 L236 140Z" fill="#a8702e"/>
+      <path d="M110 114 H190 M120 100 H180 M130 86 H170" stroke="#f6d08a" stroke-width="2" opacity=".6"/>`;
+  } else if(kind==="mystery"){
+    main = `<circle cx="160" cy="86" r="62" fill="#4fd6c8" opacity=".18"/>
+      <text x="160" y="124" text-anchor="middle" font-family="Fredoka,sans-serif" font-weight="700" font-size="110" fill="#7ff0e2" style="filter:drop-shadow(0 0 10px #4fd6c8)">?</text>
+      <circle cx="112" cy="58" r="5" fill="#fff" opacity=".8"/><circle cx="212" cy="112" r="4" fill="#fff" opacity=".7"/>`;
+  } else if(kind==="growth"){
+    main = `<circle cx="160" cy="86" r="60" fill="#6fe08f" opacity=".18"/>
+      <path d="M160 140 C160 112 158 96 162 70" stroke="#3fbf6a" stroke-width="6" fill="none" stroke-linecap="round"/>
+      <path d="M161 92 C140 90 128 76 130 62 C146 62 160 74 161 92Z" fill="#6fe08f"/>
+      <path d="M162 74 C178 64 196 64 204 74 C192 88 174 88 162 74Z" fill="#4fd07a"/>
+      <path d="M200 120 L230 70 M230 70 L216 74 M230 70 L230 85" stroke="#ffe08a" stroke-width="4" stroke-linecap="round" fill="none"/>`;
   } else if(kind==="nebula"){
     main = `<circle cx="165" cy="85" r="70" fill="#f39ae8" opacity=".25"/><circle cx="140" cy="80" r="45" fill="#b48cff" opacity=".35"/><circle cx="195" cy="95" r="40" fill="#ff9fd6" opacity=".3"/><circle cx="165" cy="85" r="10" fill="#fff"/><circle cx="165" cy="85" r="24" fill="#fff4fd" opacity=".45"/>`;
   } else {
@@ -1115,9 +1154,11 @@ function artSVG(kind,seed){
 /* ---------- videos ---------- */
 const fmtDate = d => { try { return new Date(d).toLocaleDateString("ar",{year:"numeric",month:"long",day:"numeric"}) } catch(e){ return d } };
 const sorted = VIDEOS.map((v,i)=>({...v,_i:i})).sort((a,b)=>String(b.date).localeCompare(String(a.date)));
-const cats = ["الكل", ...new Set(VIDEOS.map(v=>v.category).filter(Boolean))];
+const CATS = SITE.categories||[], catOf = n => CATS.find(c=>c.name===n);
+const cats = ["الكل", ...new Set([...CATS.map(c=>c.name), ...VIDEOS.map(v=>v.category).filter(Boolean)])];
 let curCat = "الكل";
-$("#chips").innerHTML = cats.map(c=>`<button class="chip ${c===curCat?"on":""}" data-c="${esc(c)}">${esc(c)}</button>`).join("");
+$("#chips").innerHTML = cats.map(c=>{ const k=catOf(c), n=c==="الكل"?VIDEOS.length:VIDEOS.filter(v=>v.category===c).length;
+  return `<button class="chip ${c===curCat?"on":""}" data-c="${esc(c)}" style="--cc:${k?k.color:"#ffd6f8"}">${k?k.icon+" ":"✦ "}${esc(c)} <small>${n}</small></button>`; }).join("");
 $("#chips").addEventListener("click",e=>{
   const b=e.target.closest(".chip"); if(!b) return;
   curCat=b.dataset.c; document.querySelectorAll(".chip").forEach(x=>x.classList.toggle("on",x===b)); renderVideos();
@@ -1134,7 +1175,7 @@ function renderVideos(){
   $("#grid").innerHTML = list.map(v=>`
     <button class="card vid" data-i="${v._i}">
       <div class="thumb">
-        ${v.youtubeId?`<img loading="lazy" src="https://i.ytimg.com/vi/${encodeURIComponent(v.youtubeId)}/hqdefault.jpg" alt="">`:artSVG(v.art,v._i+3)}
+        ${v.youtubeId?`<img loading="lazy" src="https://i.ytimg.com/vi/${encodeURIComponent(v.youtubeId)}/hqdefault.jpg" alt="">`:artSVG(v.art||(catOf(v.category)||{}).art,v._i+3)}
         <div class="badge">${platPills(v)}</div>
         ${v.duration?`<span class="pill dur">${esc(v.duration)}</span>`:""}
       </div>
@@ -1156,7 +1197,7 @@ function openVideo(i){
   const v = VIDEOS[i]; lastFocus = document.activeElement;
   $("#mPlayer").innerHTML = v.youtubeId
     ? `<iframe src="https://www.youtube-nocookie.com/embed/${encodeURIComponent(v.youtubeId)}" title="${esc(v.title)}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`
-    : artSVG(v.art, i+3).replace('class="art"','style="width:100%;height:100%;display:block"');
+    : artSVG(v.art||(catOf(v.category)||{}).art, i+3).replace('class="art"','style="width:100%;height:100%;display:block"');
   $("#mTitle").textContent = v.title;
   $("#mMeta").innerHTML = `<span>📅 ${esc(fmtDate(v.date))}</span>${v.duration?`<span>⏱ ${esc(v.duration)}</span>`:""}<span>🏷 ${esc(v.category||"")}</span><span>${platPills(v)}</span>`;
   let h = `<h4>الملخص الكامل</h4>` + (v.summary||[v.short]).map(p=>`<p>${esc(p)}</p>`).join("");
@@ -1208,7 +1249,7 @@ $("#reqForm").addEventListener("submit", async e=>{
       ok = r.ok;
     }catch(err){}
   } else {
-    const body = `الاسم: ${data.name||"-"}\nالتواصل: ${data.contact||"-"}\nالنوع: ${data.type}\nالمنصة: ${data.platform}\n\n${data.details}`;
+    const body = `الاسم: ${data.name||"-"}\nالتواصل: ${data.contact||"-"}\nالمجال: ${data.category}\nالنوع: ${data.type}\nالمنصة: ${data.platform}\n\n${data.details}`;
     location.href = `mailto:${SITE.requestEmail}?subject=${encodeURIComponent("اقتراح فيديو: "+data.title)}&body=${encodeURIComponent(body)}`;
     ok=true;
   }
@@ -1365,11 +1406,13 @@ document.querySelectorAll(".reveal").forEach(el=>rObs.observe(el));
   let i=Math.floor(Math.random()*F.length), hideT, typeT, hover=false;
   function type(txt){ clearInterval(typeT); out.textContent=""; if(reduce){out.textContent=txt;return} let k=0;
     const ch=Array.from(txt); typeT=setInterval(()=>{ out.textContent=ch.slice(0,++k).join(""); if(k>=ch.length) clearInterval(typeT) },28); }
-  function show(next){ if(next!==false) i=(i+1)%F.length; box.classList.add("in"); setTimeout(()=>type(F[i]),550); schedHide(); }
-  const readMs=()=>Math.min(10000,3500+F[i].length*28*2);
+  const txt=f=>typeof f==="string"?f:f.t;
+  function setCat(){ const f=F[i], k=typeof f==="object"&&f.c&&(SITE.categories||[]).find(c=>c.name===f.c); $("#factCat").textContent=k?" · "+k.icon+" "+k.name:""; }
+  function show(next){ if(next!==false) i=(i+1)%F.length; box.classList.add("in"); setCat(); setTimeout(()=>type(txt(F[i])),550); schedHide(); }
+  const readMs=()=>Math.min(10000,3500+txt(F[i]).length*28*2);
   function schedHide(){ clearTimeout(hideT); hideT=setTimeout(()=>{ if(hover) return schedHide(); box.classList.remove("in") },readMs()); }
   box.addEventListener("mouseenter",()=>hover=true); box.addEventListener("mouseleave",()=>hover=false);
-  $("#astroMan").onclick=()=>{ i=(i+1)%F.length; type(F[i]); schedHide(); };
+  $("#astroMan").onclick=()=>{ i=(i+1)%F.length; setCat(); type(txt(F[i])); schedHide(); };
   $("#astroX").onclick=()=>{ box.classList.remove("in"); clearInterval(loop); try{sessionStorage.setItem("rili-astro-off","1")}catch(e){} };
   setTimeout(()=>show(false),4000);
   const loop=setInterval(()=>show(),(SITE.factEvery||20)*1000);
