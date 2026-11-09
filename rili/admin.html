@@ -74,7 +74,14 @@ h3{font-size:18px;margin:22px 0 10px}
   background:color-mix(in srgb,var(--cc) 18%,rgba(10,6,45,.8));border:1.5px solid color-mix(in srgb,var(--cc) 55%,transparent)}
 .cat.on{background:var(--cc);color:#0f1745;box-shadow:0 0 16px -2px var(--cc)}
 .f.need .cats{outline:2px dashed var(--bad);outline-offset:6px;border-radius:12px}
-.pdfrow{display:flex;gap:8px}
+.pdfrow{display:flex;gap:8px;margin-top:6px}
+.pdfbox{padding:12px;border-radius:14px;background:rgba(255,224,138,.06);border:1px dashed rgba(255,224,138,.45)}
+.upl{width:100%;padding:12px;cursor:pointer}
+.pmsg{margin:6px 0 0;font-size:13px;color:var(--mut);min-height:1em}
+.pdfdone{display:flex;align-items:center;gap:8px}
+.pdfdone .ic{font-size:22px}
+.pdfdone .nm{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:700}
+.btn.del{color:#ffb3bc;border-color:rgba(255,107,125,.5)}
 .pdfrow input{flex:1}
 details.how{font-size:13px;color:var(--mut);margin-top:4px}
 details.how summary{cursor:pointer;color:var(--acc)}
@@ -158,15 +165,32 @@ function field(obj,f){
       w.querySelectorAll(".cat").forEach(x=>x.classList.toggle("on",x===b)); w.classList.remove("need"); setDirty(); f.onchange&&f.onchange(); };
     return w; }
   if(f.type==="pdf"){
-    w.innerHTML=lab+`<div class="pdfrow"><input class="ltr" value="${esc(v||"")}" placeholder="https://drive.google.com/file/d/..."><a class="btn sm" target="_blank" rel="noopener">فتح</a></div>
-      <details class="how"><summary>كيف أضع ملف PDF؟</summary><ol>
-        <li>ارفع ملف PDF إلى Google Drive.</li>
-        <li>اضغط على الملف ← مشاركة ← «أي شخص لديه الرابط».</li>
-        <li>انسخ الرابط والصقه هنا.</li></ol></details>`;
-    const inp=w.querySelector("input"), a=w.querySelector("a");
-    const upd=()=>{ a.href=inp.value.trim()||"#"; a.classList.toggle("hide",!inp.value.trim()); }; upd();
-    inp.oninput=()=>{ obj[f.k]=inp.value.trim(); upd(); setDirty(); };
-    return w; }
+    w.classList.add("pdfbox");
+    function draw(){
+      const v=obj[f.k]||"", isFile=v.startsWith("fs:");
+      w.innerHTML=lab+(v
+        ? `<div class="pdfdone"><span class="ic">📄</span><span class="nm">${esc(isFile?(obj.pdfName||"ملف PDF"):v)}</span>
+             ${isFile?"":`<a class="btn sm" href="${esc(v)}" target="_blank" rel="noopener">فتح</a>`}<button type="button" class="btn sm del">حذف</button></div>`
+        : `<label class="btn main upl">⬆ رفع ملف PDF<input type="file" accept="application/pdf" hidden></label>
+           <p class="pmsg"></p>
+           <details class="how"><summary>أو ضع رابطًا بدل الرفع</summary><div class="pdfrow"><input class="ltr" placeholder="https://drive.google.com/file/d/..."><button type="button" class="btn sm">إضافة</button></div></details>`);
+      if(v){ w.querySelector(".del").onclick=async()=>{ if(!confirm("حذف ملف الملخص؟")) return;
+          if(isFile) deleteFile(v.slice(3)); obj[f.k]=""; delete obj.pdfName; setDirty(); draw(); f.onchange&&f.onchange(); };
+        return; }
+      const msg=w.querySelector(".pmsg");
+      w.querySelector("input[type=file]").onchange=async e=>{
+        const file=e.target.files[0]; if(!file) return;
+        if(file.type!=="application/pdf"&&!/\.pdf$/i.test(file.name)){ msg.innerHTML='<span class="bad">اختر ملف PDF فقط</span>'; return; }
+        if(file.size>5*1024*1024){ msg.innerHTML='<span class="bad">حجم الملف أكبر من 5 ميغابايت</span>'; return; }
+        try{
+          const id=await uploadFile(file,(i,n)=>{ msg.textContent=`جارٍ الرفع… ${Math.round(i/n*100)}%`; });
+          obj[f.k]="fs:"+id; obj.pdfName=file.name; setDirty(); draw(); f.onchange&&f.onchange();
+        }catch(err){ console.warn(err); msg.innerHTML=`<span class="bad">${err&&err.code==="permission-denied"?"لا توجد صلاحية للرفع، أضف قاعدة rili_files في Firestore (راجع الدليل)":"تعذّر رفع الملف، حاول مرة أخرى"}</span>`; }
+      };
+      const li=w.querySelector(".pdfrow input");
+      w.querySelector(".pdfrow button").onclick=()=>{ const u=li.value.trim(); if(!/^https?:\/\//.test(u)) return; obj[f.k]=u; delete obj.pdfName; setDirty(); draw(); f.onchange&&f.onchange(); };
+    }
+    draw(); return w; }
   if(f.type==="select"){ const opts=typeof f.options==="function"?f.options():f.options;
     w.innerHTML=lab+`<select>${opts.map(o=>`<option ${o===v?"selected":""}>${esc(o)}</option>`).join("")}</select>`;
     w.querySelector("select").onchange=e=>{obj[f.k]=e.target.value;setDirty();f.onchange&&f.onchange()}; return w; }
@@ -219,6 +243,17 @@ function listEditor(arr,{fields,title,head,addLabel,make,fixed,open}){
   }
   draw(); return box;
 }
+/* ---------- PDF files stored in Firestore (free plan), split into parts ---------- */
+const FILES="rili_files", PART=700000;
+function fileToB64(file){ return new Promise((ok,bad)=>{ const r=new FileReader(); r.onload=()=>ok(String(r.result).split(",")[1]); r.onerror=bad; r.readAsDataURL(file); }); }
+async function uploadFile(file,prog){
+  const b64=await fileToB64(file), n=Math.ceil(b64.length/PART), id="f"+Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+  for(let i=0;i<n;i++){ prog(i,n); await db.collection(FILES).doc(id+"_p"+i).set({d:b64.slice(i*PART,(i+1)*PART)}); }
+  await db.collection(FILES).doc(id).set({name:file.name,size:file.size,parts:n,type:"application/pdf"}); prog(n,n);
+  return id;
+}
+async function deleteFile(id){ try{ const m=await db.collection(FILES).doc(id).get(); const n=m.exists?m.data().parts:0;
+  for(let i=0;i<n;i++) await db.collection(FILES).doc(id+"_p"+i).delete(); await db.collection(FILES).doc(id).delete(); }catch(e){ console.warn(e); } }
 const catNames=()=>((C.site.categories||[]).map(c=>c.name)).concat(["أخرى"]);
 
 /* ---------- tabs ---------- */
@@ -233,10 +268,10 @@ const TABS={
       fields:[
         {k:"category",label:"المجال *",hint:"اختر قبل الحفظ",type:"cat"},
         {k:"title",label:"عنوان الفيديو"},
+        {k:"pdf",label:"📄 ملف الملخص (PDF)",hint:"حتى 5 ميغابايت",type:"pdf"},
         [{k:"date",label:"تاريخ النشر",inputType:"date",ltr:true},{k:"duration",label:"المدة",hint:"مثل 12:40",ltr:true}],
         {k:"youtube",label:"رابط يوتيوب",type:"youtube",ltr:true,ph:"https://youtu.be/..."},
         {k:"tiktokUrl",label:"رابط تيك توك",ltr:true,ph:"https://www.tiktok.com/@.../video/..."},
-        {k:"pdf",label:"ملخص PDF",hint:"اختياري",type:"pdf"},
         {k:"short",label:"وصف قصير",hint:"يظهر على بطاقة الفيديو",type:"textarea"},
         {k:"summary",label:"الملخص الكامل",hint:"افصل بين الفقرات بسطر فارغ",type:"paras"},
         {k:"points",label:"أهم النقاط",hint:"كل نقطة في سطر",type:"lines"},
