@@ -311,10 +311,6 @@ footer .brand{justify-content:center;color:#fff;margin-bottom:6px}
 .snd.on .eq i:nth-child(2){animation-delay:-.3s}.snd.on .eq i:nth-child(3){animation-delay:-.6s}
 @keyframes eq{50%{height:14px}}
 @media (max-width:760px){.snd b{display:none}}
-/* warp */
-#warp{position:fixed;inset:0;width:100%;height:100%;display:block;z-index:70;pointer-events:none;opacity:0;transition:opacity .25s}
-#warp.on{opacity:1}
-.pball.launch{transform:scale(1.6)!important;filter:drop-shadow(0 0 40px var(--glow))!important;transition:transform .5s ease-in,filter .5s}
 /* quiz */
 .quiz{max-width:720px;margin:0 auto;padding:24px}
 .q-top{display:flex;justify-content:space-between;align-items:center;color:var(--mut);font-weight:700;font-size:14px}
@@ -627,7 +623,7 @@ footer .brand{justify-content:center;color:#fff;margin-bottom:6px}
   <div class="wrap">
     <div class="sec-head reveal">
       <h2><svg class="spark" style="color:var(--pink)"><use href="#sp"/></svg>اختبار الفضاء<svg class="spark" style="color:var(--lav)"><use href="#sp"/></svg></h2>
-      <p>خمسة أسئلة من عالم Rili — اجمع النجوم واكتشف رتبتك الفضائية!</p>
+      <p>أسئلة من فيديوهات Rili — اجمع النجوم واكتشف رتبتك الفضائية!</p>
     </div>
     <div class="card quiz reveal" id="quizBox">
       <div class="q-top"><span id="qProg">السؤال 1 من 5</span><span class="q-stars" id="qStars"></span></div>
@@ -789,7 +785,6 @@ footer .brand{justify-content:center;color:#fff;margin-bottom:6px}
   </div>
 </div>
 <div class="toast" id="toast"></div>
-<canvas id="warp" aria-hidden="true"></canvas>
 
 <!-- astronaut with space facts -->
 <div class="astro" id="astro" aria-live="polite">
@@ -996,24 +991,17 @@ const VIDEOS = [
 ];
 
 /* =====================================================================
-   ✦ أسئلة الاختبار — أول إجابة هي الصحيحة (تُخلط تلقائيًا) ✦
+   ✦ أسئلة الاختبار — اكتب أسئلتك أنت هنا ✦
+   - q: نص السؤال
+   - a: الخيارات (من 2 إلى 4)
+   - correct: رقم الخيار الصحيح (1 = الأول، 2 = الثاني …)
+   - why: شرح قصير يظهر بعد الإجابة (اختياري)
+   الأسئلة تظهر بنفس الترتيب الذي تكتبه. إذا تركت القائمة فارغة يختفي قسم الاختبار.
+   مثال:
+   { q:"ما أكبر كوكب في المجموعة الشمسية؟", a:["زحل","المشتري","الأرض","نبتون"], correct:2, why:"المشتري يتسع لأكثر من 1300 أرض." },
    ===================================================================== */
 const QUIZ = [
-  { q:"ما أكبر كوكب في المجموعة الشمسية؟", a:["المشتري","زحل","نبتون","الأرض"], why:"يتسع المشتري لأكثر من 1300 كوكب بحجم الأرض." },
-  { q:"كم يستغرق ضوء الشمس تقريبًا ليصل إلى الأرض؟", a:["8 دقائق","8 ثوانٍ","8 ساعات","يومًا كاملًا"], why:"نحو ثماني دقائق وعشرين ثانية." },
-  { q:"أي كوكب يُلقَّب بالكوكب الأحمر؟", a:["المريخ","الزهرة","عطارد","المشتري"], why:"لونه الأحمر سببه أكسيد الحديد في تربته." },
-  { q:"ما اسم المجرة التي نعيش فيها؟", a:["درب التبانة","أندروميدا","المثلث","سحابة ماجلان الكبرى"], why:"وهي مجرة حلزونية فيها مئات المليارات من النجوم." },
-  { q:"أي كوكب هو الأشد حرارة في المجموعة الشمسية؟", a:["الزهرة","عطارد","المريخ","المشتري"], why:"غلافه الجوي الكثيف يحبس الحرارة فتصل إلى نحو 465°م." },
-  { q:"ما الذي لا يستطيع الإفلات من جاذبية الثقب الأسود؟", a:["ولا حتى الضوء","الصوت فقط","الكواكب الصغيرة فقط","الغبار فقط"], why:"جاذبيته شديدة إلى حد أن الضوء نفسه لا يفلت منها." },
-  { q:"كم عدد كواكب المجموعة الشمسية؟", a:["8","7","9","10"], why:"منذ عام 2006 صُنِّف بلوتو كوكبًا قزمًا." },
-  { q:"أي كوكب يدور وهو مائل على جانبه تقريبًا؟", a:["أورانوس","نبتون","زحل","الأرض"], why:"يميل محوره بنحو 98 درجة." },
-  { q:"ما أقرب نجم إلى الأرض؟", a:["الشمس","الشعرى اليمانية","بروكسيما سنتوري","نجم القطب"], why:"الشمس نجم! ويليها بروكسيما سنتوري." },
-  { q:"كم يُقدَّر عمر الكون؟", a:["13.8 مليار سنة","4.6 مليارات سنة","مليون سنة","100 مليار سنة"], why:"أما 4.6 مليارات سنة فهو عمر المجموعة الشمسية." },
-  { q:"أين يقع أعلى بركان في المجموعة الشمسية؟", a:["المريخ","الأرض","الزهرة","القمر"], why:"بركان أوليمبوس مونس، وارتفاعه نحو 22 كيلومترًا." },
-  { q:"من أول إنسان مشى على سطح القمر؟", a:["نيل أرمسترونغ","يوري غاغارين","باز ألدرين","مايكل كولنز"], why:"كان ذلك عام 1969 في رحلة أبولو 11." },
-  { q:"لماذا تبقى آثار الأقدام على القمر زمنًا طويلًا؟", a:["لانعدام الرياح والهواء","لأن تربته لزجة","لأنه بارد دائمًا","لأن جاذبيته قوية"], why:"لا شيء هناك يمحوها." },
-  { q:"أي كوكب كثافته أقل من كثافة الماء؟", a:["زحل","المشتري","الأرض","عطارد"], why:"نظريًا، كان سيطفو في حوض ماء ضخم!" },
-  { q:"كم تستغرق محطة الفضاء الدولية تقريبًا لتدور حول الأرض مرة واحدة؟", a:["90 دقيقة","24 ساعة","10 دقائق","أسبوعًا"], why:"لذا يشاهد روادها نحو 16 شروقًا يوميًا." }
+
 ];
 
 /* ===================================================================== */
@@ -1255,12 +1243,12 @@ const IDEAS = (function(){
    ✦ اختبار الفضاء ✦
    ===================================================================== */
 (function(){
-  const Q=QUIZ, N=Math.min(5,Q.length); if(!N) return;
-  const RANKS=[[5,"قائد مركبة فضائية 🚀"],[3,"رائد فضاء ماهر 👨‍🚀"],[1,"مستكشف ناشئ 🔭"],[0,"مرحبًا بك في الفضاء 🌙"]];
+  const Q=QUIZ.filter(q=>q&&q.q&&q.a&&q.a.length>1), N=Q.length;
+  if(!N){ $("#quiz").remove(); document.querySelectorAll('a[href="#quiz"]').forEach(a=>a.closest("li")?a.closest("li").remove():a.remove()); return; }
+  const RANKS=[[1,"قائد مركبة فضائية 🚀"],[.6,"رائد فضاء ماهر 👨‍🚀"],[.2,"مستكشف ناشئ 🔭"],[0,"مرحبًا بك في الفضاء 🌙"]];
   const L=["أ","ب","ج","د"];
   let round=[], k=0, score=0;
-  const shuffle=a=>{ a=[...a]; for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]} return a };
-  function start(){ round=shuffle(Q).slice(0,N).map(q=>({q:q.q,why:q.why,opts:shuffle(q.a.map((t,i)=>({t,ok:i===0})))})); k=0; score=0;
+  function start(){ round=Q.map(q=>({q:q.q,why:q.why,opts:q.a.map((t,i)=>({t,ok:i===(q.correct||1)-1}))})); k=0; score=0;
     $("#qEnd").classList.add("hide"); ["#qText","#qOpts","#qFb"].forEach(s=>$(s).classList.remove("hide")); show(); }
   function show(){
     const r=round[k]; $("#qProg").textContent=`السؤال ${k+1} من ${N}`; $("#qBar").style.width=(k/N*100)+"%";
@@ -1277,7 +1265,7 @@ const IDEAS = (function(){
   });
   function end(){
     $("#qBar").style.width="100%"; ["#qText","#qOpts","#qFb"].forEach(s=>$(s).classList.add("hide"));
-    $("#qProg").textContent="النتيجة"; $("#qRank").textContent=RANKS.find(([m])=>score>=m)[1];
+    $("#qProg").textContent="النتيجة"; $("#qRank").textContent=RANKS.find(([m])=>score/N>=m)[1];
     $("#qScore").textContent=`أجبت عن ${score} من ${N} إجابات صحيحة`;
     let best=0; try{ best=Math.max(score,+localStorage.getItem("rili-quiz-best")||0); localStorage.setItem("rili-quiz-best",best) }catch(e){ best=score }
     $("#qBest").textContent=`أفضل نتيجة لك: ${best} من ${N}`; $("#qEnd").classList.remove("hide");
@@ -1317,34 +1305,6 @@ const IDEAS = (function(){
   };
 })();
 
-/* =====================================================================
-   ✦ السفر إلى الأقسام (قفزة فضائية) ✦
-   ===================================================================== */
-(function(){
-  const c=$("#warp"), x=c.getContext("2d"); let busy=false;
-  document.addEventListener("click",e=>{
-    const a=e.target.closest('a[href^="#"]'); if(!a) return; const id=a.getAttribute("href"); if(id.length<2) return;
-    const tgt=document.querySelector(id); if(!tgt) return; e.preventDefault();
-    const top=tgt.getBoundingClientRect().top+scrollY-(id==="#home"?62:66);
-    if(reduce||busy){ scrollTo({top,behavior:"instant"}); return; }
-    busy=true; const ball=a.querySelector(".pball"); if(ball) ball.classList.add("launch");
-    const W=c.width=innerWidth, H=c.height=innerHeight, cx=W/2, cy=H/2;
-    const st=Array.from({length:W<700?160:320},()=>({a:Math.random()*6.283,d:Math.random()*40+5,v:Math.random()*.6+.4,c:["#fff","#ffd0f4","#bfe3ff","#c9a8ff"][Math.random()*4|0]}));
-    const t0=performance.now(), DUR=950; let jumped=false;
-    c.classList.add("on");
-    (function f(now){
-      const p=Math.min(1,(now-t0)/DUR), sp=p<.5? p*2 : (1-p)*2;
-      x.fillStyle=`rgba(14,9,52,${.22+.3*sp})`; x.fillRect(0,0,W,H); const vg=x.createRadialGradient(cx,cy,0,cx,cy,Math.max(W,H)*.6); vg.addColorStop(0,`rgba(255,200,250,${.12*sp})`); vg.addColorStop(1,'rgba(0,0,0,0)'); x.fillStyle=vg; x.fillRect(0,0,W,H);
-      for(const s of st){ const d0=s.d; s.d+=s.v*(4+sp*60); const len=Math.min(220,sp*90*s.v+4);
-        x.strokeStyle=s.c; x.globalAlpha=.4+.6*sp; x.lineWidth=1+sp*1.5; x.beginPath();
-        x.moveTo(cx+Math.cos(s.a)*d0,cy+Math.sin(s.a)*d0); x.lineTo(cx+Math.cos(s.a)*(s.d+len),cy+Math.sin(s.a)*(s.d+len)); x.stroke();
-        if(s.d>Math.max(W,H)) s.d=Math.random()*30; }
-      x.globalAlpha=1;
-      if(p>=.5 && !jumped){ jumped=true; scrollTo({top,behavior:"instant"}); if(ball) ball.classList.remove("launch"); }
-      if(p<1) requestAnimationFrame(f); else { c.classList.remove("on"); setTimeout(()=>{x.clearRect(0,0,W,H); busy=false},260); }
-    })(t0);
-  });
-})();
 
 /* ---------- nav ---------- */
 $("#menuBtn").onclick=()=>$("#links").classList.toggle("open");
