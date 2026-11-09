@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#15114a;--card:#241c78;--card2:#2e2490;--line:rgba(190,175,255,.28);--text:#f4f1ff;--mut:#c4bcf2;--pink:#f39ae8;--ok:#4fe08a;--bad:#ff6b7d;color-scheme:dark}
+:root{--bg:#15114a;--card:#241c78;--card2:#2e2490;--line:rgba(190,175,255,.28);--text:#f4f1ff;--mut:#c4bcf2;--pink:#6fcfff;--ok:#4fe08a;--bad:#ff6b7d;color-scheme:dark}
 *{box-sizing:border-box}
 html,body{margin:0}
 body{background:linear-gradient(180deg,#15114a,#2a2190) fixed;color:var(--text);font-family:"Cairo",system-ui,sans-serif;font-size:16px;line-height:1.6;min-height:100vh}
@@ -20,7 +20,7 @@ h1 span{font-family:system-ui;font-weight:700;direction:ltr;display:inline-block
 #who{color:var(--mut);font-size:14px;display:flex;gap:8px;align-items:center}
 .card{background:rgba(36,28,120,.75);border:1px solid var(--line);border-radius:18px;padding:16px;margin-bottom:12px}
 .btn{font:inherit;font-weight:700;border:0;border-radius:999px;padding:10px 18px;cursor:pointer;color:#fff;background:rgba(255,255,255,.1);border:1px solid var(--line);text-decoration:none;display:inline-flex;align-items:center;gap:6px}
-.btn.main{background:linear-gradient(135deg,#f08ce6,#9b7bff);border:0}
+.btn.main{background:linear-gradient(135deg,#3fa2f2,#9b7bff);border:0}
 .btn.sm{padding:6px 12px;font-size:14px}
 .savebar .btn{white-space:nowrap}
 @media (max-width:480px){.savebar .btn{padding:8px 12px;font-size:14px}#status{font-size:12px}}
@@ -29,7 +29,7 @@ h1 span{font-family:system-ui;font-weight:700;direction:ltr;display:inline-block
 .hide{display:none!important}
 .tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:6px;margin-bottom:10px;scrollbar-width:thin}
 .tab{flex:none;font:inherit;font-weight:700;font-size:14px;color:var(--mut);background:rgba(255,255,255,.06);border:1px solid var(--line);border-radius:999px;padding:7px 14px;cursor:pointer}
-.tab.on{color:#1b1550;background:linear-gradient(135deg,#ffd6f8,#c9bbff);border-color:transparent}
+.tab.on{color:#101a4a;background:linear-gradient(135deg,#cfe6ff,#b6c4ff);border-color:transparent}
 .help{color:var(--mut);font-size:14px;margin:0 0 12px}
 .item{background:rgba(15,10,60,.45);border:1px solid var(--line);border-radius:16px;margin-bottom:10px;overflow:hidden}
 .item-h{display:flex;align-items:center;gap:8px;padding:10px 12px;cursor:pointer}
@@ -89,7 +89,7 @@ const DOC = ["rili_site","content"];
 
 const $=s=>document.querySelector(s);
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-const SITE_KEYS=["tagline","aboutRole","about","stats","socials","support","categories","facts","factEvery","ideas","formEndpoint","requestEmail"];
+const SITE_KEYS=["tagline","aboutRole","about","stats","socials","support","categories","facts","factEvery","astroGreeting","astroJokes","ideas","formEndpoint","requestEmail"];
 let C={site:{},videos:[],quiz:[]}, db=null, auth=null, dirty=false, tab="videos";
 
 function setDirty(v=true){ dirty=v; $("#status").innerHTML=v?'<span class="bad">● تغييرات غير محفوظة</span>':'<span class="ok">✓ كل شيء محفوظ</span>'; }
@@ -194,7 +194,7 @@ const TABS={
     p.appendChild(listEditor(C.site.socials,{fixed:true,open:true,title:s=>s.name,fields:[[{k:"handle",label:"اسم الحساب",ltr:true},{k:"url",label:"الرابط",ltr:true,ph:"https://"}]]}));
     const h=document.createElement("h3"); h.textContent="طرق الدعم"; p.appendChild(h);
     C.site.support=C.site.support||[];
-    p.appendChild(listEditor(C.site.support,{addLabel:"إضافة طريقة دعم",make:()=>({icon:"💜",title:"",text:"",btn:"ادعم الآن",url:"",star:false}),title:s=>`${s.icon||""} ${s.title||""}`,
+    p.appendChild(listEditor(C.site.support,{addLabel:"إضافة طريقة دعم",make:()=>({icon:"✦",title:"",text:"",btn:"ادعم الآن",url:"",star:false}),title:s=>`${s.icon||""} ${s.title||""}`,
       fields:[[{k:"title",label:"العنوان"},{k:"icon",label:"أيقونة (إيموجي)"}],{k:"text",label:"الوصف",type:"textarea"},[{k:"btn",label:"نص الزر"},{k:"url",label:"الرابط",ltr:true}],{k:"star",label:"تمييزها (البطاقة المضيئة)",type:"check"}]}));
   }},
   ideas:{label:"🗳️ أفكار التصويت",render(p){
@@ -211,7 +211,11 @@ const TABS={
         {k:"correct",label:"رقم الإجابة الصحيحة",hint:"1 = الخيار الأول",inputType:"number"},{k:"why",label:"شرح يظهر بعد الإجابة (اختياري)"}]}));
   }},
   facts:{label:"💡 معلومات رائد الفضاء",render(p){
-    p.innerHTML='<p class="help">المعلومات التي يقولها رائد الفضاء، معلومة كل 20 ثانية.</p>';
+    p.innerHTML='<p class="help">رائد الفضاء يبدأ بجملة الترحيب، ثم يقول معلومة كل 20 ثانية، وبعد كل 3 معلومات يقول جملة من جملك.</p>';
+    const g=document.createElement("div"); g.className="card";
+    g.appendChild(field(C.site,{k:"astroGreeting",label:"أول جملة يقولها"}));
+    g.appendChild(field(C.site,{k:"astroJokes",label:"جملك",hint:"كل جملة في سطر",type:"lines"}));
+    p.appendChild(g); const h=document.createElement("h3"); h.textContent="المعلومات"; p.appendChild(h);
     C.site.facts=(C.site.facts||[]).map(f=>typeof f==="string"?{c:"",t:f}:f);
     p.appendChild(listEditor(C.site.facts,{addLabel:"إضافة معلومة",make:()=>({c:catNames()[0],t:""}),title:f=>`${f.c?"["+f.c+"] ":""}${f.t||"معلومة جديدة"}`,
       fields:[{k:"c",label:"المجال",type:"select",options:catNames},{k:"t",label:"نص المعلومة",type:"textarea"}]}));
