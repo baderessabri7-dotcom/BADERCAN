@@ -8,7 +8,7 @@
 <meta name="theme-color" content="#211a6b">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Lalezar&family=Fredoka:wght@600;700&family=Baloo+2:wght@700;800&family=Baloo+Bhaijaan+2:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Fredoka:wght@600;700&family=Baloo+2:wght@700;800&display=swap" rel="stylesheet">
 <style>
 :root{
   --sky-1:#15114a;
@@ -38,11 +38,11 @@ body{
   position:relative;
   background:var(--sky-1);
   color:var(--text);
-  font-family:"Baloo Bhaijaan 2",system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif;
+  font-family:"Cairo",system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif;
   font-size:17px;line-height:1.75;
   min-height:100vh;overflow-x:hidden;
 }
-h1,h2,h3,.brand,.btn,.tag-title{font-family:"Lalezar","Baloo Bhaijaan 2",system-ui,sans-serif;font-weight:400;letter-spacing:.3px}
+h1,h2,h3,.brand,.btn,.tag-title{font-family:"Cairo",system-ui,sans-serif;font-weight:800;letter-spacing:0}
 a{color:inherit}
 img{max-width:100%;display:block}
 .hide{display:none!important}
@@ -87,7 +87,7 @@ nav.top{position:sticky;top:0;z-index:20;
   backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
   background:rgba(21,17,74,.55);border-bottom:1px solid var(--line)}
 nav.top .wrap{display:flex;align-items:center;justify-content:space-between;height:62px;gap:12px}
-.brand{display:flex;align-items:center;gap:10px;font-size:24px;text-decoration:none;font-family:"Baloo 2","Lalezar",sans-serif;font-weight:800;direction:ltr;white-space:nowrap}
+.brand{display:flex;align-items:center;gap:10px;font-size:24px;text-decoration:none;font-family:"Baloo 2","Cairo",sans-serif;font-weight:800;direction:ltr;white-space:nowrap}
 .brand .dot{width:30px;height:30px;border-radius:50%;
   background:radial-gradient(circle at 40% 40%,#fff 0 18%,#ffd3f7 30%,#b48cff 60%,transparent 72%);
   box-shadow:0 0 18px 4px rgba(255,190,250,.55)}
@@ -152,7 +152,7 @@ nav.top .wrap{display:flex;align-items:center;justify-content:space-between;heig
 .pball{display:block;width:min(150px,23vw);aspect-ratio:1;animation:pbob 6s ease-in-out infinite;animation-delay:var(--dl);transition:transform .35s cubic-bezier(.2,.9,.3,1.4),filter .35s}
 .pball svg{width:100%;height:100%;overflow:visible;display:block}
 .pitem:hover .pball,.pitem:focus-visible .pball{transform:scale(1.1) rotate(-4deg);filter:drop-shadow(0 0 22px var(--glow))}
-.pitem b{font-family:"Lalezar",sans-serif;font-weight:400;font-size:clamp(16px,2.6vw,23px);line-height:1.2;text-shadow:0 0 14px var(--glow)}
+.pitem b{font-family:"Cairo",sans-serif;font-weight:800;font-size:clamp(16px,2.6vw,23px);line-height:1.2;text-shadow:0 0 14px var(--glow)}
 .pitem small{color:var(--mut);font-size:clamp(11px,1.6vw,14px);line-height:1.2}
 .pitem:hover b{color:#ffe6fb}
 .pitem:focus-visible{outline:none}
@@ -176,7 +176,7 @@ nav.top .wrap{display:flex;align-items:center;justify-content:space-between;heig
 .btn.sm{font-size:16px;padding:8px 16px}
 .stats{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:34px}
 .stat{min-width:96px;padding:10px 14px;border-radius:18px;background:var(--glass);border:1px solid var(--line);backdrop-filter:blur(6px)}
-.stat b{display:block;font-family:"Lalezar",sans-serif;font-weight:400;font-size:28px;line-height:1.2}
+.stat b{display:block;font-family:"Cairo",sans-serif;font-weight:800;font-size:28px;line-height:1.2}
 .stat span{color:var(--mut);font-size:14px}
 .scroll-hint{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);z-index:1;color:var(--mut);font-size:13px;text-align:center;animation:bob 2.4s ease-in-out infinite}
 @keyframes bob{50%{transform:translate(-50%,6px)}}
@@ -225,7 +225,7 @@ nav.top .wrap{display:flex;align-items:center;justify-content:space-between;heig
 .mcontent{padding:20px 22px 26px}
 .mcontent h3{font-size:clamp(26px,4vw,34px);margin:0 0 4px;line-height:1.3}
 .mmeta{color:var(--mut);font-size:14px;display:flex;flex-wrap:wrap;gap:8px 16px;margin-bottom:14px}
-.mcontent h4{font-family:"Lalezar",sans-serif;font-weight:400;font-size:21px;margin:20px 0 6px;color:var(--pink)}
+.mcontent h4{font-family:"Cairo",sans-serif;font-weight:800;font-size:21px;margin:20px 0 6px;color:var(--pink)}
 .mcontent p{margin:0 0 10px}
 .points{list-style:none;padding:0;margin:0;display:grid;gap:8px}
 .points li{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:14px;background:rgba(255,255,255,.06)}
@@ -258,7 +258,7 @@ nav.top .wrap{display:flex;align-items:center;justify-content:space-between;heig
 .soc:hover{transform:translateY(-3px);border-color:var(--c,var(--pink))}
 .soc .ic{width:52px;height:52px;border-radius:16px;display:grid;place-items:center;flex:none;background:var(--bgc,rgba(255,255,255,.1))}
 .soc .ic svg{width:28px;height:28px}
-.soc b{display:block;font-family:"Lalezar",sans-serif;font-weight:400;font-size:21px;line-height:1.2}
+.soc b{display:block;font-family:"Cairo",sans-serif;font-weight:800;font-size:21px;line-height:1.2}
 .soc span{color:var(--mut);font-size:14px;direction:ltr;display:block;text-align:right}
 
 /* ---------- support ---------- */
@@ -313,7 +313,7 @@ footer .brand{justify-content:center;color:#fff;margin-bottom:6px}
   transform-origin:bottom left;transform:scale(.6);opacity:0;transition:transform .45s cubic-bezier(.3,1.4,.5,1) .5s,opacity .3s .5s}
 .astro.in .bubble{transform:none;opacity:1}
 .bubble::after{content:"";position:absolute;left:-8px;bottom:12px;border:8px solid transparent;border-right-color:rgba(245,238,255,.95);border-left:0}
-.bubble b{font-family:"Lalezar",sans-serif;font-weight:400;font-size:14px;color:#7a3fd0;display:block;line-height:1.3;padding-left:22px}
+.bubble b{font-family:"Cairo",sans-serif;font-weight:800;font-size:14px;color:#7a3fd0;display:block;line-height:1.3;padding-left:22px}
 .bubble p{margin:2px 0 0;font-size:13px;line-height:1.55}
 .astro-next{font:inherit;font-size:13px;font-weight:700;color:#c04fb8;background:none;border:0;padding:0;cursor:pointer}
 .astro-x{position:absolute;top:4px;left:6px;width:18px;height:18px;line-height:18px!important;font-size:10px!important;border-radius:50%;border:0;background:rgba(122,63,208,.12);color:#7a3fd0;font-size:12px;cursor:pointer;line-height:24px;padding:0}
