@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Rili's World | بدر</title>
-<meta name="description" content="Rili's World — قناة بدر: معلومات في الفلك والصحة والتاريخ والألغاز وتطوير الذات. ملخصات الفيديوهات، حسابات التواصل، الدعم، واقتراحات الفيديوهات.">
+<meta name="description" content="Rili's World — قناة بدر: معلومات في الفلك والتقنية والصحة والتاريخ والألغاز وتطوير الذات. ملخصات الفيديوهات، حسابات التواصل، الدعم، واقتراحات الفيديوهات.">
 <meta name="theme-color" content="#211a6b">
 <style>/* الخطوط مضمّنة داخل الملف: Cairo (عربي) + Fredoka (العنوان) */
 @font-face {
@@ -773,7 +773,7 @@ footer .brand{justify-content:center;color:#fff;margin-bottom:6px}
           </div>
         </div>
         <div class="field"><label for="fCat">المجال</label>
-          <select id="fCat" name="category"><option>الفلك</option><option>الصحة</option><option>التاريخ</option><option>الألغاز</option><option>تطوير الذات</option><option>مجال آخر</option></select>
+          <select id="fCat" name="category"><option>الفلك</option><option>التقنية</option><option>الصحة</option><option>التاريخ</option><option>الألغاز</option><option>تطوير الذات</option><option>مجال آخر</option></select>
         </div>
         <div class="field"><label for="fTitle">عنوان الفكرة *</label><input id="fTitle" name="title" required maxlength="120" placeholder="مثلًا: ماذا لو لم يكن للأرض قمر؟"></div>
         <div class="field"><label for="fIdea">اشرح فكرتك *</label><textarea id="fIdea" name="details" required maxlength="1500" placeholder="ليش الموضوع يهمك؟ وش تحب أركز عليه؟"></textarea><div class="counter"><span id="cnt">0</span>/1500</div></div>
@@ -866,11 +866,11 @@ footer .brand{justify-content:center;color:#fff;margin-bottom:6px}
 const SITE = {
   channel: "Rili",
   creator: "بدر",
-  tagline: "أهلاً بك في <b>Rili's World</b> — عالم <b>بدر</b>. معلومات ممتعة في <b>الفلك</b> و<b>الصحة</b> و<b>التاريخ</b> و<b>الألغاز</b> و<b>تطوير الذات</b>، برسوم ملونة وقصص بسيطة ✨",
+  tagline: "أهلاً بك في <b>Rili's World</b> — عالم <b>بدر</b>. معلومات ممتعة في <b>الفلك</b> و<b>التقنية</b> و<b>الصحة</b> و<b>التاريخ</b> و<b>الألغاز</b> و<b>تطوير الذات</b>، برسوم ملونة وقصص بسيطة ✨",
   aboutRole: "صانع محتوى على يوتيوب وتيك توك",
   about: [
     "هلا! أنا بدر، صاحب قناة Rili 👋",
-    "أصنع فيديوهات مرسومة بالكامل بأسلوبي الخاص، أشرح فيها معلومات من الفلك والصحة والتاريخ والألغاز وتطوير الذات بطريقة بسيطة وممتعة.",
+    "أصنع فيديوهات مرسومة بالكامل بأسلوبي الخاص، أشرح فيها معلومات من الفلك والتقنية والصحة والتاريخ والألغاز وتطوير الذات بطريقة بسيطة وممتعة.",
     "هذا الموقع هو بيت القناة: تلقى فيه ملخص كامل لكل فيديو، روابط حساباتي، طرق دعم القناة، ومكان ترسل فيه أفكارك للفيديوهات الجاية."
   ],
   stats: [
@@ -924,6 +924,7 @@ const SITE = {
   // مجالات القناة — تظهر كأزرار تصفية فوق الفيديوهات
   categories: [
     { name:"الفلك",       icon:"🔭", color:"#b49bff", art:"galaxy"  },
+    { name:"التقنية",     icon:"💻", color:"#7cc4ff", art:"tech"    },
     { name:"الصحة",       icon:"🫀", color:"#ff8fae", art:"health"  },
     { name:"التاريخ",     icon:"🏛️", color:"#ffc96b", art:"history" },
     { name:"الألغاز",     icon:"🧩", color:"#5fe0d2", art:"mystery" },
@@ -939,6 +940,10 @@ const SITE = {
     { c:"الفلك", t:"المشتري ضخم إلى درجة أنه يتسع لأكثر من 1300 كوكب بحجم الأرض 🤯" },
     { c:"الفلك", t:"كثافة زحل أقل من كثافة الماء، فلو وُجد حوض ماء ضخم بما يكفي لطفا فوقه! 🛁" },
     { c:"الفلك", t:"عندما تنظر إلى نجم بعيد، فأنت ترى ضوءًا غادره قبل مئات أو آلاف السنين، أي أنك ترى الماضي! ✨" },
+    { c:"التقنية", t:"أُرسلت أول رسالة بريد إلكتروني عام 1971، وأرسلها المهندس راي توملينسون 📧" },
+    { c:"التقنية", t:"أطلق تيم بيرنرز-لي أول موقع إلكتروني في العالم عام 1991، وكان صفحة نصية بسيطة 🌐" },
+    { c:"التقنية", t:"هاتفك الذكي يتفوق بفارق هائل على حاسوب مركبة أبولو 11 التي أوصلت الإنسان إلى القمر 📱" },
+    { c:"التقنية", t:"أول «خطأ برمجي» مسجّل عام 1947 كان عثّة حقيقية علقت داخل حاسوب، ومن هنا جاءت كلمة Bug 🐛" },
     { c:"الصحة", t:"يولد الطفل بنحو 300 عظمة، يلتحم بعضها مع النمو ليصبح عددها 206 عظام عند البالغ 🦴" },
     { c:"الصحة", t:"يضخ القلب نحو 7000 لتر من الدم يوميًا ❤️" },
     { c:"الصحة", t:"يشكّل الماء نحو 60% من وزن جسم الإنسان البالغ 💧" },
@@ -1146,6 +1151,12 @@ function artSVG(kind,seed){
       <circle r="22" fill="#fff" opacity=".95"/><circle r="38" fill="#ffd0fb" opacity=".35"/></g>`;
   } else if(kind==="moon"){
     main = `<circle cx="165" cy="85" r="58" fill="#3fa0ff" opacity=".25"/><circle cx="165" cy="85" r="44" fill="#e6e6ef"/><circle cx="150" cy="72" r="9" fill="#a5a4b8"/><circle cx="180" cy="98" r="7" fill="#a5a4b8"/><circle cx="182" cy="66" r="5" fill="#a5a4b8"/>`;
+  } else if(kind==="tech"){
+    main = `<circle cx="160" cy="88" r="62" fill="#7cc4ff" opacity=".18"/>
+      <g stroke="#9fd8ff" stroke-width="3" stroke-linecap="round">${[0,1,2,3].map(i=>`<path d="M${136+i*16} 52 V40 M${136+i*16} 124 V136 M124 ${64+i*16} H112 M196 ${64+i*16} H208"/>`).join("")}</g>
+      <rect x="124" y="52" width="72" height="72" rx="12" fill="#2f6fd0" stroke="#bfe6ff" stroke-width="3"/>
+      <rect x="140" y="68" width="40" height="40" rx="6" fill="#7cc4ff"/>
+      <path d="M150 88 h8 l4 -8 l6 16 l4 -8 h6" fill="none" stroke="#fff" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>`;
   } else if(kind==="health"){
     main = `<circle cx="160" cy="88" r="60" fill="#ff7a9c" opacity=".2"/>
       <path d="M160 128 C120 100 108 82 116 66 C124 50 146 50 160 68 C174 50 196 50 204 66 C212 82 200 100 160 128Z" fill="#ff6f95"/>
