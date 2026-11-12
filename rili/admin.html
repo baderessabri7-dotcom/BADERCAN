@@ -386,6 +386,14 @@ async function saveAll(){
 }
 $("#saveBtn").onclick=()=>saveAll();
 
+const FAKE_LINKS=["youtube.com/@rili","youtube.com/@rili/join","tiktok.com/@rili","tiktok.com/@rili/live","instagram.com/rili","ko-fi.com","paypal.me","rili@example.com"];
+function isFake(u){ u=String(u||"").trim().toLowerCase().replace(/^mailto:/,"").replace(/^https?:\/\//,"").replace(/^www\./,"").replace(/\/+$/,""); return !u||FAKE_LINKS.includes(u); }
+function cleanLinks(site,videos){
+  (site.socials||[]).forEach(s=>{ if(isFake(s.url)){ s.url=""; if(/^@?rili$|example\.com/i.test(s.handle||"")) s.handle=""; } });
+  (site.support||[]).forEach(s=>{ if(isFake(s.url)) s.url=""; });
+  if(isFake(site.requestEmail)) site.requestEmail="";
+  (videos||[]).forEach(v=>{ if(isFake(v.youtubeUrl)) v.youtubeUrl=""; if(isFake(v.tiktokUrl)) v.tiktokUrl=""; });
+}
 /* ---------- auth + load ---------- */
 async function start(user){
   $("#loginCard").classList.add("hide");
@@ -397,6 +405,7 @@ async function start(user){
   try{ const d=await db.collection(DOC[0]).doc(DOC[1]).get(); if(d.exists&&d.data().json) saved=JSON.parse(d.data().json); }
   catch(e){ console.warn(e); $("#status").innerHTML='<span class="bad">تعذّر تحميل المحتوى المحفوظ. حدّث الصفحة وحاول مرة أخرى.</span>'; $("#saveBar").classList.remove("hide"); $("#saveBtn").disabled=true; return; }
   C={site:{...def.site,...(saved&&saved.site||{})},videos:(saved&&saved.videos)||def.videos,quiz:(saved&&saved.quiz)||def.quiz};
+  cleanLinks(C.site,C.videos);
   $("#app").classList.remove("hide"); $("#saveBar").classList.remove("hide");
   renderTabs(); setDirty(false); loadInbox();
   if(!saved) $("#status").innerHTML='<span class="bad">هذه القيم الافتراضية من الموقع — اضغط «حفظ ونشر» لتفعيل لوحة التحكم</span>';

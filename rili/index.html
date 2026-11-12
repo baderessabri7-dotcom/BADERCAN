@@ -828,19 +828,19 @@ const SITE = {
 
   // روابط التواصل — ضع روابطك الحقيقية (اترك url فاضي لإخفاء الحساب)
   socials: [
-    { id:"youtube",   name:"يوتيوب",    handle:"@Rili",      url:"https://youtube.com/@Rili" },
-    { id:"tiktok",    name:"تيك توك",   handle:"@rili",      url:"https://www.tiktok.com/@rili" },
-    { id:"instagram", name:"انستقرام",  handle:"@rili",      url:"https://instagram.com/rili" },
+    { id:"youtube",   name:"يوتيوب",    handle:"",      url:"" },
+    { id:"tiktok",    name:"تيك توك",   handle:"",      url:"" },
+    { id:"instagram", name:"انستقرام",  handle:"",      url:"" },
     { id:"x",         name:"إكس (تويتر)", handle:"@rili",    url:"" },
     { id:"discord",   name:"ديسكورد",   handle:"سيرفر Rili", url:"" },
-    { id:"email",     name:"الإيميل",   handle:"rili@example.com", url:"mailto:rili@example.com" }
+    { id:"email",     name:"الإيميل",   handle:"", url:"" }
   ],
 
   // طرق الدعم المادي — ضع روابطك الحقيقية (اترك url فاضي لإخفاء الطريقة)
   support: [
-    { icon:"☕", title:"اشترِ لي قهوة", text:"دعم سريع لمرة وحدة يخليني أكمل السهرة على المونتاج.", btn:"ادعم الآن", url:"https://ko-fi.com/" , star:false },
-    { icon:"🌌", title:"عضوية القناة",  text:"انضم لعضوية يوتيوب واحصل على شارة خاصة ووصول مبكر للفيديوهات.", btn:"انضم للعضوية", url:"https://youtube.com/@Rili/join", star:true },
-    { icon:"💳", title:"PayPal",        text:"ادعم بأي مبلغ تحبه عبر باي بال بأمان.", btn:"ادعم عبر PayPal", url:"https://paypal.me/", star:false }
+    { icon:"☕", title:"اشترِ لي قهوة", text:"دعم سريع لمرة وحدة يخليني أكمل السهرة على المونتاج.", btn:"ادعم الآن", url:"", star:false },
+    { icon:"🌌", title:"عضوية القناة",  text:"انضم لعضوية يوتيوب واحصل على شارة خاصة ووصول مبكر للفيديوهات.", btn:"انضم للعضوية", url:"", star:true },
+    { icon:"💳", title:"PayPal",        text:"ادعم بأي مبلغ تحبه عبر باي بال بأمان.", btn:"ادعم عبر PayPal", url:"", star:false }
   ],
 
   // إرسال الاقتراحات:
@@ -866,7 +866,7 @@ const SITE = {
   ideas: [
 
   ],
-  requestEmail: "rili@example.com",
+  requestEmail: "",
 
   // مجالات القناة — تظهر كأزرار تصفية فوق الفيديوهات
   categories: [
@@ -939,7 +939,7 @@ const VIDEOS = [
     title: "رحلة من الأرض إلى حافة الكون",
     date: "2026-10-28", duration: "12:40", category: "الفلك",
     platforms: ["youtube","tiktok"], youtubeId: "",
-    youtubeUrl: "https://youtube.com/@Rili", tiktokUrl: "https://www.tiktok.com/@rili",
+    youtubeUrl: "", tiktokUrl: "",
     short: "ننطلق من كوكب الأرض ونكبّر الصورة خطوة بخطوة: القمر، فالمجموعة الشمسية، فمجرة درب التبانة، حتى نصل إلى أكبر تجمّعات المجرات.",
     summary: [
       "يبدأ الفيديو من كوكبنا الأزرق الصغير، ونرى كيف يدور حوله القمر والأقمار الصناعية، ثم نبتعد تدريجيًا لنفهم حجم الأرض مقارنةً بالشمس وبقية الكواكب.",
@@ -956,7 +956,7 @@ const VIDEOS = [
   {
     title: "ماذا يحدث لجسمك عندما لا تنام؟",
     date: "2026-10-20", duration: "9:15", category: "الصحة",
-    platforms: ["youtube"], youtubeId: "", youtubeUrl: "https://youtube.com/@Rili",
+    platforms: ["youtube"], youtubeId: "", youtubeUrl: "",
     short: "ليلة واحدة بلا نوم كافية لتؤثر في تركيزك ومزاجك. فماذا يحدث داخل جسمك ودماغك عندما تسهر؟",
     summary: [
       "النوم ليس وقتًا ضائعًا؛ ففيه يرتّب الدماغ ما تعلّمه خلال اليوم ويثبّته في الذاكرة، ويستعيد الجسم طاقته.",
@@ -974,7 +974,7 @@ const VIDEOS = [
     title: "كيف بُنيت أهرامات الجيزة؟",
     date: "2026-10-05", duration: "11:02", category: "التاريخ",
     platforms: ["youtube","tiktok"], youtubeId: "",
-    youtubeUrl: "https://youtube.com/@Rili", tiktokUrl: "https://www.tiktok.com/@rili",
+    youtubeUrl: "", tiktokUrl: "",
     short: "أكثر من مليوني كتلة حجرية، قبل نحو 4500 عام. كيف استطاع المصريون القدماء بناء الهرم الأكبر؟",
     summary: [
       "بُني الهرم الأكبر في الجيزة للملك خوفو قبل نحو 4500 عام، وظل أعلى بناء صنعه الإنسان آلاف السنين.",
@@ -992,7 +992,7 @@ const VIDEOS = [
     title: "مخطوط فوينيتش: الكتاب الذي لم يستطع أحد قراءته",
     date: "2026-09-22", duration: "1:05", category: "الألغاز",
     platforms: ["tiktok","youtube"], youtubeId: "",
-    youtubeUrl: "https://youtube.com/@Rili", tiktokUrl: "https://www.tiktok.com/@rili",
+    youtubeUrl: "", tiktokUrl: "",
     short: "كتاب عمره نحو 600 عام، مكتوب بلغة مجهولة ومليء برسوم نباتات لا يعرفها أحد. فما سره؟",
     summary: [
       "يعود مخطوط فوينيتش إلى أوائل القرن الخامس عشر بحسب تحليل الكربون المشع، ويُحفظ اليوم في مكتبة جامعة ييل الأمريكية.",
@@ -1007,7 +1007,7 @@ const VIDEOS = [
   {
     title: "كم يومًا تحتاج لبناء عادة جديدة؟",
     date: "2026-09-10", duration: "0:58", category: "تطوير الذات",
-    platforms: ["tiktok"], youtubeId: "", tiktokUrl: "https://www.tiktok.com/@rili",
+    platforms: ["tiktok"], youtubeId: "", tiktokUrl: "",
     short: "يقولون 21 يومًا… لكن الدراسات تقول شيئًا آخر!",
     summary: [
       "وجدت دراسة من جامعة كوليدج لندن أن تحوّل السلوك إلى عادة تلقائية استغرق في المتوسط نحو 66 يومًا، مع اختلاف كبير بين الأشخاص.",
@@ -1041,6 +1041,14 @@ const QUIZ = [
    ✦ تحميل المحتوى من لوحة التحكم (admin.html) ✦
    إذا حفظت محتوى من لوحة التحكم، يحلّ محل القيم المكتوبة أعلاه.
    ===================================================================== */
+const FAKE_LINKS=["youtube.com/@rili","youtube.com/@rili/join","tiktok.com/@rili","tiktok.com/@rili/live","instagram.com/rili","ko-fi.com","paypal.me","rili@example.com"];
+function isFake(u){ u=String(u||"").trim().toLowerCase().replace(/^mailto:/,"").replace(/^https?:\/\//,"").replace(/^www\./,"").replace(/\/+$/,""); return !u||FAKE_LINKS.includes(u); }
+function cleanLinks(site,videos){
+  (site.socials||[]).forEach(s=>{ if(isFake(s.url)){ s.url=""; if(/^@?rili$|example\.com/i.test(s.handle||"")) s.handle=""; } });
+  (site.support||[]).forEach(s=>{ if(isFake(s.url)) s.url=""; });
+  if(isFake(site.requestEmail)) site.requestEmail="";
+  (videos||[]).forEach(v=>{ if(isFake(v.youtubeUrl)) v.youtubeUrl=""; if(isFake(v.tiktokUrl)) v.tiktokUrl=""; });
+}
 function applyContent(c){
   if(!c||typeof c!=="object") return;
   if(c.site&&typeof c.site==="object"){ const s={...c.site}; delete s.firebase; delete s.votesCollection; Object.assign(SITE,s); }
@@ -1062,6 +1070,7 @@ function applyContent(c){
 })();
 
 function BOOT(){
+cleanLinks(SITE,VIDEOS);
 /* ===================================================================== */
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
