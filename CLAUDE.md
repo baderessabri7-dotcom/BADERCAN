@@ -1,8 +1,7 @@
 # Project notes
 
 ## Video preferences
-- Make all new videos **16:9 landscape (1920x1080)** unless the user asks otherwise.
-- `morocco_map_animation.mp4` is an older 9:16 (1080x1920) video. Keep it as it is.
+- Make every video **16:9 landscape (1920x1080)**. Never use 9:16 or any vertical format.
 
 ## Video tools
 `video-tools/` holds the scripts that made the Morocco map animation (documentary-style map with a ship following a dotted route):
