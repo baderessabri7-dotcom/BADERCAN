@@ -6,6 +6,7 @@
 ## Working style
 - **Speed matters more than perfect images.** Use whatever images are on hand, and don't spend long searching for perfect ones.
 - Look in `image-library/` first. Download new images only when nothing there fits, keep it to a few, and fetch them all at the start, before editing. Wikimedia rate-limits this server (HTTP 429) heavily.
+- Color is fine. Keep color images in color instead of always converting to black and white. Black and white is optional, mainly for photos that are already old monochrome.
 - Add every image you download to `image-library/<topic>/` (resized to at most 1920px) so later videos can reuse it.
 
 ## Video tools
