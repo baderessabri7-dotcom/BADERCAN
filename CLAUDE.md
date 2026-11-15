@@ -3,6 +3,11 @@
 ## Video preferences
 - Make every video **16:9 landscape (1920x1080)**. Never use 9:16 or any vertical format.
 
+## Working style
+- **Speed matters more than perfect images.** Use whatever images are on hand, and don't spend long searching for perfect ones.
+- Look in `image-library/` first. Download new images only when nothing there fits, keep it to a few, and fetch them all at the start, before editing. Wikimedia rate-limits this server (HTTP 429) heavily.
+- Add every image you download to `image-library/<topic>/` (resized to at most 1920px) so later videos can reuse it.
+
 ## Video tools
 `video-tools/` holds the scripts that made the Morocco map animation (documentary-style map with a ship following a dotted route):
 - `make_map.py <workdir>`: builds the parchment map (`map.png`). It needs `<workdir>/geo/countries.geojson` (Natural Earth 50m countries) and fonts in `<workdir>/fonts/` (Cinzel, Amiri-Bold, IM Fell English).
